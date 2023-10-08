@@ -1,14 +1,14 @@
 import React from "react";
-import "react-slideshow-image/dist/styles.css";
 import { Fade } from "react-slideshow-image";
+import "react-slideshow-image/dist/styles.css";
 
 const divStyle = {
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  backgroundSize: "cover",
-  height: "450px",
   width: "100%",
+  display: "flex",
+  height: "450px",
+  alignItems: "center",
+  backgroundSize: "cover",
+  justifyContent: "center",
   backgroundRepeat: "no-repeat",
 };
 
@@ -28,7 +28,7 @@ export default function ImageSlider({ w1, w2, w3, w4 }) {
     },
   ];
   return (
-    <div style={{ marginTop: "5rem" }}>
+    <div style={{ marginTop: "0.1rem" }}>
       <Fade>
         {slideImages.map((image, index) => (
           <div key={index}>

@@ -1,28 +1,21 @@
 import React from "react";
-import { Box, Button, Container } from "@chakra-ui/react";
-import { BsSearch } from "react-icons/bs";
-import { FaUser } from "react-icons/fa";
-import { AiOutlineHeart } from "react-icons/ai";
-import { BsHandbag } from "react-icons/bs";
-import { RiArrowDropDownLine } from "react-icons/ri";
-import logo from "../assets/logo.png";
-import { Image } from "@chakra-ui/react";
-import ImageSlider from "./ImageSlider";
+import Footer from "./Footer";
 import k1 from "../assets/k1.png";
 import k2 from "../assets/k2.png";
 import k3 from "../assets/k3.png";
 import k4 from "../assets/k4.png";
-import Footer from "./Footer";
+import logo from "../assets/logo.png";
+import ImageSlider from "./ImageSlider";
+import { FaUser } from "react-icons/fa";
+import { AiOutlineHeart } from "react-icons/ai";
+import { RiArrowDropDownLine } from "react-icons/ri";
+import { BsSearch, BsHandbag } from "react-icons/bs";
+import { Box, Button, Container, Image } from "@chakra-ui/react";
 
 export default function KidSection() {
   return (
     <>
-      <Container
-        className="navbar"
-        zIndex="1000"
-        position="fixed"
-        backgroundColor="white"
-        width="100%">
+      <Container className="navbar">
         <Image src={logo} alt="logo" width="130px" mx="2rem" marginTop="-2" />
         <Box display="flex" textAlign="center" marginLeft="16%" marginTop="-75">
           <Button className="navbutton">

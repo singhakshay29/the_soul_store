@@ -1,27 +1,37 @@
-import React, { useEffect, useState } from "react";
-import { Image, Box, Text, Grid, GridItem, Select } from "@chakra-ui/react";
+import {
+  Box,
+  Text,
+  Grid,
+  Image,
+  Button,
+  Divider,
+  Popover,
+  GridItem,
+} from "@chakra-ui/react";
+import Api from "../Api";
 import MenNav from "./MenNav";
 import t1 from "../assets/t1.png";
-import { Divider } from "@chakra-ui/react";
-import { FaRupeeSign } from "react-icons/fa";
-import { Checkbox, CheckboxGroup } from "@chakra-ui/react";
+import ImageSlider from "./ImageSlider";
 import { Link } from "react-router-dom";
-import { AiOutlineHeart } from "react-icons/ai";
+import { FaRupeeSign } from "react-icons/fa";
+import React, { useEffect, useState } from "react";
+import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 
-export default function TShirt() {
+let productData = [];
+export default function TShirt({ signinSuceess }) {
   const [productsList, setproductsList] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [isPopoverOpen, setIsPopoverOpen] = useState(false);
 
   async function getThedata() {
     try {
       const storedproducts = localStorage.getItem("stock");
       if (storedproducts) {
         const parsedData = JSON.parse(storedproducts);
-        console.log(parsedData.stock);
         setproductsList(parsedData.stock);
+        productData = parsedData.stock;
       } else {
-        const baseApi =
-          "https://academics.newtonschool.co/api/v1/ecommerce/clothes/products?limit=100";
-        const response = await fetch(baseApi, {
+        const response = await fetch(Api.productlistAPI, {
           method: "GET",
           headers: {
             projectId: "dm3s7h4e43m1",
@@ -31,6 +41,7 @@ export default function TShirt() {
 
         const products = data.data;
         setproductsList(products);
+        productData = products;
 
         localStorage.setItem(
           "stock",
@@ -44,34 +55,142 @@ export default function TShirt() {
     }
   }
 
-  const handleBewakoof = () => {
-    const filterBewakoof = productsList.filter(
-      (item) => item.brand === "Bewakoof®"
-    );
-    setproductsList(filterBewakoof);
+  async function addWishlist(productId) {
+    console.log(productId);
+    const user = localStorage.getItem("signupDeatils");
+    if (user) {
+      const parsedData = JSON.parse(user);
+      try {
+        await fetch(Api.wishlist, {
+          method: "PATCH",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${parsedData.signup.token}`,
+            projectId: "dm3s7h4e43m1",
+          },
+          body: JSON.stringify({ productId: productId }),
+        });
+      } catch (error) {
+        console.error("Somethings went wrong");
+      }
+    }
+  }
+  async function removeWishlist(id) {
+    const user = localStorage.getItem("signupDeatils");
+    if (user) {
+      const parsedData = JSON.parse(user);
+      const baseApi = Api.wishlist + id;
+      console.log(baseApi);
+      await fetch(baseApi, {
+        method: "DELETE",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${parsedData.signup.token}`,
+          projectId: "dm3s7h4e43m1",
+        },
+      });
+    }
+  }
+
+  const handleCategoryFilter = (category) => {
+    // resetFilter();
+    console.log(productData);
+    setSelectedCategory(category);
+    // const productList1 = [...productsList];
+    let filteredProducts = productsList?.filter((item) => {
+      return item.brand === category;
+    });
+    setproductsList(filteredProducts);
   };
 
+  // const resetFilter = () => {
+  //   setSelectedCategory(null);
+  //   setproductsList(productsList);
+  // };
+
+  function handleBewakoof(checked) {
+    if (checked) {
+      const filterBewakoof = productsList.filter(
+        (item) => item.brand === "Bewakoof®"
+      );
+      setproductsList(filterBewakoof);
+    } else {
+      setproductsList(productsList);
+    }
+  }
+  const savefavouriteToLocalStorage = (favourite) => {
+    localStorage.setItem(
+      "favourite",
+      JSON.stringify({
+        favourite: favourite,
+      })
+    );
+  };
+
+  const loadfavouriteFromLocalStorage = () => {
+    const favourite = localStorage.getItem("favourite");
+    if (favourite) {
+      const parsedData = JSON.parse(favourite);
+      return parsedData.favourite || {};
+    }
+    return {};
+  };
+  const [favourite, setfavourite] = useState(() =>
+    loadfavouriteFromLocalStorage()
+  );
+
+  const toggleFavorite = (productId) => {
+    setfavourite((prevfavourite) => {
+      const isFavorite = prevfavourite[productId];
+      const updatedfavourite = {
+        ...prevfavourite,
+        [productId]: !isFavorite,
+      };
+      if (!isFavorite) {
+        console.log(isFavorite);
+        console.log("a");
+        addWishlist(productId);
+      } else {
+        removeWishlist(productId);
+        console.log(isFavorite);
+        console.log("b");
+      }
+      savefavouriteToLocalStorage(updatedfavourite);
+
+      return updatedfavourite;
+    });
+  };
+
+  const openPopover = () => {
+    setIsPopoverOpen(true);
+    setTimeout(() => {
+      setIsPopoverOpen(false);
+    }, 2000);
+  };
   useEffect(() => {
     getThedata();
-  }, []);
+  }, [selectedCategory]);
 
   return (
     <>
       <MenNav />
-      <Box marginTop="80px">
-        <Image src={t1} width="100%" alt="banner" />
-      </Box>
+      <ImageSlider w1={t1} />
       <Text className="categoryHeading">
         Home/T-Shirt -{productsList.length}items
-        <Select
-          className="categoryInput"
-          placeholder="Select Sorting Options"
-          color="grey">
+        <select className="categoryInput" placeholder="Select Sorting Options">
           <option>Price-High to Low</option>
           <option>Price-Low to High</option>
           <option>A to Z</option>
-        </Select>
+        </select>
       </Text>
+
+      {isPopoverOpen && (
+        <Popover>
+          <Button className="popoverbody">Product Add to wishlist</Button>
+        </Popover>
+      )}
 
       <Divider
         className="categoryDivider"
@@ -85,61 +204,278 @@ export default function TShirt() {
           <Text className="bottomTexth2" marginLeft="20px">
             BRANDS
           </Text>
-          <CheckboxGroup>
-            <Checkbox
-              className="categorySearchBoxText"
-              onClick={handleBewakoof}>
+
+          <Box display="flex">
+            <input
+              type="checkbox"
+              className="categorySearchBoxInput"
+              checked={selectedCategory === "Bewakoof®"}
+              onChange={() => handleCategoryFilter("Bewakoof®")}
+            />
+            <label
+              htmlFor="categorySearchBoxInput"
+              className="categorySearchBoxText">
               Bewakoof®
-            </Checkbox>
-            <Checkbox className="categorySearchBoxText">
+            </label>
+          </Box>
+          <Box display="flex">
+            <input
+              type="checkbox"
+              className="categorySearchBoxInput"
+              checked={
+                selectedCategory === "OFFICIAL RICK AND MORTY MERCHANDISE"
+              }
+              onChange={() =>
+                handleCategoryFilter("OFFICIAL RICK AND MORTY MERCHANDISE")
+              }
+            />
+            <label
+              htmlFor="categorySearchBoxInput"
+              className="categorySearchBoxText">
               RICK AND MORTY MERCHANDISE
-            </Checkbox>
-            <Checkbox className="categorySearchBoxText">
+            </label>
+          </Box>
+          <Box display="flex">
+            <input
+              type="checkbox"
+              className="categorySearchBoxInput"
+              checked={selectedCategory === "OFFICIAL DISNEY MERCHANDISE"}
+              onChange={() =>
+                handleCategoryFilter("OFFICIAL DISNEY MERCHANDISE")
+              }
+            />
+            <label
+              htmlFor="categorySearchBoxInput"
+              className="categorySearchBoxText">
               DISNEY MERCHANDISE
-            </Checkbox>
-            <Checkbox className="categorySearchBoxText">
+            </label>
+          </Box>
+          <Box display="flex">
+            <input
+              type="checkbox"
+              checked={selectedCategory === "BEWAKOOF X STREETWEAR"}
+              className="categorySearchBoxInput"
+              onChange={() => handleCategoryFilter("BEWAKOOF X STREETWEAR")}
+            />
+            <label
+              htmlFor="categorySearchBoxInput"
+              className="categorySearchBoxText">
               BEWAKOOF X STREETWEAR
-            </Checkbox>
-            <Checkbox className="categorySearchBoxText">
+            </label>
+          </Box>
+          <Box display="flex">
+            <input
+              type="checkbox"
+              className="categorySearchBoxInput"
+              checked={selectedCategory === "OFFICIAL NARUTO MERCHANDISE"}
+              onChange={() =>
+                handleCategoryFilter("OFFICIAL NARUTO MERCHANDISE")
+              }
+            />
+            <label
+              htmlFor="categorySearchBoxInput"
+              className="categorySearchBoxText">
               NARUTO MERCHANDISE
-            </Checkbox>
-            <Checkbox className="categorySearchBoxText">
+            </label>
+          </Box>
+          <Box display="flex">
+            <input
+              type="checkbox"
+              className="categorySearchBoxInput"
+              checked={selectedCategory === "OFFICIAL MINIONS MERCHANDISE"}
+              onChange={() =>
+                handleCategoryFilter("OFFICIAL MINIONS MERCHANDISE")
+              }
+            />
+            <label
+              htmlFor="categorySearchBoxInput"
+              className="categorySearchBoxText">
               MINIONS MERCHANDISE
-            </Checkbox>
-            <Checkbox className="categorySearchBoxText">
+            </label>
+          </Box>
+          <Box display="flex">
+            <input
+              type="checkbox"
+              className="categorySearchBoxInput"
+              checked={selectedCategory === "OFFICIAL HARRY POTTER MERCHANDISE"}
+              onChange={() =>
+                handleCategoryFilter("OFFICIAL HARRY POTTER MERCHANDISE")
+              }
+            />
+            <label
+              htmlFor="categorySearchBoxInput"
+              className="categorySearchBoxText">
               HARRY POTTER MERCHANDISE
-            </Checkbox>
-          </CheckboxGroup>
+            </label>
+          </Box>
+          <Box display="flex">
+            <input
+              type="checkbox"
+              className="categorySearchBoxInput"
+              checked={selectedCategory === "OFFICIAL DC COMICS MERCHANDISE"}
+              onChange={() =>
+                handleCategoryFilter("OFFICIAL DC COMICS MERCHANDISE")
+              }
+            />
+            <label
+              htmlFor="categorySearchBoxInput"
+              className="categorySearchBoxText">
+              DC COMICS MERCHANDISE
+            </label>
+          </Box>
+
           <Text className="bottomTexth2" marginLeft="20px" marginTop="60px">
             PRICE
           </Text>
-          <CheckboxGroup>
-            <Checkbox className="categorySearchBoxText">
+          <Box display="flex">
+            <input
+              type="checkbox"
+              className="categorySearchBoxInput"
+              onChange={handleBewakoof}
+            />
+            <label
+              htmlFor="categorySearchBoxInput"
+              className="categorySearchBoxText">
               Rs. 299 To Rs. 399
-            </Checkbox>
-            <Checkbox className="categorySearchBoxText">
+            </label>
+          </Box>
+          <Box display="flex">
+            <input
+              type="checkbox"
+              className="categorySearchBoxInput"
+              onChange={handleBewakoof}
+            />
+            <label
+              htmlFor="categorySearchBoxInput"
+              className="categorySearchBoxText">
               Rs. 410 To Rs. 599
-            </Checkbox>
-            <Checkbox className="categorySearchBoxText">
+            </label>
+          </Box>
+          <Box display="flex">
+            <input
+              type="checkbox"
+              className="categorySearchBoxInput"
+              onChange={handleBewakoof}
+            />
+            <label
+              htmlFor="categorySearchBoxInput"
+              className="categorySearchBoxText">
               Rs. 610 To Rs. 799
-            </Checkbox>
-            <Checkbox className="categorySearchBoxText">
+            </label>
+          </Box>
+          <Box display="flex">
+            <input
+              type="checkbox"
+              className="categorySearchBoxInput"
+              onChange={handleBewakoof}
+            />
+            <label
+              htmlFor="categorySearchBoxInput"
+              className="categorySearchBoxText">
               Rs. 810 To Rs. 999
-            </Checkbox>
-          </CheckboxGroup>
+            </label>
+          </Box>
+
           <Text className="bottomTexth2" marginLeft="20px" marginTop="60px">
             COLOR
           </Text>
-          <CheckboxGroup>
-            <Checkbox className="categorySearchBoxText">BLACK</Checkbox>
-            <Checkbox className="categorySearchBoxText">GREEN</Checkbox>
-            <Checkbox className="categorySearchBoxText">BROWN</Checkbox>
-            <Checkbox className="categorySearchBoxText">BLUE</Checkbox>
-            <Checkbox className="categorySearchBoxText">White</Checkbox>
-            <Checkbox className="categorySearchBoxText">RED</Checkbox>
-            <Checkbox className="categorySearchBoxText">YELLOW</Checkbox>
-            <Checkbox className="categorySearchBoxText">NAVY</Checkbox>
-          </CheckboxGroup>
+
+          <Box display="flex">
+            <input
+              type="checkbox"
+              className="categorySearchBoxInput"
+              onChange={handleBewakoof}
+            />
+            <label
+              htmlFor="categorySearchBoxInput"
+              className="categorySearchBoxText">
+              BLACK
+            </label>
+          </Box>
+          <Box display="flex">
+            <input
+              type="checkbox"
+              className="categorySearchBoxInput"
+              onChange={handleBewakoof}
+            />
+            <label
+              htmlFor="categorySearchBoxInput"
+              className="categorySearchBoxText">
+              GREEN
+            </label>
+          </Box>
+          <Box display="flex">
+            <input
+              type="checkbox"
+              className="categorySearchBoxInput"
+              onChange={handleBewakoof}
+            />
+            <label
+              htmlFor="categorySearchBoxInput"
+              className="categorySearchBoxText">
+              BROWN
+            </label>
+          </Box>
+          <Box display="flex">
+            <input
+              type="checkbox"
+              className="categorySearchBoxInput"
+              onChange={handleBewakoof}
+            />
+            <label
+              htmlFor="categorySearchBoxInput"
+              className="categorySearchBoxText">
+              WHITE
+            </label>
+          </Box>
+          <Box display="flex">
+            <input
+              type="checkbox"
+              className="categorySearchBoxInput"
+              onChange={handleBewakoof}
+            />
+            <label
+              htmlFor="categorySearchBoxInput"
+              className="categorySearchBoxText">
+              BLUE
+            </label>
+          </Box>
+          <Box display="flex">
+            <input
+              type="checkbox"
+              className="categorySearchBoxInput"
+              onChange={handleBewakoof}
+            />
+            <label
+              htmlFor="categorySearchBoxInput"
+              className="categorySearchBoxText">
+              RED
+            </label>
+          </Box>
+          <Box display="flex">
+            <input
+              type="checkbox"
+              className="categorySearchBoxInput"
+              onChange={handleBewakoof}
+            />
+            <label
+              htmlFor="categorySearchBoxInput"
+              className="categorySearchBoxText">
+              YELLOW
+            </label>
+          </Box>
+          <Box display="flex">
+            <input
+              type="checkbox"
+              className="categorySearchBoxInput"
+              onChange={handleBewakoof}
+            />
+            <label
+              htmlFor="categorySearchBoxInput"
+              className="categorySearchBoxText">
+              NAVY
+            </label>
+          </Box>
         </Box>
 
         <Grid templateColumns="repeat(4, 1fr)" gap={6}>
@@ -147,8 +483,39 @@ export default function TShirt() {
             productsList.map((item, index) => (
               <GridItem key={index} margin="0 0.6rem">
                 <Box margin="0" padding="0">
-                  <Link to={`/product/${item._id}`}>
-                    <AiOutlineHeart className="favIcon" />
+                  {signinSuceess ? (
+                    <>
+                      {favourite[item._id] ? (
+                        <>
+                          <AiFillHeart
+                            className="favIconadded"
+                            onClick={() => {
+                              toggleFavorite(item._id);
+                              openPopover();
+                            }}
+                          />
+                        </>
+                      ) : (
+                        <>
+                          <AiOutlineHeart
+                            className="favIcon"
+                            onClick={() => {
+                              toggleFavorite(item._id);
+                              openPopover();
+                            }}
+                          />
+                        </>
+                      )}
+                    </>
+                  ) : (
+                    <>
+                      <Link to="/login">
+                        <AiOutlineHeart className="favIcon" />
+                      </Link>
+                    </>
+                  )}
+
+                  <Link to="/product" state={{ data: item }}>
                     <Image
                       src={item.displayImage}
                       alt={item.name}

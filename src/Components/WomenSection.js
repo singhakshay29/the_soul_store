@@ -1,29 +1,40 @@
 import React from "react";
-import { Box, Button, Card, Container } from "@chakra-ui/react";
-import { BsSearch } from "react-icons/bs";
-import { FaUser } from "react-icons/fa";
-import { AiOutlineHeart } from "react-icons/ai";
-import { BsHandbag } from "react-icons/bs";
-import { RiArrowDropDownLine } from "react-icons/ri";
-import logo from "../assets/logo.png";
-import { Image } from "@chakra-ui/react";
-import ImageSlider from "./ImageSlider";
+import Footer from "./Footer";
 import w1 from "../assets/w1.png";
 import w2 from "../assets/w2.png";
 import w3 from "../assets/w3.png";
 import w4 from "../assets/w4.png";
-import Footer from "./Footer";
+import logo from "../assets/logo.png";
+import ImageSlider from "./ImageSlider";
+import { FaUser } from "react-icons/fa";
+import { useEffect, useState } from "react";
+import { AiOutlineHeart } from "react-icons/ai";
+import { BsSearch, BsHandbag } from "react-icons/bs";
+import { RiArrowDropDownLine } from "react-icons/ri";
+import { Box, Button, Card, Container, Image } from "@chakra-ui/react";
 
 export default function WomenSection() {
+  const [scrollY, setScrollY] = useState(0);
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrollY(window.scrollY);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
   return (
     <>
-      <Container
-        className="navbar"
-        zIndex="1000"
-        position="fixed"
-        backgroundColor="white"
-        width="100%">
-        <Image src={logo} alt="logo" width="130px" mx="2rem" marginTop="-2" />
+      <Container className={scrollY > 50 ? "navbar navbarscrolled" : "navbar"}>
+        <Image
+          src={logo}
+          alt="logo"
+          width="130px"
+          mx="2rem"
+          style={{ marginTop: "-50", padding: "0" }}
+        />
         <Box display="flex" textAlign="center" marginLeft="16%" marginTop="-75">
           <Button className="navbutton">
             TOPWEAR

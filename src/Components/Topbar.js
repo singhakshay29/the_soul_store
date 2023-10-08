@@ -1,48 +1,70 @@
-import React from "react";
-import { Box, Button, Container } from "@chakra-ui/react";
+import React, { useState } from "react";
 import { CiMobile3 } from "react-icons/ci";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { Box, Button, Container } from "@chakra-ui/react";
 
 export default function Topbar() {
-  // const navLinkStyle = ({ isActive }) => {
-  //   return {
-  //     color: isActive ? "#58595b" : "white",
-  //     backgroundColor: isActive ? "white" : "#ed2d2f",
-  //   };
-  // };
-
-  const navLinkStyle = ({ isActive }) => {
-    return {
-      color: isActive ? "black" : "white",
-      backgroundColor: isActive ? "white" : "#ed2d2f",
-    };
+  const isLoggedIn = useSelector((state) => {
+    return state.isLoggedIn;
+  });
+  const [active, setActive] = useState("");
+  const handleClick = (event) => {
+    setActive(event.target.id);
   };
 
   return (
     <Container height="55px" bg="#e11b23" p="0" display="block">
       <Box marginLeft="15%">
-        <NavLink to="/" style={navLinkStyle}>
-          <Button className="topbarbutton">Women</Button>
-        </NavLink>
-        <NavLink to="/men" style={navLinkStyle}>
-          <Button className="topbarbutton">Men</Button>
-        </NavLink>
-        <NavLink to="/kid" style={navLinkStyle}>
-          <Button className="topbarbutton">Kids</Button>
-        </NavLink>
-        <NavLink to="/login">
-          <Button marginLeft="35%" className="topbarbutton2">
-            Track Order
+        <NavLink to="/">
+          <Button
+            className={active === "1" ? "active1 topbarbutton" : "topbarbutton"}
+            id={"1"}
+            onClick={handleClick}>
+            Women
           </Button>
         </NavLink>
-        <NavLink to="/login">
-          <Button className="topbarbutton2">Contact US</Button>
+        <NavLink to="/men">
+          <Button
+            className={active === "2" ? "active1 topbarbutton" : "topbarbutton"}
+            id={"2"}
+            onClick={handleClick}>
+            Men
+          </Button>
         </NavLink>
-
-        <Button className="topbarbutton2">
-          <CiMobile3 style={{ margin: "5px" }} />
-          Download APP
-        </Button>
+        <NavLink to="/kid">
+          <Button
+            className={active === "3" ? "active1 topbarbutton" : "topbarbutton"}
+            id={"3"}
+            onClick={handleClick}>
+            Kids
+          </Button>
+        </NavLink>
+        {isLoggedIn ? (
+          <>
+            <NavLink to="/order">
+              <Button marginLeft="35%" className="topbarbutton2">
+                Track Order
+              </Button>
+              <Button className="topbarbutton2">Contact US</Button>
+            </NavLink>
+          </>
+        ) : (
+          <>
+            <NavLink to="/login">
+              <Button marginLeft="35%" className="topbarbutton2">
+                Track Order
+              </Button>
+              <Button className="topbarbutton2">Contact US</Button>
+            </NavLink>
+          </>
+        )}
+        <Link to="https://play.google.com/store/apps/details?id=com.thesouledstore">
+          <Button className="topbarbutton2">
+            <CiMobile3 style={{ margin: "5px" }} />
+            Download APP
+          </Button>
+        </Link>
       </Box>
     </Container>
   );
