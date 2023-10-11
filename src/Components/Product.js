@@ -9,6 +9,7 @@ import {
   Container,
 } from "@chakra-ui/react";
 import {
+  AiFillHeart,
   AiOutlineHeart,
   AiFillFacebook,
   AiOutlineInstagram,
@@ -16,23 +17,32 @@ import {
 import Api from "../Api";
 import Modal from "./Modal";
 import MenNav from "./MenNav";
+import { BsWhatsapp } from "react-icons/bs";
+import { FaRupeeSign } from "react-icons/fa";
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { FaRupeeSign } from "react-icons/fa";
-import { BsWhatsapp } from "react-icons/bs";
+import { useDispatch, useSelector } from "react-redux";
+import { ADD_TO_WISHLIST, REMOVE_FROM_WISHLIST } from "../action";
+import { addCart } from "../fetch";
 
-export default function Product({ signinSuceess }) {
+export default function Product() {
+  const dispatch = useDispatch();
   const location = useLocation();
   const { data } = location.state;
   const [product, setproduct] = useState({});
-  const [productImages, setProductImages] = useState([]);
+  const [quantity, setQuantity] = useState(1);
   const [clickedImg, setClickedImg] = useState(null);
-  const [currentIndex, setCurrentIndex] = useState(null);
-  const [, setFavorites] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const { wishlist } = useSelector((state) => state.app);
+  const [productImages, setProductImages] = useState([]);
+  const { isLoggedIn } = useSelector((state) => state.user);
   const id = data._id;
-  console.log(id);
+
+  const favId = wishlist.map((item) => {
+    return item.products._id;
+  });
+
   async function getTheProductDeatails() {
-    console.log("a");
     try {
       const baseApi = Api.product + id;
       const response = await fetch(baseApi, {
@@ -49,50 +59,6 @@ export default function Product({ signinSuceess }) {
     }
   }
 
-  async function addWishlist(productId) {
-    console.log(productId);
-    const user = localStorage.getItem("signupDeatils");
-    if (user) {
-      const parsedData = JSON.parse(user);
-      try {
-        await fetch(Api.wishlist, {
-          method: "PATCH",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${parsedData.signup.token}`,
-            projectId: "dm3s7h4e43m1",
-          },
-          body: JSON.stringify({ productId: productId }),
-        });
-      } catch (error) {
-        console.error("Somethings went wrong");
-      }
-    }
-  }
-
-  async function addCart(productId) {
-    const user = localStorage.getItem("signupDeatils");
-    if (user) {
-      const parsedData = JSON.parse(user);
-      try {
-        const response = await fetch(Api.cart, {
-          method: "POST",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${parsedData.signup.token}`,
-            projectid: "dm3s7h4e43m1",
-          },
-          body: JSON.stringify({ productId: productId }),
-        });
-        const data = await response.json();
-        console.log(data);
-      } catch (error) {
-        console.log("Somethings went wrong");
-      }
-    }
-  }
   const handleClick = (item, index) => {
     setCurrentIndex(index);
     setClickedImg(item);
@@ -132,18 +98,6 @@ export default function Product({ signinSuceess }) {
   };
 
   useEffect(() => {
-    const loadFavoritesFromLocalStorage = (id) => {
-      const favoritesData = localStorage.getItem("favorites");
-      if (favoritesData) {
-        const products = JSON.parse(favoritesData);
-        const isFavorite = products?.favorites[id] || false;
-        setFavorites(isFavorite);
-      }
-    };
-    loadFavoritesFromLocalStorage(id);
-  }, [id]);
-
-  useEffect(() => {
     getTheProductDeatails();
     // eslint-disable-next-line
   }, []);
@@ -178,7 +132,10 @@ export default function Product({ signinSuceess }) {
             </Text>
             <Text className="bottomTexth3">
               QUANTITY
-              <select style={{ marginLeft: "10px" }}>
+              <select
+                value={quantity}
+                onChange={(e) => setQuantity(parseInt(e.target.value))}
+                style={{ marginLeft: "10px" }}>
                 <option>1</option>
                 <option>2</option>
                 <option>3</option>
@@ -187,21 +144,36 @@ export default function Product({ signinSuceess }) {
               </select>
             </Text>
             <Box display="flex" margin="0" padding="0">
-              {signinSuceess ? (
+              {isLoggedIn ? (
                 <>
                   <Button
-                    onClick={() => addCart(product._id)}
+                    onClick={() => addCart(product._id, quantity)}
                     className="loginbutton"
-                    borderRadius="0"
+                    borderRadius="2px"
                     width="160px">
                     ADD TO CART
                   </Button>
-                  <Button
-                    onClick={() => addWishlist(product._id)}
-                    className="wishlist">
-                    <AiOutlineHeart />
-                    ADD TO WISHLIST
-                  </Button>
+                  {favId.includes(product._id) ? (
+                    <>
+                      <Button
+                        onClick={() =>
+                          dispatch(REMOVE_FROM_WISHLIST(product._id))
+                        }
+                        className="wishlist">
+                        <AiFillHeart style={{ fontSize: "1rem" }} />
+                        ADDED TO WISHLIST
+                      </Button>
+                    </>
+                  ) : (
+                    <>
+                      <Button
+                        onClick={() => dispatch(ADD_TO_WISHLIST(product._id))}
+                        className="wishlist">
+                        <AiOutlineHeart style={{ fontSize: "1rem" }} />
+                        ADD TO WISHLIST
+                      </Button>
+                    </>
+                  )}
                 </>
               ) : (
                 <>

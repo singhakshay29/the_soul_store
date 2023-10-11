@@ -1,196 +1,111 @@
-import {
-  Box,
-  Text,
-  Grid,
-  Image,
-  Button,
-  Divider,
-  Popover,
-  GridItem,
-} from "@chakra-ui/react";
-import Api from "../Api";
+import Card from "./Card";
 import MenNav from "./MenNav";
 import t1 from "../assets/t1.png";
 import ImageSlider from "./ImageSlider";
-import { Link } from "react-router-dom";
-import { FaRupeeSign } from "react-icons/fa";
 import React, { useEffect, useState } from "react";
-import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
+import { useSelector, useDispatch } from "react-redux";
+import { Box, Text, Grid, Divider } from "@chakra-ui/react";
+import { FETCH_PRODUCTS } from "../action";
 
-let productData = [];
-export default function TShirt({ signinSuceess }) {
-  const [productsList, setproductsList] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState(null);
-  const [isPopoverOpen, setIsPopoverOpen] = useState(false);
+export default function TShirt() {
+  const dispatch = useDispatch();
+  const [selectedBrands, setSelectedBrands] = useState([]);
+  const [selectedColors, setSelectedColors] = useState([]);
+  const [selectedPriceRange, setSelectedPriceRange] = useState([]);
+  console.log(selectedPriceRange);
 
-  async function getThedata() {
-    try {
-      const storedproducts = localStorage.getItem("stock");
-      if (storedproducts) {
-        const parsedData = JSON.parse(storedproducts);
-        setproductsList(parsedData.stock);
-        productData = parsedData.stock;
-      } else {
-        const response = await fetch(Api.productlistAPI, {
-          method: "GET",
-          headers: {
-            projectId: "dm3s7h4e43m1",
-          },
-        });
-        const data = await response.json();
-
-        const products = data.data;
-        setproductsList(products);
-        productData = products;
-
-        localStorage.setItem(
-          "stock",
-          JSON.stringify({
-            stock: products,
-          })
-        );
-      }
-    } catch (error) {
-      console.error("Something went wrong");
+  const { isLoggedIn } = useSelector((state) => state.user);
+  console.log(isLoggedIn);
+  const { productsList } = useSelector((state) => state.app);
+  function handleBewakoof(checked) {}
+  const filterProducts = (
+    productsList,
+    selectedBrands,
+    selectedColors,
+    selectedPriceRange
+  ) => {
+    let filteredProducts = [...productsList];
+    if (
+      selectedBrands.length === 0 &&
+      selectedColors.length === 0 &&
+      selectedPriceRange.length === 0
+    ) {
+      return productsList;
     }
-  }
 
-  async function addWishlist(productId) {
-    console.log(productId);
-    const user = localStorage.getItem("signupDeatils");
-    if (user) {
-      const parsedData = JSON.parse(user);
-      try {
-        await fetch(Api.wishlist, {
-          method: "PATCH",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${parsedData.signup.token}`,
-            projectId: "dm3s7h4e43m1",
-          },
-          body: JSON.stringify({ productId: productId }),
-        });
-      } catch (error) {
-        console.error("Somethings went wrong");
-      }
-    }
-  }
-  async function removeWishlist(id) {
-    const user = localStorage.getItem("signupDeatils");
-    if (user) {
-      const parsedData = JSON.parse(user);
-      const baseApi = Api.wishlist + id;
-      console.log(baseApi);
-      await fetch(baseApi, {
-        method: "DELETE",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${parsedData.signup.token}`,
-          projectId: "dm3s7h4e43m1",
-        },
-      });
-    }
-  }
-
-  const handleCategoryFilter = (category) => {
-    // resetFilter();
-    console.log(productData);
-    setSelectedCategory(category);
-    // const productList1 = [...productsList];
-    let filteredProducts = productsList?.filter((item) => {
-      return item.brand === category;
-    });
-    setproductsList(filteredProducts);
-  };
-
-  // const resetFilter = () => {
-  //   setSelectedCategory(null);
-  //   setproductsList(productsList);
-  // };
-
-  function handleBewakoof(checked) {
-    if (checked) {
-      const filterBewakoof = productsList.filter(
-        (item) => item.brand === "Bewakoof®"
+    if (selectedBrands.length > 0) {
+      filteredProducts = filteredProducts.filter((product) =>
+        selectedBrands.includes(product.brand)
       );
-      setproductsList(filterBewakoof);
-    } else {
-      setproductsList(productsList);
     }
-  }
-  const savefavouriteToLocalStorage = (favourite) => {
-    localStorage.setItem(
-      "favourite",
-      JSON.stringify({
-        favourite: favourite,
-      })
-    );
-  };
 
-  const loadfavouriteFromLocalStorage = () => {
-    const favourite = localStorage.getItem("favourite");
-    if (favourite) {
-      const parsedData = JSON.parse(favourite);
-      return parsedData.favourite || {};
+    if (selectedColors.length > 0) {
+      filteredProducts = filteredProducts.filter((product) =>
+        selectedColors.includes(product.color)
+      );
     }
-    return {};
+    console.log(selectedPriceRange.length);
+    if (selectedPriceRange.length === 2) {
+      const [minPrice, maxPrice] = selectedPriceRange[0];
+      filteredProducts = filteredProducts.filter(
+        (product) => product.price >= minPrice && product.price <= maxPrice
+      );
+    }
+
+    return filteredProducts;
   };
-  const [favourite, setfavourite] = useState(() =>
-    loadfavouriteFromLocalStorage()
+  const filteredProducts = filterProducts(
+    productsList,
+    selectedBrands,
+    selectedColors,
+    selectedPriceRange
   );
 
-  const toggleFavorite = (productId) => {
-    setfavourite((prevfavourite) => {
-      const isFavorite = prevfavourite[productId];
-      const updatedfavourite = {
-        ...prevfavourite,
-        [productId]: !isFavorite,
-      };
-      if (!isFavorite) {
-        console.log(isFavorite);
-        console.log("a");
-        addWishlist(productId);
+  const handleCategoryFilter = (value, filterType) => {
+    if (filterType === "Brand") {
+      if (selectedBrands.includes(value)) {
+        setSelectedBrands(selectedBrands.filter((brand) => brand !== value));
       } else {
-        removeWishlist(productId);
-        console.log(isFavorite);
-        console.log("b");
+        setSelectedBrands([...selectedBrands, value]);
       }
-      savefavouriteToLocalStorage(updatedfavourite);
-
-      return updatedfavourite;
-    });
+    } else if (filterType === "Color") {
+      if (selectedColors.includes(value)) {
+        setSelectedColors(selectedColors.filter((color) => color !== value));
+      } else {
+        setSelectedColors([...selectedColors, value]);
+      }
+    } else if (filterType === "Price") {
+      if (selectedPriceRange.includes(value)) {
+        setSelectedPriceRange(
+          selectedPriceRange.filter((range) => range !== value)
+        );
+      } else {
+        setSelectedPriceRange([...selectedPriceRange, value]);
+      }
+    }
   };
 
-  const openPopover = () => {
-    setIsPopoverOpen(true);
-    setTimeout(() => {
-      setIsPopoverOpen(false);
-    }, 2000);
-  };
   useEffect(() => {
-    getThedata();
-  }, [selectedCategory]);
+    dispatch(FETCH_PRODUCTS());
+    // eslint-disable-next-line
+  }, []);
 
   return (
     <>
       <MenNav />
       <ImageSlider w1={t1} />
       <Text className="categoryHeading">
-        Home/T-Shirt -{productsList.length}items
+        T-Shirt -
+        {filteredProducts.length > 0
+          ? filteredProducts.length
+          : productsList.length}
+        items
         <select className="categoryInput" placeholder="Select Sorting Options">
           <option>Price-High to Low</option>
           <option>Price-Low to High</option>
           <option>A to Z</option>
         </select>
       </Text>
-
-      {isPopoverOpen && (
-        <Popover>
-          <Button className="popoverbody">Product Add to wishlist</Button>
-        </Popover>
-      )}
 
       <Divider
         className="categoryDivider"
@@ -209,8 +124,10 @@ export default function TShirt({ signinSuceess }) {
             <input
               type="checkbox"
               className="categorySearchBoxInput"
-              checked={selectedCategory === "Bewakoof®"}
-              onChange={() => handleCategoryFilter("Bewakoof®")}
+              onChange={() => {
+                setSelectedBrands("Bewakoof®");
+                handleCategoryFilter("Bewakoof®", "Brand");
+              }}
             />
             <label
               htmlFor="categorySearchBoxInput"
@@ -222,12 +139,13 @@ export default function TShirt({ signinSuceess }) {
             <input
               type="checkbox"
               className="categorySearchBoxInput"
-              checked={
-                selectedCategory === "OFFICIAL RICK AND MORTY MERCHANDISE"
-              }
-              onChange={() =>
-                handleCategoryFilter("OFFICIAL RICK AND MORTY MERCHANDISE")
-              }
+              onChange={() => {
+                setSelectedBrands("OFFICIAL RICK AND MORTY MERCHANDISE");
+                handleCategoryFilter(
+                  "OFFICIAL RICK AND MORTY MERCHANDISE",
+                  "Brand"
+                );
+              }}
             />
             <label
               htmlFor="categorySearchBoxInput"
@@ -239,10 +157,10 @@ export default function TShirt({ signinSuceess }) {
             <input
               type="checkbox"
               className="categorySearchBoxInput"
-              checked={selectedCategory === "OFFICIAL DISNEY MERCHANDISE"}
-              onChange={() =>
-                handleCategoryFilter("OFFICIAL DISNEY MERCHANDISE")
-              }
+              onChange={() => {
+                setSelectedBrands("OFFICIAL DISNEY MERCHANDISE");
+                handleCategoryFilter("OFFICIAL DISNEY MERCHANDISE", "Brand");
+              }}
             />
             <label
               htmlFor="categorySearchBoxInput"
@@ -253,9 +171,11 @@ export default function TShirt({ signinSuceess }) {
           <Box display="flex">
             <input
               type="checkbox"
-              checked={selectedCategory === "BEWAKOOF X STREETWEAR"}
               className="categorySearchBoxInput"
-              onChange={() => handleCategoryFilter("BEWAKOOF X STREETWEAR")}
+              onChange={() => {
+                setSelectedBrands("BEWAKOOF X STREETWEAR");
+                handleCategoryFilter("BEWAKOOF X STREETWEAR", "Brand");
+              }}
             />
             <label
               htmlFor="categorySearchBoxInput"
@@ -267,10 +187,10 @@ export default function TShirt({ signinSuceess }) {
             <input
               type="checkbox"
               className="categorySearchBoxInput"
-              checked={selectedCategory === "OFFICIAL NARUTO MERCHANDISE"}
-              onChange={() =>
-                handleCategoryFilter("OFFICIAL NARUTO MERCHANDISE")
-              }
+              onChange={() => {
+                setSelectedBrands("OFFICIAL NARUTO MERCHANDISE");
+                handleCategoryFilter("OFFICIAL NARUTO MERCHANDISE", "Brand");
+              }}
             />
             <label
               htmlFor="categorySearchBoxInput"
@@ -282,10 +202,10 @@ export default function TShirt({ signinSuceess }) {
             <input
               type="checkbox"
               className="categorySearchBoxInput"
-              checked={selectedCategory === "OFFICIAL MINIONS MERCHANDISE"}
-              onChange={() =>
-                handleCategoryFilter("OFFICIAL MINIONS MERCHANDISE")
-              }
+              onChange={() => {
+                setSelectedBrands("OFFICIAL MINIONS MERCHANDISE");
+                handleCategoryFilter("OFFICIAL MINIONS MERCHANDISE", "Brand");
+              }}
             />
             <label
               htmlFor="categorySearchBoxInput"
@@ -297,10 +217,13 @@ export default function TShirt({ signinSuceess }) {
             <input
               type="checkbox"
               className="categorySearchBoxInput"
-              checked={selectedCategory === "OFFICIAL HARRY POTTER MERCHANDISE"}
-              onChange={() =>
-                handleCategoryFilter("OFFICIAL HARRY POTTER MERCHANDISE")
-              }
+              onChange={() => {
+                setSelectedBrands("OFFICIAL HARRY POTTER MERCHANDISE");
+                handleCategoryFilter(
+                  "OFFICIAL HARRY POTTER MERCHANDISE",
+                  "Brand"
+                );
+              }}
             />
             <label
               htmlFor="categorySearchBoxInput"
@@ -312,10 +235,10 @@ export default function TShirt({ signinSuceess }) {
             <input
               type="checkbox"
               className="categorySearchBoxInput"
-              checked={selectedCategory === "OFFICIAL DC COMICS MERCHANDISE"}
-              onChange={() =>
-                handleCategoryFilter("OFFICIAL DC COMICS MERCHANDISE")
-              }
+              onChange={() => {
+                setSelectedBrands("OFFICIAL DC COMICS MERCHANDISE");
+                handleCategoryFilter("OFFICIAL DC COMICS MERCHANDISE", "Brand");
+              }}
             />
             <label
               htmlFor="categorySearchBoxInput"
@@ -331,7 +254,10 @@ export default function TShirt({ signinSuceess }) {
             <input
               type="checkbox"
               className="categorySearchBoxInput"
-              onChange={handleBewakoof}
+              onChange={() => {
+                let range = [299, 399];
+                handleCategoryFilter(range, "Price");
+              }}
             />
             <label
               htmlFor="categorySearchBoxInput"
@@ -343,7 +269,10 @@ export default function TShirt({ signinSuceess }) {
             <input
               type="checkbox"
               className="categorySearchBoxInput"
-              onChange={handleBewakoof}
+              onChange={() => {
+                let range = [410, 599];
+                handleCategoryFilter(range, "Price");
+              }}
             />
             <label
               htmlFor="categorySearchBoxInput"
@@ -384,7 +313,10 @@ export default function TShirt({ signinSuceess }) {
             <input
               type="checkbox"
               className="categorySearchBoxInput"
-              onChange={handleBewakoof}
+              onChange={() => {
+                setSelectedColors("BLACK");
+                handleCategoryFilter("BLACK", "Color");
+              }}
             />
             <label
               htmlFor="categorySearchBoxInput"
@@ -396,7 +328,10 @@ export default function TShirt({ signinSuceess }) {
             <input
               type="checkbox"
               className="categorySearchBoxInput"
-              onChange={handleBewakoof}
+              onChange={() => {
+                setSelectedColors("GREEN");
+                handleCategoryFilter("GREEN", "Color");
+              }}
             />
             <label
               htmlFor="categorySearchBoxInput"
@@ -408,7 +343,10 @@ export default function TShirt({ signinSuceess }) {
             <input
               type="checkbox"
               className="categorySearchBoxInput"
-              onChange={handleBewakoof}
+              onChange={() => {
+                setSelectedColors("BROWN");
+                handleCategoryFilter("BROWN", "Color");
+              }}
             />
             <label
               htmlFor="categorySearchBoxInput"
@@ -420,7 +358,10 @@ export default function TShirt({ signinSuceess }) {
             <input
               type="checkbox"
               className="categorySearchBoxInput"
-              onChange={handleBewakoof}
+              onChange={() => {
+                setSelectedColors("WHITE");
+                handleCategoryFilter("WHITE", "Color");
+              }}
             />
             <label
               htmlFor="categorySearchBoxInput"
@@ -432,7 +373,10 @@ export default function TShirt({ signinSuceess }) {
             <input
               type="checkbox"
               className="categorySearchBoxInput"
-              onChange={handleBewakoof}
+              onChange={() => {
+                setSelectedColors("BLUE");
+                handleCategoryFilter("BLUE", "Color");
+              }}
             />
             <label
               htmlFor="categorySearchBoxInput"
@@ -444,7 +388,10 @@ export default function TShirt({ signinSuceess }) {
             <input
               type="checkbox"
               className="categorySearchBoxInput"
-              onChange={handleBewakoof}
+              onChange={() => {
+                setSelectedColors("RED");
+                handleCategoryFilter("RED", "Color");
+              }}
             />
             <label
               htmlFor="categorySearchBoxInput"
@@ -456,7 +403,10 @@ export default function TShirt({ signinSuceess }) {
             <input
               type="checkbox"
               className="categorySearchBoxInput"
-              onChange={handleBewakoof}
+              onChange={() => {
+                setSelectedColors("YELLOW");
+                handleCategoryFilter("YELLOW", "Color");
+              }}
             />
             <label
               htmlFor="categorySearchBoxInput"
@@ -468,7 +418,10 @@ export default function TShirt({ signinSuceess }) {
             <input
               type="checkbox"
               className="categorySearchBoxInput"
-              onChange={handleBewakoof}
+              onChange={() => {
+                setSelectedColors("NAVY");
+                handleCategoryFilter("NAVY", "Color");
+              }}
             />
             <label
               htmlFor="categorySearchBoxInput"
@@ -479,65 +432,14 @@ export default function TShirt({ signinSuceess }) {
         </Box>
 
         <Grid templateColumns="repeat(4, 1fr)" gap={6}>
-          {productsList.length > 0 &&
-            productsList.map((item, index) => (
-              <GridItem key={index} margin="0 0.6rem">
-                <Box margin="0" padding="0">
-                  {signinSuceess ? (
-                    <>
-                      {favourite[item._id] ? (
-                        <>
-                          <AiFillHeart
-                            className="favIconadded"
-                            onClick={() => {
-                              toggleFavorite(item._id);
-                              openPopover();
-                            }}
-                          />
-                        </>
-                      ) : (
-                        <>
-                          <AiOutlineHeart
-                            className="favIcon"
-                            onClick={() => {
-                              toggleFavorite(item._id);
-                              openPopover();
-                            }}
-                          />
-                        </>
-                      )}
-                    </>
-                  ) : (
-                    <>
-                      <Link to="/login">
-                        <AiOutlineHeart className="favIcon" />
-                      </Link>
-                    </>
-                  )}
-
-                  <Link to="/product" state={{ data: item }}>
-                    <Image
-                      src={item.displayImage}
-                      alt={item.name}
-                      width="240px"
-                      cursor="pointer"
-                    />
-                  </Link>
-
-                  <Text className="heading2" height="28px">
-                    {item.name}
-                  </Text>
-                  <Divider className="categoryDivider" />
-                  <Text>{item.type}</Text>
-                  <Text>{item.color}</Text>
-                  <Text display="flex" className="heading2">
-                    <FaRupeeSign fontSize="12px" />
-                    {item.price}
-                    <Text marginLeft="0.5rem">ONLY</Text>
-                  </Text>
-                </Box>
-              </GridItem>
-            ))}
+          {filteredProducts.length > 0
+            ? filteredProducts.map((item, index) => (
+                <Card item={item} index={index} />
+              ))
+            : productsList.length > 0 &&
+              productsList.map((item, index) => (
+                <Card item={item} index={index} />
+              ))}
         </Grid>
       </Grid>
     </>

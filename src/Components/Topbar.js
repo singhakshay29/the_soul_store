@@ -6,7 +6,7 @@ import { Box, Button, Container } from "@chakra-ui/react";
 
 export default function Topbar() {
   const isLoggedIn = useSelector((state) => {
-    return state.isLoggedIn;
+    return state.user.isLoggedIn;
   });
   const [active, setActive] = useState("");
   const handleClick = (event) => {

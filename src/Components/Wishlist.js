@@ -8,143 +8,76 @@ import {
   GridItem,
   Container,
 } from "@chakra-ui/react";
-import Api from "../Api";
 import Footer from "./Footer";
 import MenNav from "./MenNav";
 import { Link } from "react-router-dom";
 import { RxCross2 } from "react-icons/rx";
 import { FaRupeeSign } from "react-icons/fa";
 import wishlist1 from "../assets/wishlist1.png";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { GET_WISHLIST, REMOVE_FROM_WISHLIST, ADD_TO_CART } from "../action";
 
-export default function Wishlist({ signinSuceess }) {
-  const [results, setResults] = useState(0);
-  const [wishlist, setWishlist] = useState();
-
-  async function getWishlist() {
-    const user = localStorage.getItem("signupDeatils");
-    if (user) {
-      const parsedData = JSON.parse(user);
-
-      const response = await fetch(Api.wishlist, {
-        method: "GET",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${parsedData.signup.token}`,
-          projectid: "dm3s7h4e43m1",
-        },
-      });
-      const data = await response.json();
-
-      const databox = data.data;
-
-      setResults(databox.items.length);
-      console.log(databox.items);
-      setWishlist(databox?.items);
-    }
-  }
-
-  async function removeWishlist(id) {
-    const user = localStorage.getItem("signupDeatils");
-    if (user) {
-      const parsedData = JSON.parse(user);
-      const baseApi = Api.wishlist + id;
-      console.log(baseApi);
-      await fetch(baseApi, {
-        method: "DELETE",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${parsedData.signup.token}`,
-          projectId: "dm3s7h4e43m1",
-        },
-      });
-      getWishlist();
-    }
-  }
-
-  const loadfavouriteFromLocalStorage = () => {
-    const favourite = localStorage.getItem("favourite");
-    if (favourite) {
-      const parsedData = JSON.parse(favourite);
-      return parsedData.favourite || {};
-    }
-    return {};
-  };
-  const [, setfavourite] = useState(() => loadfavouriteFromLocalStorage());
-  const savefavouriteToLocalStorage = (favourite) => {
-    localStorage.setItem(
-      "favourite",
-      JSON.stringify({
-        favourite: favourite,
-      })
-    );
-  };
-
-  const removeFavorite = (productId) => {
-    setfavourite((prevfavourite) => {
-      const isFavorite = prevfavourite[productId];
-      const updatedfavourite = {
-        ...prevfavourite,
-        [productId]: !isFavorite,
-      };
-      savefavouriteToLocalStorage(updatedfavourite);
-
-      return updatedfavourite;
-    });
-  };
+export default function Wishlist() {
+  const dispatch = useDispatch();
+  const wishlist = useSelector((state) => {
+    console.log(state);
+    return state.app;
+  });
+  const { isLoggedIn } = useSelector((state) => state.user);
 
   useEffect(() => {
-    getWishlist();
+    dispatch(GET_WISHLIST());
+    // eslint-disable-next-line
   }, []);
 
   return (
     <>
       <MenNav />
-      {results > 0 ? (
+      {wishlist?.length > 0 ? (
         <>
-          <Text className="categoryHeading bottomheading">
-            My Wishlist -{wishlist.length}items
+          <Text className="wT">
+            My Wishlist - <span>({wishlist.length} items)</span>
           </Text>
-          <Grid templateColumns="repeat(4, 1fr)" gap={6}>
+          <Grid
+            templateColumns="repeat(4, 19rem)"
+            style={{ marginLeft: "1rem" }}
+            gap={6}>
             {wishlist.length > 0 &&
               wishlist.map((item, index) => (
                 <GridItem key={index} margin="2rem">
-                  <Box
-                    margin="0"
-                    padding="0"
-                    style={{ border: "1px solid #eee" }}>
+                  <Box style={{ border: "1px solid #eee" }}>
                     <RxCross2
                       onClick={() => {
-                        removeWishlist(item.products._id);
-                        removeFavorite(item.products._id);
+                        dispatch(REMOVE_FROM_WISHLIST(item.products._id));
                       }}
                       className="favremove"
                     />
                     <Link to="/product" state={{ data: item }}>
                       <Image
-                        src={item.products?.displayImage}
-                        alt={item.products.name}
-                        width="246px"
+                        src={item?.products?.displayImage}
+                        alt={item?.products?.name}
+                        width="14.9rem"
                         cursor="pointer"
                       />
                     </Link>
 
-                    <Text className="heading2" height="28px">
-                      {item.products.name}
-                    </Text>
-                    <Divider
-                      style={{ marginTop: "30px" }}
-                      className="categoryDivider"
-                    />
+                    <Text className="wTT">{item.products?.name}</Text>
+                    <Divider className="categoryDivider" />
                     <Text display="flex" className="heading2 mL10">
                       <FaRupeeSign fontSize="12px" />
-                      {item.products.price}
+                      {item.products?.price}
                       <Text marginLeft="0.5rem">ONLY</Text>
                     </Text>
                     <Divider className="categoryDivider" />
-                    <Button className="buttonCart">MOVE TO CART</Button>
+                    <Button
+                      className="buttonCart"
+                      onClick={() => {
+                        dispatch(REMOVE_FROM_WISHLIST(item.products?._id));
+                        dispatch(ADD_TO_CART(item.products?._id, 1));
+                      }}>
+                      MOVE TO CART
+                    </Button>
                   </Box>
                 </GridItem>
               ))}
@@ -163,7 +96,7 @@ export default function Wishlist({ signinSuceess }) {
               Add products to your wishlist, review them anytime and easily move
               to cart.
             </Text>
-            {signinSuceess ? (
+            {isLoggedIn ? (
               <>
                 <Box>
                   <Link to="/men">

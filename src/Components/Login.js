@@ -1,30 +1,27 @@
 import Footer from "./Footer";
-import React, { useState } from "react";
 import jwt_decode from "jwt-decode";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { LOGIN_FAILURE, LOGIN_USER } from "../action";
+import { useDispatch, useSelector } from "react-redux";
 import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
 import { Box, Container, Card, Button, Input, Text } from "@chakra-ui/react";
-import { useDispatch, useSelector } from "react-redux";
-
-import { LOGIN_FAILURE, LOGIN_USER } from "../action";
 
 export default function Login() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const errorMessage = useSelector((state) => {
-    return state.errorMessage;
+    return state.user.errorMessage;
   });
 
   const isLoggedIn = useSelector((state) => {
-    return state.isLoggedIn;
+    return state.user.isLoggedIn;
   });
-  // console.log(errorMessage);
-  // const navigator = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorColor, setErrorColor] = useState("");
   const handleLogin = (e) => {
-    console.log("aks");
     e.preventDefault();
     if (!password || !email) {
       dispatch(LOGIN_FAILURE("All Fields must be filled"));
@@ -33,49 +30,11 @@ export default function Login() {
     } else if (!email.includes("@")) {
       dispatch(LOGIN_FAILURE("Email is invalid"));
       setErrorColor("red");
-      console.log("aksha");
     } else {
       dispatch(LOGIN_USER(email, password));
-
-      // (async function () {
-      //   try {
-      //     const response = await fetch(
-      //       "https://academics.newtonschool.co/api/v1/user/login",
-      //       {
-      //         method: "POST",
-      //         headers: {
-      //           "Content-Type": "application/json",
-      //           projectId: "dm3s7h4e43m1",
-      //         },
-      //         body: JSON.stringify({
-      //           email: `${email}`,
-      //           password: `${password}`,
-      //           appType: "ecommerce",
-      //         }),
-      //       }
-      //     );
-      //     if (response.ok) {
-      //       const responseData = await response.json();
-      //       localStorage.setItem(
-      //         "signupDeatils",
-      //         JSON.stringify({
-      //           signup: responseData,
-      //         })
-      //       );
-      //       setErrorMessage("Login successful!");
-      //       setErrorColor("green");
-      //       setEmail("");
-      //       setPassword("");
-      //       setSignSuccess(true);
-      //       navigator("/men");
-      //     } else {
-      //       setErrorMessage("Incorrect EmailId or Password");
-      //       setErrorColor("red");
-      //     }
-      //   } catch (error) {
-      //     console.error("An error occurred");
-      //   }
-      // })();
+    }
+    if (isLoggedIn) {
+      navigate("/men");
     }
   };
   return (
