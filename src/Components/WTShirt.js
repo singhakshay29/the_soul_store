@@ -1,21 +1,18 @@
 import WomenNav from "./WomenNav";
 import Card from "./Card";
 import React from "react";
-import bannerT from "../assets/bannerT.jpg";
-import { Box, Text, Grid, Divider, Image } from "@chakra-ui/react";
+
+import { Box, Text, Grid, Divider } from "@chakra-ui/react";
 import { useLocation } from "react-router-dom";
 export default function WTShirt() {
   const data = useLocation();
   const itemList = data.state.data;
+  const img = data.state.data2;
 
   return (
     <>
       <WomenNav />
-      <Image
-        src={bannerT}
-        alt="banner"
-        style={{ width: "80rem", marginTop: "2rem" }}
-      />
+      <img src={img ? img : null} alt="" style={{ width: "80rem" }} />
       <Text className="categoryHeading">
         Women/T-Shirt - {itemList?.length} items
         <select className="categoryInput" placeholder="Select Sorting Options">

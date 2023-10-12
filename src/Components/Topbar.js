@@ -14,7 +14,7 @@ export default function Topbar() {
   };
 
   return (
-    <Container height="55px" bg="#e11b23" p="0" display="block">
+    <Container height="55px" bg="#e11b23" p="0" display="block" zIndex="1">
       <Box marginLeft="15%">
         <NavLink to="/">
           <Button

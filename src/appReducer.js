@@ -1,12 +1,20 @@
 import actiontype from "./actiontype";
 
-const initialState = {
+const baseInitialState = {
   cart: [],
   wishlist: [],
   category: "",
   productsList: [],
   categoryData: [],
 };
+const initialUserData = localStorage.getItem("stock");
+
+const initialState = initialUserData
+  ? {
+      ...baseInitialState,
+      productsList: JSON.parse(initialUserData),
+    }
+  : baseInitialState;
 
 const appReducer = (state = initialState, action) => {
   switch (action.type) {

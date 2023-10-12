@@ -12,6 +12,10 @@ const divStyle = {
   backgroundRepeat: "no-repeat",
 };
 
+const properties = {
+  indicators: true,
+};
+
 export default function ImageSlider({ w1, w2, w3, w4 }) {
   const slideImages = [
     {
@@ -29,7 +33,7 @@ export default function ImageSlider({ w1, w2, w3, w4 }) {
   ];
   return (
     <div style={{ marginTop: "0.1rem" }}>
-      <Fade>
+      <Fade {...properties}>
         {slideImages.map((image, index) => (
           <div key={index}>
             <div

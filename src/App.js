@@ -25,7 +25,7 @@ function App() {
           <Route path="login" element={<Login />}></Route>
           <Route path="signup" element={<SignUp />}></Route>
           <Route path="tshirt" element={<TShirt />}></Route>
-          <Route path="tshirtWomen" element={<WTShirt />}></Route>
+          <Route path="category" element={<WTShirt />}></Route>
           <Route path="product" element={<Product />}></Route>
           <Route path="wishlist" element={<Wishlist />}></Route>
           <Route path="shoppingcart" element={<ShoppingCart />}></Route>
