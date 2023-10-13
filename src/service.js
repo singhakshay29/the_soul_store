@@ -1,10 +1,31 @@
 import mystore from "./store";
-
 const store = mystore.getState();
-
 const productWomen = store.app.productsList.stock.filter((item) => {
   return item.gender === "Women";
 });
+const productMen = store.app.productsList.stock.filter((item) => {
+  return item.gender === "Men";
+});
+
+export const productMenTshirt = productMen.filter((item) => {
+  return item.subCategory === "tshirt";
+});
+export const productMenShirt = productMen.filter((item) => {
+  return item.subCategory === "shirt";
+});
+
+export const productMenJoggers = productMen.filter((item) => {
+  return item.subCategory === "jogger";
+});
+
+export const productMenJeans = productMen.filter((item) => {
+  return item.subCategory === "jeans";
+});
+
+export const productMenShorts = productMen.filter((item) => {
+  return item.subCategory === "shorts";
+});
+//
 export const productWomenTshirt = productWomen.filter((item) => {
   return item.subCategory === "tshirt";
 });
@@ -50,14 +71,8 @@ export const productOrange = productWomen.filter((item) => {
 export const productGreen = productWomen.filter((item) => {
   return item.color === "GREEN";
 });
-export const productRed = productWomen.filter((item) => {
-  return item.color === "RED";
-});
 export const productYellow = productWomen.filter((item) => {
   return item.color === "YELLOW";
-});
-export const productPurple = productWomen.filter((item) => {
-  return item.color === "PURPLE";
 });
 export const productKhahki = productWomen.filter((item) => {
   return item.color === "KHAKI";
@@ -65,6 +80,121 @@ export const productKhahki = productWomen.filter((item) => {
 export const productMaroon = productWomen.filter((item) => {
   return item.color === "MAROON";
 });
+export const productPurple = productWomen.filter((item) => {
+  return item.color === "PURPLE";
+});
+export const productRed = productWomen.filter((item) => {
+  return item.color === "RED";
+});
+const womenTshirtCategory = productWomenTshirt.map((item) => {
+  return item.brand;
+});
+const womenTshirtColor = productWomenTshirt.map((item) => {
+  return item.color;
+});
+const womenJoggersCategory = productWomenJoggers.map((item) => {
+  return item.brand;
+});
+const womenJoggersColor = productWomenJoggers.map((item) => {
+  return item.color;
+});
+const womenJeansCategory = productWomenJeans.map((item) => {
+  return item.brand;
+});
+const womenJeansColor = productWomenJeans.map((item) => {
+  return item.color;
+});
+const womenShirtsCategory = productWomenshirts.map((item) => {
+  return item.brand;
+});
+const womenShirtsColor = productWomenshirts.map((item) => {
+  return item.color;
+});
+const womenJumpCategory = productWomenJump.map((item) => {
+  return item.brand;
+});
+const womenJumpColor = productWomenJump.map((item) => {
+  return item.color;
+});
+const womenKurtiCategory = productWomenKurti.map((item) => {
+  return item.brand;
+});
+const womenKurtiColor = productWomenKurti.map((item) => {
+  return item.color;
+});
+const womenProductWhiteBrand = productWhite.map((item) => {
+  return item.brand;
+});
+const womenProductPinkBrand = productPink.map((item) => {
+  return item.brand;
+});
+const womenProductBlackBrand = productBlack.map((item) => {
+  return item.brand;
+});
+const womenProductBlueBrand = productBlue.map((item) => {
+  return item.brand;
+});
+const womenProductBrownBrand = productBrown.map((item) => {
+  return item.brand;
+});
+
+const womenProductGreyBrand = productGrey.map((item) => {
+  return item.brand;
+});
+
+const womenProductOrangeBrand = productOrange.map((item) => {
+  return item.brand;
+});
+const womenProductLBrand = productL.map((item) => {
+  return item.brand;
+});
+const womenProductGreenBrand = productGreen.map((item) => {
+  return item.brand;
+});
+const womenProductRedBrand = productRed.map((item) => {
+  return item.brand;
+});
+const womenProductYellowBrand = productYellow.map((item) => {
+  return item.brand;
+});
+
+const womenProductPurpleBrand = productPurple.map((item) => {
+  return item.brand;
+});
+const womenProductKhahkiBrand = productKhahki.map((item) => {
+  return item.brand;
+});
+const womenProductMaroonBrand = productMaroon.map((item) => {
+  return item.brand;
+});
+
+export const colorName = [...new Set(womenTshirtColor)];
+export const brandName = [...new Set(womenTshirtCategory)];
+export const colorNameJ = [...new Set(womenJoggersColor)];
+export const brandNameJ = [...new Set(womenJoggersCategory)];
+export const colorNameJS = [...new Set(womenJeansColor)];
+export const brandNameJS = [...new Set(womenJeansCategory)];
+export const colorNameS = [...new Set(womenShirtsColor)];
+export const brandNameS = [...new Set(womenShirtsCategory)];
+export const colorNameJP = [...new Set(womenJumpColor)];
+export const brandNameJP = [...new Set(womenJumpCategory)];
+export const colorNameK = [...new Set(womenKurtiColor)];
+export const brandNameK = [...new Set(womenKurtiCategory)];
+export const whitebrandName = [...new Set(womenProductWhiteBrand)];
+export const pinkbrandName = [...new Set(womenProductPinkBrand)];
+export const blackbrandName = [...new Set(womenProductBlackBrand)];
+export const bluebrandName = [...new Set(womenProductBlueBrand)];
+export const LbrandName = [...new Set(womenProductLBrand)];
+export const brownbrandName = [...new Set(womenProductBrownBrand)];
+export const greybrandName = [...new Set(womenProductGreyBrand)];
+export const orangebrandName = [...new Set(womenProductOrangeBrand)];
+export const GreenbrandName = [...new Set(womenProductGreenBrand)];
+export const RedbrandName = [...new Set(womenProductRedBrand)];
+export const YellowbrandName = [...new Set(womenProductYellowBrand)];
+export const PurplebrandName = [...new Set(womenProductPurpleBrand)];
+export const KhahkibrandName = [...new Set(womenProductKhahkiBrand)];
+export const MaroonbrandName = [...new Set(womenProductMaroonBrand)];
+
 export const productBewakoof = productWomen.filter((item) => {
   return item.brand === "Bewakoof®";
 });

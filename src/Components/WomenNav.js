@@ -44,6 +44,32 @@ import {
   productGARFIELDMERCHANDISE,
   productMINIONSMERCHANDISE,
   productNARUTOMERCHANDISE,
+  colorNameJS,
+  brandNameJS,
+  colorName,
+  brandName,
+  colorNameS,
+  brandNameS,
+  colorNameJP,
+  brandNameJP,
+  colorNameJ,
+  brandNameJ,
+  colorNameK,
+  brandNameK,
+  whitebrandName,
+  blackbrandName,
+  pinkbrandName,
+  brownbrandName,
+  greybrandName,
+  orangebrandName,
+  bluebrandName,
+  GreenbrandName,
+  RedbrandName,
+  YellowbrandName,
+  PurplebrandName,
+  LbrandName,
+  KhahkibrandName,
+  MaroonbrandName,
 } from "../service";
 import {
   Box,
@@ -57,17 +83,27 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 import eye from "../assets/eye.jpg";
-import { FaUser } from "react-icons/fa";
+import { Link } from "react-router-dom";
+import { FaRegUser } from "react-icons/fa";
+import { FaSearch } from "react-icons/fa";
+import bannerT from "../assets/bannerT.jpg";
+import { BsHandbag } from "react-icons/bs";
 import newlogo from "../assets/newlogo.png";
 import { useEffect, useState } from "react";
 import { AiOutlineHeart } from "react-icons/ai";
-import { BsHandbag } from "react-icons/bs";
+import bannerBS from "../assets/bannerBS.jpg";
+import bannerJ from "../assets/bannerJ.jpg";
+import jog from "../assets/jog.jpg";
+import bB from "../assets/bB.jpg";
+import bP from "../assets/bP.jpg";
+import wB from "../assets/wB.jpg";
+import blueBanner from "../assets/bluebanner.jpg";
+import bL from "../assets/bL.jpg";
+
 import { RiArrowDropDownLine } from "react-icons/ri";
-import { Link } from "react-router-dom";
-import { FaSearch } from "react-icons/fa";
 export default function WomenNav() {
   const [scrollY, setScrollY] = useState(0);
-  // const [active, setActive] = useState("");
+  const [active, setActive] = useState("");
   const [isDropdownOpen, setIsDropDownOpen] = useState(null);
 
   const handleMouseEnter = (dropdown) => {
@@ -77,9 +113,9 @@ export default function WomenNav() {
     setIsDropDownOpen(null);
   };
 
-  // const handleClick = (event) => {
-  //   setActive(event.target.id);
-  // };
+  const handleClick = (event) => {
+    setActive(event.target.id);
+  };
   useEffect(() => {
     const handleScroll = () => {
       setScrollY(window.scrollY);
@@ -121,7 +157,13 @@ export default function WomenNav() {
                   <Link
                     to="/category"
                     style={{ textDecoration: "none" }}
-                    state={{ data: productWomenTshirt }}>
+                    state={{
+                      Banner: bannerT,
+                      colorName: colorName,
+                      brandName: brandName,
+                      data: productWomenTshirt,
+                      Heading: "Oversized Women T-Shirt",
+                    }}>
                     <Text className="navdropboxh1 mT10">
                       Oversized T-Shirts
                     </Text>
@@ -129,19 +171,36 @@ export default function WomenNav() {
                   <Link
                     to="/category"
                     style={{ textDecoration: "none" }}
-                    state={{ data: productWomenshirts }}>
+                    state={{
+                      Banner: bannerBS,
+                      colorName: colorNameS,
+                      brandName: brandNameS,
+                      data: productWomenshirts,
+                      Heading: "Women's Shirts",
+                    }}>
                     <Text className="navdropboxh1">Shirts</Text>
                   </Link>
                   <Link
                     to="/category"
                     style={{ textDecoration: "none" }}
-                    state={{ data: productWomenTshirt }}>
+                    state={{
+                      Banner: bannerT,
+                      colorName: colorName,
+                      brandName: brandName,
+                      data: productWomenTshirt,
+                      Heading: "Women T-Shirt",
+                    }}>
                     <Text className="navdropboxh1">T-Shirts</Text>
                   </Link>
                   <Link
                     to="/category"
                     style={{ textDecoration: "none" }}
-                    state={{ data: productWomenKurti }}>
+                    state={{
+                      data: productWomenKurti,
+                      colorName: colorNameK,
+                      brandName: brandNameK,
+                      Heading: "Women Kurti",
+                    }}>
                     <Text className="navdropboxh1">Kurti</Text>
                   </Link>
                 </Box>
@@ -167,19 +226,36 @@ export default function WomenNav() {
                   <Link
                     to="/category"
                     style={{ textDecoration: "none" }}
-                    state={{ data: productWomenJoggers }}>
+                    state={{
+                      Banner: jog,
+                      colorName: colorNameJ,
+                      brandName: brandNameJ,
+                      Heading: "Women Joggers",
+                      data: productWomenJoggers,
+                    }}>
                     <Text className="navdropboxh1 mT10">Joggers</Text>
                   </Link>
                   <Link
                     to="/category"
                     style={{ textDecoration: "none" }}
-                    state={{ data: productWomenJeans }}>
+                    state={{
+                      data: productWomenJeans,
+                      colorName: colorNameJS,
+                      brandName: brandNameJS,
+                      Heading: "Women Jeans",
+                    }}>
                     <Text className="navdropboxh1">Jeans</Text>
                   </Link>
                   <Link
                     to="/category"
                     style={{ textDecoration: "none" }}
-                    state={{ data: productWomenJump }}>
+                    state={{
+                      Banner: bannerJ,
+                      data: productWomenJump,
+                      colorName: colorNameJP,
+                      brandName: brandNameJP,
+                      Heading: "Women Jumpsuit",
+                    }}>
                     <Text className="navdropboxh1">Jumpsuit</Text>
                   </Link>
                 </Box>
@@ -207,85 +283,146 @@ export default function WomenNav() {
                   <Link
                     to="/category"
                     style={{ textDecoration: "none" }}
-                    state={{ data: productBlack }}>
+                    state={{
+                      data: productBlack,
+                      Banner: bB,
+                      brandName: blackbrandName,
+                      Heading: "Women Black Collection",
+                    }}>
                     <Text className="navdropboxh1 mT10"> Black</Text>
                   </Link>
                   <Link
                     to="/category"
                     style={{ textDecoration: "none" }}
-                    state={{ data: productBrown }}>
+                    state={{
+                      data: productBrown,
+                      brandName: brownbrandName,
+                      Heading: "Women Brown Collection",
+                    }}>
                     <Text className="navdropboxh1">Brown</Text>
                   </Link>
                   <Link
                     to="/category"
                     style={{ textDecoration: "none" }}
-                    state={{ data: productWhite }}>
+                    state={{
+                      Banner: wB,
+                      data: productWhite,
+                      brandName: whitebrandName,
+                      Heading: "Women White Collection",
+                    }}>
                     <Text className="navdropboxh1">White</Text>
                   </Link>
                   <Link
                     to="/category"
                     style={{ textDecoration: "none" }}
-                    state={{ data: productGrey }}>
+                    state={{
+                      data: productGrey,
+                      brandName: greybrandName,
+                      Heading: "Women Grey Collection",
+                    }}>
                     <Text className="navdropboxh1">Grey</Text>
                   </Link>
                   <Link
                     to="/category"
                     style={{ textDecoration: "none" }}
-                    state={{ data: productOrange }}>
+                    state={{
+                      data: productOrange,
+                      brandName: orangebrandName,
+                      Heading: "Women Orange Collection",
+                    }}>
                     <Text className="navdropboxh1 mT10"> Orange</Text>
                   </Link>
                   <Link
                     to="/category"
                     style={{ textDecoration: "none" }}
-                    state={{ data: productBlue }}>
+                    state={{
+                      data: productBlue,
+                      brandName: bluebrandName,
+                      Heading: "Women Blue Collection",
+                      Banner: blueBanner,
+                    }}>
                     <Text className="navdropboxh1">Blue</Text>
                   </Link>
                   <Link
                     to="/category"
                     style={{ textDecoration: "none" }}
-                    state={{ data: productGreen }}>
+                    state={{
+                      data: productGreen,
+                      brandName: GreenbrandName,
+                      Heading: "Women Green Collection",
+                    }}>
                     <Text className="navdropboxh1">Green</Text>
                   </Link>
                   <Link
                     to="/category"
                     style={{ textDecoration: "none" }}
-                    state={{ data: productRed }}>
+                    state={{
+                      data: productRed,
+                      brandName: RedbrandName,
+                      Heading: "Women Red Collection",
+                    }}>
                     <Text className="navdropboxh1">Red</Text>
                   </Link>
                   <Link
                     to="/category"
                     style={{ textDecoration: "none" }}
-                    state={{ data: productPink }}>
+                    state={{
+                      data: productPink,
+                      Banner: bP,
+                      brandName: pinkbrandName,
+                      Heading: "Women Pink Collection",
+                    }}>
                     <Text className="navdropboxh1 mT10">Pink</Text>
                   </Link>
                   <Link
                     to="/category"
                     style={{ textDecoration: "none" }}
-                    state={{ data: productYellow }}>
+                    state={{
+                      data: productYellow,
+                      brandName: YellowbrandName,
+                      Heading: "Women Yellow Collection",
+                    }}>
                     <Text className="navdropboxh1">Yellow</Text>
                   </Link>
                   <Link
                     to="/category"
                     style={{ textDecoration: "none" }}
-                    state={{ data: productPurple }}>
+                    state={{
+                      data: productPurple,
+                      brandName: PurplebrandName,
+                      Heading: "Women Purple Collection",
+                    }}>
                     <Text className="navdropboxh1">Purple</Text>
                   </Link>
                   <Link
                     to="/category"
                     style={{ textDecoration: "none" }}
-                    state={{ data: productL }}>
+                    state={{
+                      data: productL,
+                      Banner: bL,
+                      brandName: LbrandName,
+                      Heading: "Women Lavender Collection",
+                    }}>
                     <Text className="navdropboxh1">Lavender</Text>
                   </Link>
                   <Link
                     to="/category"
                     style={{ textDecoration: "none" }}
-                    state={{ data: productKhahki }}>
+                    state={{
+                      data: productKhahki,
+                      brandName: KhahkibrandName,
+                      Heading: "Women Khaki Collection",
+                    }}>
                     <Text className="navdropboxh1">Khaki</Text>
                   </Link>
                   <Link
                     to="/category"
                     style={{ textDecoration: "none" }}
-                    state={{ data: productMaroon }}>
+                    state={{
+                      data: productMaroon,
+                      brandName: MaroonbrandName,
+                      Heading: "Women Maroon Collection",
+                    }}>
                     <Text className="navdropboxh1">Maroon</Text>
                   </Link>
                 </Box>
@@ -515,33 +652,42 @@ export default function WomenNav() {
                 icon={<FaSearch fontSize="23px" color="grey" />}
               />
             </ListItem>
-            <ListItem className="navIconL">
+            <ListItem
+              className={active === "1" ? "activenav navIconL" : "navIconL"}
+              id={"1"}
+              onClick={handleClick}
+              onMouseEnter={() => handleMouseEnter("Fa")}
+              onMouseLeave={() => handleMouseLeave()}>
               <IconButton
                 variant="outline"
                 colorScheme="teal"
                 aria-label="Call Sage"
-                style={{ background: "transparent", border: "none" }}
-                icon={<FaUser fontSize="25px" color="grey" />}
+                className="navI"
+                icon={<FaRegUser />}
               />
             </ListItem>
-            <ListItem className="navIconL">
-              <IconButton
-                variant="outline"
-                colorScheme="teal"
-                aria-label="Call Sage"
-                style={{ background: "transparent", border: "none" }}
-                icon={<AiOutlineHeart fontSize="25px" color="grey" />}
-              />
-            </ListItem>
-            <ListItem className="navIconL">
-              <IconButton
-                variant="outline"
-                colorScheme="teal"
-                aria-label="Call Sage"
-                style={{ background: "transparent", border: "none" }}
-                icon={<BsHandbag fontSize="25px" color="grey" />}
-              />
-            </ListItem>
+            <Link to="/wishlist">
+              <ListItem className="navIconL" onClick={handleClick}>
+                <IconButton
+                  variant="outline"
+                  colorScheme="teal"
+                  aria-label="Call Sage"
+                  style={{ background: "transparent", border: "none" }}
+                  icon={<AiOutlineHeart fontSize="25px" color="grey" />}
+                />
+              </ListItem>
+            </Link>
+            <Link to="/shoppingcart">
+              <ListItem className="navIconL">
+                <IconButton
+                  variant="outline"
+                  colorScheme="teal"
+                  aria-label="Call Sage"
+                  style={{ background: "transparent", border: "none" }}
+                  icon={<BsHandbag fontSize="25px" color="grey" />}
+                />
+              </ListItem>
+            </Link>
           </List>
         </Box>
       </Container>

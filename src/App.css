@@ -109,6 +109,7 @@
   margin: 0;
   padding: 0;
   margin-left: 10px;
+  cursor: pointer;
 }
 
 .navList:hover {
@@ -132,6 +133,7 @@
   padding: 0;
   margin-left: 10px;
   height: 52px;
+  cursor: pointer;
 }
 .navlist2:hover {
   border-bottom: 3px solid #ed2d2f;
@@ -180,13 +182,33 @@
   margin-left: 15px;
   align-content: center;
   margin-top: 0;
-  padding: 15px;
+  padding: 10px;
+  cursor: pointer;
+  height: 73%;
+  font-size: 25px;
 }
 .navIconL:hover {
   border-bottom: 3px solid #ed2d2f;
   background-color: #f7f8fa;
   color: #ed2d2f;
 }
+.navI {
+  font-size: 25px;
+  color: gray;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+.navI:hover {
+  color: red;
+}
+.activenav {
+  color: red;
+  border-bottom: 3px solid #ed2d2f;
+  background-color: #f7f8fa;
+  color: #ed2d2f;
+}
+
 .bW {
   margin-top: 10.9rem;
   width: 125px;
@@ -233,13 +255,13 @@
 .heading1 {
   width: 100%;
   align-items: center;
-  margin: 1rem;
+  /* margin: 1rem; */
   font-weight: 800;
   color: #282c3f;
   font-size: 25px;
   font-stretch: normal;
   line-height: 1.24;
-  margin-top: 5rem;
+  margin: 1rem;
 }
 
 .heading2 {
@@ -333,29 +355,53 @@
   transform: scale(1.1);
   transition: transform 0.3s ease-in-out;
 }
+.gallery {
+  width: 400px;
+  cursor: pointer;
+}
 .categoryHeading {
   color: #58595b;
-  font-size: 16px;
-  margin-left: 18%;
+  font-size: 15px;
   margin-bottom: 0;
   display: flex;
   flex-direction: column;
   display: flex;
+  margin-top: 5px;
 }
 .categoryDivider {
   orientation: horizontal;
   height: 2px;
   background-color: #eee;
 }
+.categoryBox {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  width: 65rem;
+  margin-left: 18%;
+}
+.categoryH1 {
+  margin-left: 18%;
+  color: #a7a9ac;
+  font-size: 12px;
+  cursor: pointer;
+}
+.categoryH1:hover {
+  color: #58595b;
+}
+.catFlex {
+  flex-direction: column;
+}
 
 .categoryInput {
-  margin-left: 80%;
   height: 30px;
   width: 200px;
   color: grey;
 }
 .categorySearchBox {
-  height: 1100px;
+  /* height: 1100px; */
+  height: auto;
   border: 1px solid #eee;
   width: 200px;
   margin-left: 0.3rem;
@@ -363,15 +409,27 @@
   flex-direction: column;
 }
 .categorySearchBoxText {
-  font-weight: 600;
+  font-weight: 400;
   margin: 10px 5px;
-  color: #a7a9ac;
+  color: #58595b;
   margin-left: 10px;
+  font-size: 14px;
+  text-transform: capitalize;
+}
+.catHeading {
+  font-weight: 800;
+  font-size: 15px;
+  color: #58595b;
+  padding: 12px 3px;
+  margin-left: 20px;
 }
 .categorySearchBoxInput {
   margin: 10px 5px;
-  margin-left: 20px;
+  margin-left: 15px;
   cursor: pointer;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .categorySearchBoxInput:checked {

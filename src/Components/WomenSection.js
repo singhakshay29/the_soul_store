@@ -1,4 +1,14 @@
 import {
+  brandName,
+  colorName,
+  colorNameJ,
+  brandNameJ,
+  colorNameS,
+  brandNameS,
+  brandNameK,
+  colorNameJP,
+  brandNameJP,
+  colorNameK,
   productWomenJump,
   productWomenKurti,
   productWomenshirts,
@@ -20,14 +30,15 @@ import jog from "../assets/jog.jpg";
 import cargo from "../assets/cargo.jpg";
 import { Link } from "react-router-dom";
 import ImageSlider from "./ImageSlider";
+import basis from "../assets/basis.jpg";
 import member from "../assets/member.png";
 import shirt1 from "../assets/shirt1.jpg";
-import bannerT from "../assets/bannerT.jpg";
-import bannerBS from "../assets/bannerBS.jpg";
 import basicB from "../assets/basicB.jpg";
-import basis from "../assets/basis.jpg";
+import bannerT from "../assets/bannerT.jpg";
 import bannerJ from "../assets/bannerJ.jpg";
+import bannerBS from "../assets/bannerBS.jpg";
 import { Card, Image, Container } from "@chakra-ui/react";
+
 export default function WomenSection() {
   return (
     <>
@@ -40,20 +51,39 @@ export default function WomenSection() {
         <Container className="iBox">
           <Link
             to="/category"
-            state={{ data: productWomenTshirt, data2: basicB }}>
+            state={{
+              data: productWomenTshirt,
+              Banner: basicB,
+              colorName: colorName,
+              brandName: brandName,
+              Heading: "Women's Basics",
+            }}>
             <Image src={basis} className="categoryImage" alt="SHIRTS" />
           </Link>
         </Container>
 
         <Container className="iBox">
-          <Link to="/category" state={{ data: productWomenKurti }}>
+          <Link
+            to="/category"
+            state={{
+              data: productWomenKurti,
+              colorName: colorNameK,
+              brandName: brandNameK,
+              Heading: "Women Dresses",
+            }}>
             <Image src={DW} className="categoryImage" alt="T-SHIRTS" />
           </Link>
         </Container>
         <Container className="iBox">
           <Link
             to="/category"
-            state={{ data: productWomenJump, data2: bannerJ }}>
+            state={{
+              data: productWomenJump,
+              Banner: bannerJ,
+              colorName: colorNameJP,
+              brandName: brandNameJP,
+              Heading: "Women Jumpsuit",
+            }}>
             <Image
               src={JW}
               className="categoryImage "
@@ -69,21 +99,39 @@ export default function WomenSection() {
         <Container className="iBox">
           <Link
             to="/category"
-            state={{ data: productWomenTshirt, data2: bannerT }}>
+            state={{
+              Banner: bannerT,
+              colorName: colorName,
+              brandName: brandName,
+              data: productWomenTshirt,
+              Heading: "Women T-Shirt",
+            }}>
             <Image src={btS} className="categoryImage" alt="SHIRTS" />
           </Link>
         </Container>
         <Container className="iBox">
           <Link
             to="/category"
-            state={{ data: productWomenJoggers, data2: jog }}>
+            state={{
+              Banner: jog,
+              colorName: colorNameJ,
+              brandName: brandNameJ,
+              Heading: "Women Joggers",
+              data: productWomenJoggers,
+            }}>
             <Image src={cargo} className="categoryImage" alt="T-SHIRTS" />
           </Link>
         </Container>
         <Container className="iBox">
           <Link
             to="/category"
-            state={{ data: productWomenshirts, data2: bannerBS }}>
+            state={{
+              Banner: bannerBS,
+              colorName: colorNameS,
+              brandName: brandNameS,
+              data: productWomenshirts,
+              Heading: "Women's Shirts",
+            }}>
             <Image
               src={shirt1}
               className="categoryImage "
