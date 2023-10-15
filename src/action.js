@@ -137,13 +137,13 @@ export const GET_WISHLIST = () => {
 
 export const ADD_TO_WISHLIST = (productId) => {
   return async (dispatch) => {
-    const data = await addWishlist(productId);
-    dispatch(SET_CART(data));
+    await addWishlist(productId);
+    dispatch(GET_WISHLIST());
   };
 };
 export const REMOVE_FROM_WISHLIST = (productId) => {
   return async (dispatch) => {
-    const data = removeWishlist(productId);
-    dispatch(SET_CART(data));
+    removeWishlist(productId);
+    dispatch(GET_WISHLIST());
   };
 };

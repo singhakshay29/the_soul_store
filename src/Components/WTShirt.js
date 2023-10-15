@@ -9,12 +9,11 @@ export default function WTShirt() {
   const [selectedBrands, setSelectedBrands] = useState("");
   const [selectedColors, setSelectedColors] = useState("");
   const [selectedPrices, setSelectedPrices] = useState("");
-  const data = useLocation();
-  console.log(data);
-  const itemList = data.state?.data;
+  const object = useLocation();
+  const itemList = object.state?.data;
   console.log(itemList);
-  const { Banner, Heading, brandName, colorName, gender } = data.state;
-  console.log(data.state);
+  console.log(object);
+  const { Banner, Heading, brandName, colorName, gender } = object.state;
   const handleSortingAndFiltering = (
     sortingCriteria,
     filterCriteriaBrand,

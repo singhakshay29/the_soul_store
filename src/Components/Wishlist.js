@@ -27,6 +27,13 @@ export default function Wishlist() {
   });
   console.log(data);
 
+  const handleRemoveFromWishlist = (productId) => {
+    dispatch(REMOVE_FROM_WISHLIST(productId));
+    setTimeout(() => {
+      dispatch(GET_WISHLIST());
+    }, 300);
+  };
+
   useEffect(() => {
     dispatch(GET_WISHLIST());
     // eslint-disable-next-line
@@ -50,7 +57,7 @@ export default function Wishlist() {
                   <Box style={{ border: "1px solid #eee" }}>
                     <RxCross2
                       onClick={() => {
-                        dispatch(REMOVE_FROM_WISHLIST(item.products._id));
+                        handleRemoveFromWishlist(item.products._id);
                       }}
                       className="favremove"
                     />
@@ -74,7 +81,7 @@ export default function Wishlist() {
                     <Button
                       className="buttonCart"
                       onClick={() => {
-                        dispatch(REMOVE_FROM_WISHLIST(item.products?._id));
+                        handleRemoveFromWishlist(item.products?._id);
                         dispatch(ADD_TO_CART(item.products?._id, 1));
                       }}>
                       MOVE TO CART

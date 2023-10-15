@@ -77,7 +77,6 @@ export async function addWishlist(productId) {
         },
         body: JSON.stringify({ productId: productId }),
       });
-      console.log(response);
       return response;
     } catch (error) {
       console.error("Somethings went wrong");

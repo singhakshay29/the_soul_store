@@ -19,21 +19,28 @@ export default function Card({ item, index }) {
   const [displayImage, setDisplayImage] = useState("");
   const { wishlist } = useSelector((state) => state.app);
   const { isLoggedIn } = useSelector((state) => state.user);
+  const [isInWishlist, setIsInWishlist] = useState(false);
+  const productId = item?._id;
   // const [isPopoverOpen, setIsPopoverOpen] = useState(false);
-
-  const favId = wishlist.map((item) => {
-    return item.products._id;
-  });
 
   const handleToggleFavorite = (productId) => {
     if (isLoggedIn) {
-      if (favId.includes(productId)) {
+      if (isInWishlist) {
         dispatch(REMOVE_FROM_WISHLIST(productId));
+        setIsInWishlist(false);
       } else {
         dispatch(ADD_TO_WISHLIST(productId));
+        setIsInWishlist(true);
       }
     }
   };
+
+  useEffect(() => {
+    if (wishlist.some((wish) => wish.products._id === productId)) {
+      setIsInWishlist(true);
+    }
+  }, [wishlist, productId]);
+
   useEffect(() => {
     async function fetchImage() {
       try {
@@ -66,7 +73,7 @@ export default function Card({ item, index }) {
       <GridItem key={index} margin="0 0.6rem">
         {isLoggedIn ? (
           <>
-            {favId.includes(item?._id) ? (
+            {isInWishlist ? (
               <>
                 <AiFillHeart
                   className="favIconadded"
