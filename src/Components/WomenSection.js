@@ -15,7 +15,7 @@ import {
   productWomenTshirt,
   productWomenJoggers,
 } from "../service";
-import React from "react";
+import React, { useEffect } from "react";
 import Footer from "./Footer";
 import w1 from "../assets/w1.png";
 import w2 from "../assets/w2.png";
@@ -38,8 +38,15 @@ import bannerT from "../assets/bannerT.jpg";
 import bannerJ from "../assets/bannerJ.jpg";
 import bannerBS from "../assets/bannerBS.jpg";
 import { Card, Image, Container } from "@chakra-ui/react";
+import { useDispatch } from "react-redux";
+import { FETCH_PRODUCTS } from "../action";
 
 export default function WomenSection() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(FETCH_PRODUCTS());
+    // eslint-disable-next-line
+  }, []);
   return (
     <>
       <WomenNav />

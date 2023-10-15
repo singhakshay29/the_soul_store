@@ -38,13 +38,6 @@ const userReducer = (state = initialState, action) => {
         userData: action.payload,
       };
 
-    case actiontype.SIGNUP_USER:
-      return {
-        ...state,
-        isLoggedIn: true,
-        userData: action.payload,
-      };
-
     default:
       return state;
   }

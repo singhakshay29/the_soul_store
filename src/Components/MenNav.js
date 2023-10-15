@@ -1,14 +1,3 @@
-// import React from "react";
-// import logo from "../assets/logo.png";
-// import { FaUser } from "react-icons/fa";
-// import { Image } from "@chakra-ui/react";
-// import { Link } from "react-router-dom";
-// import { BsSearch } from "react-icons/bs";
-// import { BsHandbag } from "react-icons/bs";
-// import { useEffect, useState } from "react";
-// import { AiOutlineHeart } from "react-icons/ai";
-// import { RiArrowDropDownLine } from "react-icons/ri";
-// import { Box, Button, Container, Text } from "@chakra-ui/react";
 import {
   productL,
   productRed,
@@ -32,17 +21,11 @@ import {
   productDRYSTATE,
   productCOCACOLA,
   productBelliskey,
-  productWomenJump,
-  productWomenJeans,
-  productWomenKurti,
   productLOONEYTUNES,
-  productWomenTshirt,
   productHubberholme,
-  productWomenshirts,
   productCampusSutra,
   productBewakoofAir,
   productHARRYPOTTER,
-  productWomenJoggers,
   productCHIMPAAANZEE,
   productLoungeDreams,
   productInstafabPlus,
@@ -55,18 +38,6 @@ import {
   productGARFIELDMERCHANDISE,
   productMINIONSMERCHANDISE,
   productNARUTOMERCHANDISE,
-  colorNameJS,
-  brandNameJS,
-  colorName,
-  brandName,
-  colorNameS,
-  brandNameS,
-  colorNameJP,
-  brandNameJP,
-  colorNameJ,
-  brandNameJ,
-  colorNameK,
-  brandNameK,
   whitebrandName,
   blackbrandName,
   pinkbrandName,
@@ -81,6 +52,36 @@ import {
   LbrandName,
   KhahkibrandName,
   MaroonbrandName,
+  productMenShirt,
+  productMenTshirt,
+  productMenJoggers,
+  productMenJeans,
+  productMenShorts,
+  brandNameMT,
+  ColorNameMT,
+  brandNameMS,
+  ColorNameMS,
+  productMenSweater,
+  colorNameMSW,
+  brandNameMSW,
+  productMenKurta,
+  colorNameKu,
+  brandNameKu,
+  productMenHoodie,
+  colorNameHo,
+  brandNameHo,
+  productMenTracksuit,
+  colorNameTr,
+  brandNameTr,
+  colorNameJg,
+  brandNameJg,
+  colorNameMJS,
+  brandNameMJS,
+  brandNameSh,
+  colorNameSh,
+  colorNameTRS,
+  brandNameTRS,
+  productMenTrouser,
 } from "../service";
 import {
   Box,
@@ -97,19 +98,20 @@ import eye from "../assets/eye.jpg";
 import { Link } from "react-router-dom";
 import { FaRegUser } from "react-icons/fa";
 import { FaSearch } from "react-icons/fa";
-import bannerT from "../assets/bannerT.jpg";
+
 import { BsHandbag } from "react-icons/bs";
 import newlogo from "../assets/newlogo.png";
 import { useEffect, useState } from "react";
 import { AiOutlineHeart } from "react-icons/ai";
-import bannerBS from "../assets/bannerBS.jpg";
-import bannerJ from "../assets/bannerJ.jpg";
-import jog from "../assets/jog.jpg";
+
 import bB from "../assets/bB.jpg";
 import bP from "../assets/bP.jpg";
 import wB from "../assets/wB.jpg";
 import blueBanner from "../assets/bluebanner.jpg";
 import bL from "../assets/bL.jpg";
+import MBJ from "../assets/MBJ.jpg";
+import MBS from "../assets/MBS.jpg";
+import MBJS from "../assets/MBJS.jpg";
 
 import { RiArrowDropDownLine } from "react-icons/ri";
 
@@ -140,6 +142,7 @@ export default function MenNav() {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
   return (
     <>
       <Container className={scrollY > 43 ? "navbar navbarscrolled" : "navbar"}>
@@ -167,16 +170,18 @@ export default function MenNav() {
                 <Box
                   onMouseEnter={() => handleMouseEnter("TOPWEAR")}
                   onMouseLeave={() => handleMouseLeave()}
-                  className={scrollY > 43 ? "navdropbox tW2" : "navdropbox tW"}>
+                  className={
+                    scrollY > 43 ? "navdropbox tw3" : "navdropbox tW3"
+                  }>
                   <Link
                     to="/category"
                     style={{ textDecoration: "none" }}
                     state={{
-                      Banner: bannerT,
-                      colorName: colorName,
-                      brandName: brandName,
-                      data: productWomenTshirt,
-                      Heading: "Oversized Women T-Shirt",
+                      data: productMenTshirt,
+                      Heading: "Men's T-Shirts",
+                      brandName: brandNameMT,
+                      colorName: ColorNameMT,
+                      gender: "Male",
                     }}>
                     <Text className="navdropboxh1 mT10">
                       Oversized T-Shirts
@@ -186,11 +191,11 @@ export default function MenNav() {
                     to="/category"
                     style={{ textDecoration: "none" }}
                     state={{
-                      Banner: bannerBS,
-                      colorName: colorNameS,
-                      brandName: brandNameS,
-                      data: productWomenshirts,
-                      Heading: "Women's Shirts",
+                      data: productMenShirt,
+                      Heading: "Men's Shirt",
+                      brandName: brandNameMS,
+                      colorName: ColorNameMS,
+                      gender: "Male",
                     }}>
                     <Text className="navdropboxh1">Shirts</Text>
                   </Link>
@@ -198,11 +203,11 @@ export default function MenNav() {
                     to="/category"
                     style={{ textDecoration: "none" }}
                     state={{
-                      Banner: bannerT,
-                      colorName: colorName,
-                      brandName: brandName,
-                      data: productWomenTshirt,
-                      Heading: "Women T-Shirt",
+                      data: productMenTshirt,
+                      Heading: "Men's T-Shirts",
+                      brandName: brandNameMT,
+                      colorName: ColorNameMT,
+                      gender: "Male",
                     }}>
                     <Text className="navdropboxh1">T-Shirts</Text>
                   </Link>
@@ -210,12 +215,49 @@ export default function MenNav() {
                     to="/category"
                     style={{ textDecoration: "none" }}
                     state={{
-                      data: productWomenKurti,
-                      colorName: colorNameK,
-                      brandName: brandNameK,
-                      Heading: "Women Kurti",
+                      data: productMenSweater,
+                      colorName: colorNameMSW,
+                      brandName: brandNameMSW,
+                      Heading: "Men's Sweater",
+                      gender: "Male",
                     }}>
-                    <Text className="navdropboxh1">Kurti</Text>
+                    <Text className="navdropboxh1">Sweater</Text>
+                  </Link>
+                  <Link
+                    to="/category"
+                    style={{ textDecoration: "none" }}
+                    state={{
+                      data: productMenKurta,
+                      colorName: colorNameKu,
+                      brandName: brandNameKu,
+                      Heading: "Men's Kurta",
+                      gender: "Male",
+                    }}>
+                    <Text className="navdropboxh1">Kurta</Text>
+                  </Link>
+                  <Link
+                    to="/category"
+                    style={{ textDecoration: "none" }}
+                    state={{
+                      data: productMenHoodie,
+                      colorName: colorNameHo,
+                      brandName: brandNameHo,
+                      Heading: "Men's Hoodie",
+                      gender: "Male",
+                    }}>
+                    <Text className="navdropboxh1">Hoodie</Text>
+                  </Link>
+                  <Link
+                    to="/category"
+                    style={{ textDecoration: "none" }}
+                    state={{
+                      data: productMenTracksuit,
+                      colorName: colorNameTr,
+                      brandName: brandNameTr,
+                      Heading: "Men's Tracksuit",
+                      gender: "Male",
+                    }}>
+                    <Text className="navdropboxh1">Tracksuit</Text>
                   </Link>
                 </Box>
               )}
@@ -236,16 +278,19 @@ export default function MenNav() {
                 <Box
                   onMouseEnter={() => handleMouseEnter("BOTTOMWEAR")}
                   onMouseLeave={() => handleMouseLeave()}
-                  className={scrollY > 43 ? "navdropbox bW2" : "navdropbox bW"}>
+                  className={
+                    scrollY > 43 ? "navdropbox bW4" : "navdropbox bW3"
+                  }>
                   <Link
                     to="/category"
                     style={{ textDecoration: "none" }}
                     state={{
-                      Banner: jog,
-                      colorName: colorNameJ,
-                      brandName: brandNameJ,
-                      Heading: "Women Joggers",
-                      data: productWomenJoggers,
+                      Banner: MBJ,
+                      data: productMenJoggers,
+                      Heading: "Men's Joggers",
+                      gender: "Male",
+                      colorName: colorNameJg,
+                      brandName: brandNameJg,
                     }}>
                     <Text className="navdropboxh1 mT10">Joggers</Text>
                   </Link>
@@ -253,10 +298,12 @@ export default function MenNav() {
                     to="/category"
                     style={{ textDecoration: "none" }}
                     state={{
-                      data: productWomenJeans,
-                      colorName: colorNameJS,
-                      brandName: brandNameJS,
-                      Heading: "Women Jeans",
+                      Banner: MBJS,
+                      gender: "Male",
+                      data: productMenJeans,
+                      Heading: "Men's Jeans",
+                      colorName: colorNameMJS,
+                      brandName: brandNameMJS,
                     }}>
                     <Text className="navdropboxh1">Jeans</Text>
                   </Link>
@@ -264,13 +311,36 @@ export default function MenNav() {
                     to="/category"
                     style={{ textDecoration: "none" }}
                     state={{
-                      Banner: bannerJ,
-                      data: productWomenJump,
-                      colorName: colorNameJP,
-                      brandName: brandNameJP,
-                      Heading: "Women Jumpsuit",
+                      Banner: MBS,
+                      gender: "Male",
+                      data: productMenShorts,
+                      Heading: "Men's Shorts",
                     }}>
-                    <Text className="navdropboxh1">Jumpsuit</Text>
+                    <Text className="navdropboxh1">Shorts</Text>
+                  </Link>
+                  <Link
+                    to="/category"
+                    style={{ textDecoration: "none" }}
+                    state={{
+                      gender: "Male",
+                      Heading: "Men's Shorts",
+                      data: productMenShorts,
+                      brandName: brandNameSh,
+                      colorName: colorNameSh,
+                    }}>
+                    <Text className="navdropboxh1">Pyjamas</Text>
+                  </Link>
+                  <Link
+                    to="/category"
+                    style={{ textDecoration: "none" }}
+                    state={{
+                      data: productMenTrouser,
+                      Heading: "Men's Trouser",
+                      gender: "Male",
+                      colorName: colorNameTRS,
+                      brandName: brandNameTRS,
+                    }}>
+                    <Text className="navdropboxh1">Trouser</Text>
                   </Link>
                 </Box>
               )}

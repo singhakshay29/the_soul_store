@@ -64,7 +64,6 @@ export default function Card({ item, index }) {
         </Popover>
       )} */}
       <GridItem key={index} margin="0 0.6rem">
-        {/* <Box margin="0" padding="0" style={{ overflow: "hidden" }}> */}
         {isLoggedIn ? (
           <>
             {favId.includes(item?._id) ? (
@@ -118,7 +117,6 @@ export default function Card({ item, index }) {
           {item?.price}
           <Text marginLeft="0.5rem">ONLY</Text>
         </Text>
-        {/* </Box> */}
       </GridItem>
     </>
   );

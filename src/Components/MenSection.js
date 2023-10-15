@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Footer from "./Footer";
 import MenNav from "./MenNav";
 import m1 from "../assets/m1.png";
@@ -25,8 +25,15 @@ import {
   productMenShorts,
   productMenTshirt,
 } from "../service";
+import { useDispatch } from "react-redux";
+import { FETCH_PRODUCTS } from "../action";
 
 export default function MenSection() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(FETCH_PRODUCTS());
+  });
   return (
     <>
       <MenNav />
@@ -59,9 +66,6 @@ export default function MenSection() {
             to="/category"
             state={{
               data: productMenTshirt,
-              // Banner: bannerJ,
-              // colorName: colorNameJP,
-              // brandName: brandNameJP,
               Heading: "Men's T-Shirts",
             }}>
             <Image
@@ -102,9 +106,6 @@ export default function MenSection() {
             state={{
               Banner: MBJS,
               data: productMenJeans,
-              // Banner: bannerJ,
-              // colorName: colorNameJP,
-              // brandName: brandNameJP,
               Heading: "Men's Jeans",
             }}>
             <Image

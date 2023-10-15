@@ -3,15 +3,17 @@ import Card from "./Card";
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Box, Text, Grid, Divider, Container, Flex } from "@chakra-ui/react";
+import MenNav from "./MenNav";
 export default function WTShirt() {
   const [sortingOption, setSortingOption] = useState("");
   const [selectedBrands, setSelectedBrands] = useState("");
   const [selectedColors, setSelectedColors] = useState("");
   const [selectedPrices, setSelectedPrices] = useState("");
   const data = useLocation();
-  const itemList = data.state.data;
+  console.log(data);
+  const itemList = data.state?.data;
   console.log(itemList);
-  const { Banner, Heading, brandName, colorName } = data.state;
+  const { Banner, Heading, brandName, colorName, gender } = data.state;
   console.log(data.state);
   const handleSortingAndFiltering = (
     sortingCriteria,
@@ -104,7 +106,8 @@ export default function WTShirt() {
 
   return (
     <>
-      <WomenNav />
+      {gender === "Male" ? <MenNav /> : <WomenNav />}
+
       <img src={Banner ? Banner : null} alt="" style={{ width: "80rem" }} />
       <Container>
         <Text className="categoryH1">
@@ -231,68 +234,6 @@ export default function WTShirt() {
               Rs. 839 To 1049
             </label>
           </Flex>
-
-          {/* <Box display="flex">
-      
-     
-
-          <Text className="bottomTexth2" marginLeft="20px" marginTop="60px">
-            PRICE
-          </Text>
-          {/* <Box display="flex">
-        <input
-          type="checkbox"
-          className="categorySearchBoxInput"
-          onChange={() => {
-            let range = [299, 399];
-            handleCategoryFilter(range, "Price");
-          }}
-        />
-        <label
-          htmlFor="categorySearchBoxInput"
-          className="categorySearchBoxText">
-          Rs. 299 To Rs. 399
-        </label>
-      </Box>
-      <Box display="flex">
-        <input
-          type="checkbox"
-          className="categorySearchBoxInput"
-          onChange={() => {
-            let range = [410, 599];
-            handleCategoryFilter(range, "Price");
-          }}
-        />
-        <label
-          htmlFor="categorySearchBoxInput"
-          className="categorySearchBoxText">
-          Rs. 410 To Rs. 599
-        </label>
-      </Box>
-      <Box display="flex">
-        <input
-          type="checkbox"
-          className="categorySearchBoxInput"
-          onChange={handleBewakoof}
-        />
-        <label
-          htmlFor="categorySearchBoxInput"
-          className="categorySearchBoxText">
-          Rs. 610 To Rs. 799
-        </label>
-      </Box>
-      <Box display="flex">
-        <input
-          type="checkbox"
-          className="categorySearchBoxInput"
-          onChange={handleBewakoof}
-        />
-        <label
-          htmlFor="categorySearchBoxInput"
-          className="categorySearchBoxText">
-          Rs. 810 To Rs. 999
-        </label>
-      </Box> */}
         </Box>
 
         <Grid

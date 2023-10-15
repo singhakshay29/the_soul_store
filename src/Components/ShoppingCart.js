@@ -13,72 +13,49 @@ import {
   Container,
   MenuButton,
 } from "@chakra-ui/react";
-import Api from "../Api";
 import MenNav from "./MenNav";
 import Footer from "./Footer";
 import Modal from "react-modal";
 import { Link } from "react-router-dom";
 import { BiRupee } from "react-icons/bi";
-import { useDispatch } from "react-redux";
-import { ADD_TO_WISHLIST } from "../action";
 import { GrFormClose } from "react-icons/gr";
 import emptycart from "../assets/emptyCart.png";
 import React, { useEffect, useState } from "react";
 import { ChevronDownIcon } from "@chakra-ui/icons";
+import { ADD_TO_WISHLIST, GET_CART } from "../action";
+import { useDispatch, useSelector } from "react-redux";
 
-export default function ShoppingCart({ signinSuceess }) {
-  const [img, setImg] = useState("");
+export default function ShoppingCart() {
   const [, setQty] = useState(1);
+  const dispatch = useDispatch();
+  const [id, setId] = useState("");
+  const [img, setImg] = useState("");
   const [text, setText] = useState("");
   const [size, setSize] = useState("S");
-  const [results, setResults] = useState(0);
-  const [products, setProducts] = useState([]);
-  const [id, setId] = useState("");
   const [modalIsOpen, setIsOpen] = useState(false);
-  const dispatch = useDispatch();
-
-  async function getCart() {
-    const user = localStorage.getItem("userDetails");
-    if (user) {
-      const parsedData = JSON.parse(user);
-      try {
-        const response = await fetch(Api.cart, {
-          method: "GET",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${parsedData.signup.token}`,
-            projectid: "dm3s7h4e43m1",
-          },
-        });
-        const data = await response.json();
-        console.log(data);
-        setResults(data.results);
-        setProducts(data.data);
-      } catch (error) {
-        console.log("Somethings went wrong");
-      }
-    }
-  }
+  const { isLoggedIn } = useSelector((state) => state.user);
+  const { results } = useSelector((state) => state.app.cart);
+  const { items } = useSelector((state) => state.app.cart.data);
+  const { totalPrice } = useSelector((state) => state.app.cart.data);
 
   const customStyles = {
     content: {
       top: "50%",
+      padding: 0,
       left: "50%",
       right: "auto",
       bottom: "auto",
       width: "380px",
-      padding: 0,
       marginRight: "-50%",
       transform: "translate(-50%, -50%)",
     },
   };
 
   function openModal(url, w, id) {
-    setText(w);
-    setIsOpen(true);
-    setImg(url);
     setId(id);
+    setText(w);
+    setImg(url);
+    setIsOpen(true);
   }
 
   function afterOpenModal() {
@@ -91,7 +68,8 @@ export default function ShoppingCart({ signinSuceess }) {
   }
 
   useEffect(() => {
-    getCart();
+    dispatch(GET_CART());
+    // eslint-disable-next-line
   }, []);
   return (
     <>
@@ -134,7 +112,6 @@ export default function ShoppingCart({ signinSuceess }) {
       </Modal>
       <Box style={{ display: "flex", justifyContent: "center" }}>
         <Text className="text2">MY BAG </Text>
-
         <Text>- - - - - - - - - - - -</Text>
         <Text className="text2">ADDRESS</Text>
         <Text>- - - - - - - - - - - -</Text>
@@ -145,12 +122,12 @@ export default function ShoppingCart({ signinSuceess }) {
         <>
           <Flex>
             <Grid className="cartItem">
-              {products.items.map((item) => (
+              {items.map((item) => (
                 <GridItem className="shopbox">
                   <Image
-                    src={item?.product?.displayImage}
                     className="shopboxImg"
                     alt={item?.product?.name}
+                    src={item?.product?.displayImage}
                   />
                   <Box>
                     <Flex style={{ justifyContent: "space-between" }}>
@@ -291,7 +268,7 @@ export default function ShoppingCart({ signinSuceess }) {
                   <Text className="shopbox3text"> Cart Total</Text>
                   <Text className="text2 price">
                     <BiRupee />
-                    {products?.totalPrice}
+                    {totalPrice}
                   </Text>
                 </Flex>
                 <Flex className="boxS">
@@ -317,7 +294,7 @@ export default function ShoppingCart({ signinSuceess }) {
                   <Text className="shopbox3text"> Total Amount</Text>
                   <Text className="text2 price">
                     <BiRupee />
-                    {products?.totalPrice}
+                    {totalPrice}
                   </Text>
                 </Flex>
               </Box>
@@ -341,7 +318,7 @@ export default function ShoppingCart({ signinSuceess }) {
                   <Button className="wishlist">CONTINUE SHOPPING</Button>
                 </Link>
 
-                {!signinSuceess && (
+                {!isLoggedIn && (
                   <>
                     <Link to="/login">
                       <Button className="loginbutton button2">LOGIN</Button>

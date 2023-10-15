@@ -5,7 +5,7 @@ const baseInitialState = {
   wishlist: [],
   category: "",
   productsList: [],
-  categoryData: [],
+  // categoryData: [],
 };
 const initialUserData = localStorage.getItem("stock");
 
@@ -18,11 +18,11 @@ const initialState = initialUserData
 
 const appReducer = (state = initialState, action) => {
   switch (action.type) {
-    case actiontype.CATEGORY_DATA:
-      return {
-        ...state,
-        categoryData: action.payload,
-      };
+    // case actiontype.CATEGORY_DATA:
+    //   return {
+    //     ...state,
+    //     categoryData: action.payload,
+    //   };
 
     case actiontype.SET_PRODUCTS:
       return {

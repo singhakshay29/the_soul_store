@@ -20,11 +20,12 @@ import { GET_WISHLIST, REMOVE_FROM_WISHLIST, ADD_TO_CART } from "../action";
 
 export default function Wishlist() {
   const dispatch = useDispatch();
-  const wishlist = useSelector((state) => {
-    console.log(state);
+  const { wishlist } = useSelector((state) => state.app);
+  const { isLoggedIn } = useSelector((state) => state.user);
+  const data = useSelector((state) => {
     return state.app;
   });
-  const { isLoggedIn } = useSelector((state) => state.user);
+  console.log(data);
 
   useEffect(() => {
     dispatch(GET_WISHLIST());

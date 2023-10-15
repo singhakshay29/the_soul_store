@@ -5,13 +5,13 @@ import SignUp from "./Components/SignUp";
 import TShirt from "./Components/TShirt";
 import Topbar from "./Components/Topbar";
 import Product from "./Components/Product";
+import WTShirt from "./Components/WTShirt";
 import Wishlist from "./Components/Wishlist";
 import KidSection from "./Components/KidSection";
 import MenSection from "./Components/MenSection";
 import WomenSection from "./Components/WomenSection";
 import ShoppingCart from "./Components/ShoppingCart";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import WTShirt from "./Components/WTShirt";
 
 function App() {
   return (
@@ -28,8 +28,8 @@ function App() {
           <Route path="category" element={<WTShirt />}></Route>
           <Route path="product" element={<Product />}></Route>
           <Route path="wishlist" element={<Wishlist />}></Route>
-          <Route path="shoppingcart" element={<ShoppingCart />}></Route>
           <Route path="order" element={<Order />}></Route>
+          <Route path="shoppingcart" element={<ShoppingCart />}></Route>
         </Routes>
       </Router>
     </>

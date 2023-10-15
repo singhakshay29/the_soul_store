@@ -3,28 +3,165 @@ const store = mystore.getState();
 const productWomen = store.app.productsList.stock.filter((item) => {
   return item.gender === "Women";
 });
+console.log(store.app);
 const productMen = store.app.productsList.stock.filter((item) => {
   return item.gender === "Men";
 });
 
+const sub = productMen.filter((item) => console.log(item.subCategory));
+console.log(sub);
 export const productMenTshirt = productMen.filter((item) => {
   return item.subCategory === "tshirt";
 });
+const MenTshirtCategory = productMenTshirt.map((item) => {
+  return item.brand;
+});
+
+const MenColorCategory = productMenTshirt.map((item) => {
+  return item.color;
+});
+export const ColorNameMT = [...new Set(MenColorCategory)];
+export const brandNameMT = [...new Set(MenTshirtCategory)];
 export const productMenShirt = productMen.filter((item) => {
   return item.subCategory === "shirt";
 });
+
+const MenShirtCategory = productMenShirt.map((item) => {
+  return item.brand;
+});
+
+const MenColorCategoryS = productMenShirt.map((item) => {
+  return item.color;
+});
+export const ColorNameMS = [...new Set(MenColorCategoryS)];
+export const brandNameMS = [...new Set(MenShirtCategory)];
+
+export const productMenSweater = productMen.filter((item) => {
+  return item.subCategory === "sweater";
+});
+
+const MenSweaterCategory = productMenSweater.map((item) => {
+  return item.brand;
+});
+
+const MenColorCategorySweater = productMenSweater.map((item) => {
+  return item.color;
+});
+export const colorNameMSW = [...new Set(MenColorCategorySweater)];
+export const brandNameMSW = [...new Set(MenSweaterCategory)];
+
+export const productMenKurta = productMen.filter((item) => {
+  return item.subCategory === "kurta";
+});
+
+const MenKurtaCategory = productMenKurta.map((item) => {
+  return item.brand;
+});
+
+const MenColorCategoryKurta = productMenKurta.map((item) => {
+  return item.color;
+});
+export const colorNameKu = [...new Set(MenColorCategoryKurta)];
+export const brandNameKu = [...new Set(MenKurtaCategory)];
+
+export const productMenHoodie = productMen.filter((item) => {
+  return item.subCategory === "hoodie";
+});
+
+const MenHoodieCategory = productMenHoodie.map((item) => {
+  return item.brand;
+});
+
+const MenColorCategoryHoodie = productMenHoodie.map((item) => {
+  return item.color;
+});
+export const colorNameHo = [...new Set(MenColorCategoryHoodie)];
+export const brandNameHo = [...new Set(MenHoodieCategory)];
+//
+export const productMenTracksuit = productMen.filter((item) => {
+  return item.subCategory === "tracksuit";
+});
+
+const MentracksuitCategory = productMenTracksuit.map((item) => {
+  return item.brand;
+});
+
+const MenColorCategorytracksuit = productMenTracksuit.map((item) => {
+  return item.color;
+});
+export const colorNameTr = [...new Set(MenColorCategorytracksuit)];
+export const brandNameTr = [...new Set(MentracksuitCategory)];
+//
 
 export const productMenJoggers = productMen.filter((item) => {
   return item.subCategory === "jogger";
 });
 
+const MenJoggersCategory = productMenJoggers.map((item) => {
+  return item.brand;
+});
+
+const MenColorCategoryJoggers = productMenJoggers.map((item) => {
+  return item.color;
+});
+export const colorNameJg = [...new Set(MenColorCategoryJoggers)];
+export const brandNameJg = [...new Set(MenJoggersCategory)];
+
 export const productMenJeans = productMen.filter((item) => {
   return item.subCategory === "jeans";
 });
 
+const MenJeansCategory = productMenJeans.map((item) => {
+  return item.brand;
+});
+
+const MenColorCategoryJeans = productMenJeans.map((item) => {
+  return item.color;
+});
+export const colorNameMJS = [...new Set(MenColorCategoryJeans)];
+export const brandNameMJS = [...new Set(MenJeansCategory)];
+
 export const productMenShorts = productMen.filter((item) => {
   return item.subCategory === "shorts";
 });
+
+const MenShortsCategory = productMenShorts.map((item) => {
+  return item.brand;
+});
+
+const MenColorCategoryShorts = productMenShorts.map((item) => {
+  return item.color;
+});
+export const colorNameSh = [...new Set(MenColorCategoryShorts)];
+export const brandNameSh = [...new Set(MenShortsCategory)];
+
+export const productMenPyjamas = productMen.filter((item) => {
+  return item.subCategory === "pyjamas";
+});
+
+const MenPyjamasCategory = productMenPyjamas.map((item) => {
+  return item.brand;
+});
+
+const MenColorCategoryPyjamas = productMenPyjamas.map((item) => {
+  return item.color;
+});
+export const colorNamePy = [...new Set(MenColorCategoryPyjamas)];
+export const brandNamePy = [...new Set(MenPyjamasCategory)];
+
+export const productMenTrouser = productMen.filter((item) => {
+  return item.subCategory === "trouser";
+});
+
+const MenTrouserCategory = productMenTrouser.map((item) => {
+  return item.brand;
+});
+
+const MenColorCategoryTrouser = productMenTrouser.map((item) => {
+  return item.color;
+});
+export const colorNameTRS = [...new Set(MenColorCategoryTrouser)];
+export const brandNameTRS = [...new Set(MenTrouserCategory)];
 //
 export const productWomenTshirt = productWomen.filter((item) => {
   return item.subCategory === "tshirt";
