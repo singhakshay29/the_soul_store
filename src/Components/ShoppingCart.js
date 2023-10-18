@@ -13,30 +13,35 @@ import {
   Container,
   MenuButton,
 } from "@chakra-ui/react";
-import MenNav from "./MenNav";
 import Footer from "./Footer";
 import Modal from "react-modal";
+import { FaPlus } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { BiRupee } from "react-icons/bi";
 import { GrFormClose } from "react-icons/gr";
 import emptycart from "../assets/emptyCart.png";
 import React, { useEffect, useState } from "react";
 import { ChevronDownIcon } from "@chakra-ui/icons";
-import { ADD_TO_WISHLIST, GET_CART } from "../action";
+import { ADD_TO_WISHLIST, GET_CART, REMOVE_FROM_CART } from "../action";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function ShoppingCart() {
-  const [, setQty] = useState(1);
+  const [qty, setQty] = useState(1);
   const dispatch = useDispatch();
   const [id, setId] = useState("");
   const [img, setImg] = useState("");
-  const [text, setText] = useState("");
+  const [text, setText] = useState(false);
   const [size, setSize] = useState("S");
   const [modalIsOpen, setIsOpen] = useState(false);
+  const [modalIsOpen2, setIsOpen2] = useState(false);
   const { isLoggedIn } = useSelector((state) => state.user);
-  const { results } = useSelector((state) => state.app.cart);
-  const { items } = useSelector((state) => state.app.cart.data);
-  const { totalPrice } = useSelector((state) => state.app.cart.data);
+  const { cart } = useSelector((state) => state.app);
+  let items, totalPrice, results;
+  if (cart.results > 0) {
+    const { data } = cart;
+    ({ results } = cart);
+    ({ items, totalPrice } = data);
+  }
 
   const customStyles = {
     content: {
@@ -51,11 +56,15 @@ export default function ShoppingCart() {
     },
   };
 
-  function openModal(url, w, id) {
+  function openModal(url, v, id) {
     setId(id);
-    setText(w);
+    setText(v);
     setImg(url);
     setIsOpen(true);
+  }
+
+  function openModal2() {
+    setIsOpen2(true);
   }
 
   function afterOpenModal() {
@@ -66,6 +75,26 @@ export default function ShoppingCart() {
   function closeModal() {
     setIsOpen(false);
   }
+  function closeModal2() {
+    setIsOpen2(false);
+  }
+
+  const handleRemoveAdd = (productId, qty) => {
+    dispatch(REMOVE_FROM_CART(productId, qty));
+    setTimeout(() => {
+      dispatch(ADD_TO_WISHLIST(productId));
+    }, 200);
+  };
+
+  const handleRemove = (productId, qty) => {
+    dispatch(REMOVE_FROM_CART(productId, qty));
+    setTimeout(() => {
+      dispatch(GET_CART());
+    }, 200);
+    setTimeout(() => {
+      setIsOpen(false);
+    }, 200);
+  };
 
   useEffect(() => {
     dispatch(GET_CART());
@@ -73,7 +102,6 @@ export default function ShoppingCart() {
   }, []);
   return (
     <>
-      <MenNav />
       <Modal
         isOpen={modalIsOpen}
         onAfterOpen={afterOpenModal}
@@ -102,14 +130,39 @@ export default function ShoppingCart() {
           <button
             className="text2 mb2"
             onClick={() => {
-              dispatch(ADD_TO_WISHLIST(id));
+              handleRemoveAdd(id, qty);
             }}>
             YES
           </button>
         ) : (
-          <button className="text2 mb2">YES</button>
+          <button className="text2 mb2" onClick={() => handleRemove(id, qty)}>
+            YES
+          </button>
         )}
       </Modal>
+      <Modal
+        isOpen={modalIsOpen2}
+        onRequestClose={closeModal2}
+        style={customStyles}
+        ariaHideApp={false}
+        contentLabel="Example Modal">
+        <Flex>
+          Add New
+          <form>
+            <input type="text" placeholder="First Name"></input>
+            <input type="text" placeholder="Second Name"></input>
+
+            <input type="text" placeholder="Address type"></input>
+            <input type="text" placeholder="House No."></input>
+            <input type="text" placeholder="Street Name"></input>
+            <input type="text" placeholder="City"></input>
+            <input type="text" placeholder="State"></input>
+            <input type="text" placeholder="Country"></input>
+            <input type="text" placeholder="Pin no"></input>
+          </form>
+        </Flex>
+      </Modal>
+
       <Box style={{ display: "flex", justifyContent: "center" }}>
         <Text className="text2">MY BAG </Text>
         <Text>- - - - - - - - - - - -</Text>
@@ -118,8 +171,9 @@ export default function ShoppingCart() {
         <Text className="text2">PAYMENT</Text>
       </Box>
       <Divider className="categoryDivider" />
+
       {results > 0 ? (
-        <>
+        <div id="1">
           <Flex>
             <Grid className="cartItem">
               {items.map((item) => (
@@ -194,15 +248,18 @@ export default function ShoppingCart() {
                             rightIcon={
                               <ChevronDownIcon className="shopboxIcon" />
                             }>
-                            Qty:{item?.quantity}
+                            Qty:{qty}
                           </MenuButton>
                           <MenuList>
-                            <MenuItem
-                              onClick={() => setQty(1)}
-                              className="bbutton">
-                              1
-                            </MenuItem>
-                            <MenuItem
+                            {[1, 2, 3, 4, 5].map((qty) => (
+                              <MenuItem
+                                key={qty}
+                                onClick={() => setQty(qty)}
+                                className="bbutton">
+                                {qty}
+                              </MenuItem>
+                            ))}
+                            {/* <MenuItem
                               onClick={() => setQty(2)}
                               className="bbutton">
                               2
@@ -221,7 +278,7 @@ export default function ShoppingCart() {
                               onClick={() => setQty(5)}
                               className="bbutton">
                               5
-                            </MenuItem>
+                            </MenuItem> */}
                           </MenuList>
                         </>
                       )}
@@ -234,6 +291,7 @@ export default function ShoppingCart() {
                         onClick={() => {
                           openModal(
                             item?.product?.displayImage,
+                            false,
                             item?.product?._id
                           );
                         }}>
@@ -244,7 +302,7 @@ export default function ShoppingCart() {
                         onClick={() => {
                           openModal(
                             item?.product?.displayImage,
-                            "w",
+                            true,
                             item?.product?._id
                           );
                         }}>
@@ -301,7 +359,7 @@ export default function ShoppingCart() {
               <Box className="shopbox2">PLACE ORDER</Box>
             </Box>
           </Flex>
-        </>
+        </div>
       ) : (
         <>
           <Container display="flex" justifyContent="center" marginTop="80px">
@@ -329,6 +387,56 @@ export default function ShoppingCart() {
             </>
           </Box>
         </>
+      )}
+
+      {results < 0 && (
+        <div>
+          <Flex>
+            <Grid className="cartItem">
+              <GridItem className="shopbox">
+                <Box
+                  className="addresbox"
+                  onClick={() => {
+                    openModal2();
+                  }}>
+                  <FaPlus className="plusIcon" />
+                </Box>
+              </GridItem>
+            </Grid>
+
+            <Box
+              style={{
+                marginLeft: "4%",
+                marginTop: "22px",
+              }}>
+              <Text style={{ color: "#a7a9ac" }}>BILLING DETAILS</Text>
+              <Box className="shopbox4">
+                <Flex className="boxS">
+                  <Text className="shopbox3text"> Cart Total</Text>
+                  <Text className="text2 price">
+                    <BiRupee />
+                    {totalPrice}
+                  </Text>
+                </Flex>
+                <Flex className="boxS">
+                  <Text className="shopbox3text"> GST</Text>
+                  <Text className="text2 price">
+                    <BiRupee />
+                    12%
+                  </Text>
+                </Flex>
+                <Flex className="boxS">
+                  <Text className="shopbox3text"> Total Amount</Text>
+                  <Text className="text2 price">
+                    <BiRupee />
+                    {totalPrice}
+                  </Text>
+                </Flex>
+              </Box>
+              <Box className="shopbox2">PLACE ORDER</Box>
+            </Box>
+          </Flex>
+        </div>
       )}
 
       <Footer />

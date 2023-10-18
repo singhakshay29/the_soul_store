@@ -21,7 +21,6 @@ import w1 from "../assets/w1.png";
 import w2 from "../assets/w2.png";
 import w3 from "../assets/w3.png";
 import w4 from "../assets/w4.png";
-import WomenNav from "./WomenNav";
 import WGallery from "./WGallery";
 import DW from "../assets/DW.jpg";
 import JW from "../assets/JW.jpg";
@@ -48,8 +47,7 @@ export default function WomenSection() {
     // eslint-disable-next-line
   }, []);
   return (
-    <>
-      <WomenNav />
+    <Container style={{ overflow: "hidden" }}>
       <ImageSlider w1={w1} w2={w2} w3={w3} w4={w4} />
       <Card style={{ width: "77.8rem", marginTop: 0 }} className="heading1">
         COLLECTIONS
@@ -151,6 +149,6 @@ export default function WomenSection() {
       <Card className="heading1">MEMBERSHIP</Card>
       <Image src={member} alt="membership" width="100%" />
       <Footer />
-    </>
+    </Container>
   );
 }

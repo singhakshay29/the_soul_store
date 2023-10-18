@@ -11,13 +11,18 @@ import KidSection from "./Components/KidSection";
 import MenSection from "./Components/MenSection";
 import WomenSection from "./Components/WomenSection";
 import ShoppingCart from "./Components/ShoppingCart";
+import { useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import WomenNav from "./Components/WomenNav";
+import MenNav from "./Components/MenNav";
 
 function App() {
+  const [active, setActive] = useState("1");
   return (
     <>
       <Router>
-        <Topbar />
+        <Topbar active={active} setActive={setActive} />
+        {active === "1" ? <WomenNav /> : <MenNav />}
         <Routes>
           <Route path="/" element={<WomenSection />}></Route>
           <Route path="/men" element={<MenSection />}></Route>

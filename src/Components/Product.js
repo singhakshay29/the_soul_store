@@ -7,6 +7,12 @@ import {
   Divider,
   GridItem,
   Container,
+  Accordion,
+  AccordionItem,
+  AccordionButton,
+  AccordionPanel,
+  AccordionIcon,
+  Flex,
 } from "@chakra-ui/react";
 import {
   AiFillHeart,
@@ -16,7 +22,6 @@ import {
 } from "react-icons/ai";
 import Api from "../Api";
 import Modal from "./Modal";
-import MenNav from "./MenNav";
 import { BsWhatsapp } from "react-icons/bs";
 import { FaRupeeSign } from "react-icons/fa";
 import React, { useState, useEffect } from "react";
@@ -24,6 +29,7 @@ import { Link, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { ADD_TO_WISHLIST, REMOVE_FROM_WISHLIST } from "../action";
 import { addCart } from "../fetch";
+import Footer from "./Footer";
 
 export default function Product() {
   const dispatch = useDispatch();
@@ -37,6 +43,7 @@ export default function Product() {
   const [productImages, setProductImages] = useState([]);
   const { isLoggedIn } = useSelector((state) => state.user);
   const id = data._id;
+  console.log(data);
 
   const favId = wishlist.map((item) => {
     return item.products._id;
@@ -104,34 +111,46 @@ export default function Product() {
 
   return (
     <>
-      <MenNav />
-      <Container marginTop="30px">
-        <Text className="categoryHeading">Home/T-Shirt/{product?.name}</Text>
-        <Grid templateColumns="repeat(2, 1fr)" margin="1rem">
+      <Container marginTop="15px" style={{ overflow: "hidden" }}>
+        <Container className="categoryBox2">
+          <Link to="/" style={{ textDecoration: "none", color: "#a7a9ac" }}>
+            <Text className="categoryP1">Home</Text>
+          </Link>
+          <Text className="categoryP1">/</Text>
+          <Link to="/" style={{ textDecoration: "none", color: "#a7a9ac" }}>
+            <Text className="categoryP1">{data?.subCategory}</Text>
+          </Link>
+          <Text className="categoryP1">/</Text>
+          <Text className="color">{product?.name}</Text>
+        </Container>
+        <Grid
+          templateColumns="repeat(2, 1fr)"
+          marginTop="0.1rem"
+          marginLeft="2.5%">
           <Grid templateColumns="repeat(2, 1fr)" gap={1}>
             {productImages?.map((item, index) => (
               <GridItem>
                 <Image
                   src={item}
-                  width="400px"
-                  margin="0.3rem"
+                  className="productImg"
                   alt={product.name}
+                  style={{ cursor: "pointer" }}
                   onClick={() => handleClick(item, index)}
                 />
               </GridItem>
             ))}
           </Grid>
-          <Box margin="2rem">
-            <Text className="heading1" marginTop="0">
+          <Box margin="5px 2rem">
+            <Text className="headingbox" marginTop="0">
               {product?.name}
             </Text>
-            <Text className="bottomTexth3">{product?.subCategory}</Text>
+            <Text className="btT">{product?.subCategory}</Text>
             <Divider className="categoryDivider" />
-            <Text className="heading1" marginTop="0">
+            <Text className="headingbox" marginTop="0">
               <FaRupeeSign fontSize="16px" /> {product?.price}
             </Text>
-            <Text className="bottomTexth3">
-              QUANTITY
+            <Text className="bottomTexth4">
+              Quantity
               <select
                 value={quantity}
                 onChange={(e) => setQuantity(parseInt(e.target.value))}
@@ -143,14 +162,12 @@ export default function Product() {
                 <option>5</option>
               </select>
             </Text>
-            <Box display="flex" margin="0" padding="0">
+            <Box display="flex" margin="0" paddingTop="30px">
               {isLoggedIn ? (
                 <>
                   <Button
                     onClick={() => addCart(product._id, quantity)}
-                    className="loginbutton"
-                    borderRadius="2px"
-                    width="160px">
+                    className="buttonCartP">
                     ADD TO CART
                   </Button>
                   {favId.includes(product._id) ? (
@@ -159,7 +176,7 @@ export default function Product() {
                         onClick={() =>
                           dispatch(REMOVE_FROM_WISHLIST(product._id))
                         }
-                        className="wishlist">
+                        className="wishlistbutton">
                         <AiFillHeart style={{ fontSize: "1rem" }} />
                         ADDED TO WISHLIST
                       </Button>
@@ -168,7 +185,7 @@ export default function Product() {
                     <>
                       <Button
                         onClick={() => dispatch(ADD_TO_WISHLIST(product._id))}
-                        className="wishlist">
+                        className="wishlistbutton ">
                         <AiOutlineHeart style={{ fontSize: "1rem" }} />
                         ADD TO WISHLIST
                       </Button>
@@ -207,31 +224,76 @@ export default function Product() {
                 style={{ fontSize: "23px" }}
               />
             </Text>
-            <Box className="categorySearchBox productDetails">
-              <Text className="bottomTexth3">PRODUCT DETAILS</Text>
-              <Text className="bottomTexth3">Material & Care:</Text>
-              <Text className="text" marginLeft="30px" marginTop="20px">
-                100% Cotton
-              </Text>
-              <Text className="text" marginLeft="30px" marginTop="0">
-                Machine Wash
-              </Text>
-              <Text className="bottomTexth3">BRAND:</Text>
-              <Text className="text" marginLeft="30px" marginTop="0">
-                {product?.brand}
-              </Text>
-              <Text className="bottomTexth3">Country of Origin:</Text>
-              <Text className="text" marginLeft="30px" marginTop="0">
-                India (and proud)
-              </Text>
-              <Text className="text" marginLeft="30px">
-                Hey Souledsters! You must have noticed that we've said goodbye
-                to the little Mr. Souls sleeve label that we've had through the
-                years. But always remember, when you shop from our app, website,
-                stores, or online marketplaces, you're always getting the
-                genuine real deal!
-              </Text>
-            </Box>
+
+            <Accordion defaultIndex={[0]} allowMultiple marginTop="2rem">
+              <AccordionItem className="accodianItem">
+                <h2 style={{ margin: 0 }}>
+                  <AccordionButton className="accodianbutton">
+                    <Box
+                      className="HTexth3A"
+                      as="span"
+                      flex="1"
+                      textAlign="left">
+                      Product Details
+                    </Box>
+                    <AccordionIcon />
+                  </AccordionButton>
+                </h2>
+                <AccordionPanel pb={4}>
+                  <Text className="bottomTexth3">Material & Care:</Text>
+                  <Text className="text" marginLeft="30px" marginTop="20px">
+                    100% Cotton
+                  </Text>
+                  <Text className="text" marginLeft="30px" marginTop="0">
+                    Machine Wash
+                  </Text>
+                  <Text className="bottomTexth3">BRAND:</Text>
+                  <Text className="text" marginLeft="30px" marginTop="0">
+                    {product?.brand}
+                  </Text>
+                  <Text className="bottomTexth3">Country of Origin:</Text>
+                  <Text className="text" marginLeft="30px" marginTop="0">
+                    India (and proud)
+                  </Text>
+                  <Text className="text" marginLeft="30px">
+                    Hey Souledsters! You must have noticed that we've said
+                    goodbye to the little Mr. Souls sleeve label that we've had
+                    through the years. But always remember, when you shop from
+                    our app, website, stores, or online marketplaces, you're
+                    always getting the genuine real deal!
+                  </Text>
+                </AccordionPanel>
+              </AccordionItem>
+
+              <AccordionItem className="accodianItem">
+                <h2 style={{ margin: 0 }}>
+                  <AccordionButton className="accodianbutton">
+                    <Box
+                      as="span"
+                      flex="1"
+                      textAlign="left"
+                      className="HTexth3A">
+                      Product Description
+                    </Box>
+                    <AccordionIcon />
+                  </AccordionButton>
+                </h2>
+                <AccordionPanel pb={4}>
+                  <Text className="bottomTexth3">
+                    Official Licensed {data?.brand}
+                  </Text>
+                  <Flex>
+                    <Text className="bottomTexth3">Color:</Text>
+                    <Text className="text mL10">{data?.color}</Text>
+                  </Flex>
+                  <Flex>
+                    <Text className="bottomTexth3">Type:</Text>
+                    <Text className="text mL10">{data?.gender}</Text>
+                    <Text className="text mL10">{data?.subCategory}</Text>
+                  </Flex>
+                </AccordionPanel>
+              </AccordionItem>
+            </Accordion>
           </Box>
         </Grid>
         {clickedImg && (
@@ -243,6 +305,7 @@ export default function Product() {
           />
         )}
       </Container>
+      <Footer />
     </>
   );
 }

@@ -1,6 +1,6 @@
 import {
   Text,
-  Image,
+  // Image,
   // Button,
   // Popover,
   Divider,
@@ -104,9 +104,9 @@ export default function Card({ item, index }) {
         )}
 
         <Link to="/product" state={{ data: item }}>
-          <Image
+          <img
             src={displayImage}
-            alt={item?.name}
+            alt=""
             width="240px"
             height="300px"
             cursor="pointer"

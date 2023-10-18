@@ -1,5 +1,4 @@
 import Card from "./Card";
-import MenNav from "./MenNav";
 import t1 from "../assets/t1.png";
 import ImageSlider from "./ImageSlider";
 import React, { useEffect, useState } from "react";
@@ -92,7 +91,6 @@ export default function TShirt() {
 
   return (
     <>
-      <MenNav />
       <ImageSlider w1={t1} />
       <Text className="categoryHeading">
         T-Shirt -

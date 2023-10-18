@@ -37,7 +37,6 @@ const userReducer = (state = initialState, action) => {
         isLoggedIn: true,
         userData: action.payload,
       };
-
     default:
       return state;
   }

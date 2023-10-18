@@ -99,13 +99,19 @@ import bP from "../assets/bP.jpg";
 import wB from "../assets/wB.jpg";
 import blueBanner from "../assets/bluebanner.jpg";
 import bL from "../assets/bL.jpg";
-
+import { useSelector } from "react-redux";
 import { RiArrowDropDownLine } from "react-icons/ri";
 export default function WomenNav() {
-  const [scrollY, setScrollY] = useState(0);
   const [active, setActive] = useState("");
+  const [scrollY, setScrollY] = useState(0);
   const [isDropdownOpen, setIsDropDownOpen] = useState(null);
-
+  const { isLoggedIn } = useSelector((state) => state.user);
+  const { results } = useSelector((state) => state.app.cart);
+  const { wishlist } = useSelector((state) => state.app);
+  const state = useSelector((state) => {
+    return state.app;
+  });
+  console.log(state);
   const handleMouseEnter = (dropdown) => {
     setIsDropDownOpen(dropdown);
   };
@@ -452,7 +458,10 @@ export default function WomenNav() {
                       <Link
                         to="/category"
                         style={{ textDecoration: "none" }}
-                        state={{ data: productBewakoof }}>
+                        state={{
+                          data: productBewakoof,
+                          Heading: "Bewakoof® Collection",
+                        }}>
                         <Text className="navdropboxh1 mT10">Bewakoof®</Text>
                       </Link>
                       <Link
@@ -648,45 +657,71 @@ export default function WomenNav() {
                 variant="outline"
                 colorScheme="teal"
                 aria-label="Call Sage"
-                style={{ background: "transparent", border: "none" }}
+                style={{
+                  background: "transparent",
+                  border: "none",
+                  cursor: "pointer",
+                }}
                 icon={<FaSearch fontSize="23px" color="grey" />}
               />
             </ListItem>
-            <ListItem
-              className={active === "1" ? "activenav navIconL" : "navIconL"}
-              id={"1"}
-              onClick={handleClick}
-              onMouseEnter={() => handleMouseEnter("Fa")}
+            <Link
+              to="/order"
+              style={{
+                textDecoration: "none",
+                marginLeft: "10px",
+              }}
+              onMouseEnter={() => handleMouseEnter("User")}
               onMouseLeave={() => handleMouseLeave()}>
-              <IconButton
-                variant="outline"
-                colorScheme="teal"
-                aria-label="Call Sage"
-                className="navI"
-                icon={<FaRegUser />}
+              <FaRegUser
+                className={
+                  active === "1" ? "activeIcon navbuttonicon" : "navbuttonicon"
+                }
+                id={"1"}
+                onClick={handleClick}
+                onMouseEnter={() => handleMouseEnter("User")}
               />
-            </ListItem>
+            </Link>
+
+            {isDropdownOpen === "User" && (
+              <Box
+                onMouseEnter={() => handleMouseEnter("User")}
+                onMouseLeave={() => handleMouseLeave()}
+                className="navdropbox uPT">
+                <Text className="navdropboxh1 mT10"> Orders</Text>
+                <Text className="navdropboxh1"> Profile</Text>
+                <Text className="navdropboxh1">Log Out</Text>
+              </Box>
+            )}
             <Link to="/wishlist">
-              <ListItem className="navIconL" onClick={handleClick}>
-                <IconButton
-                  variant="outline"
-                  colorScheme="teal"
-                  aria-label="Call Sage"
-                  style={{ background: "transparent", border: "none" }}
-                  icon={<AiOutlineHeart fontSize="25px" color="grey" />}
-                />
-              </ListItem>
+              {isLoggedIn && (
+                <>
+                  {wishlist?.length > 0 && (
+                    <Text className="length">{wishlist?.length}</Text>
+                  )}
+                </>
+              )}
+              <AiOutlineHeart
+                className={
+                  active === "2" ? "activeIcon navbuttonicon" : "navbuttonicon"
+                }
+                id={"2"}
+                onClick={handleClick}
+              />
             </Link>
             <Link to="/shoppingcart">
-              <ListItem className="navIconL">
-                <IconButton
-                  variant="outline"
-                  colorScheme="teal"
-                  aria-label="Call Sage"
-                  style={{ background: "transparent", border: "none" }}
-                  icon={<BsHandbag fontSize="25px" color="grey" />}
-                />
-              </ListItem>
+              {isLoggedIn && (
+                <>
+                  {results > 0 && <Text className="cartLength">{results}</Text>}
+                </>
+              )}
+              <BsHandbag
+                className={
+                  active === "3" ? "activeIcon navbuttonicon" : "navbuttonicon"
+                }
+                id={"3"}
+                onClick={handleClick}
+              />
             </Link>
           </List>
         </Box>

@@ -2,13 +2,8 @@ import mystore from "./store";
 const store = mystore.getState();
 console.log(store);
 
-const productWomen = store.app.productsList?.stock?.filter((item) => {
-  return item.gender === "Women";
-});
-console.log(store.app);
-const productMen = store.app.productsList?.stock?.filter((item) => {
-  return item.gender === "Men";
-});
+const productMen = store.app.menData;
+const productWomen = store.app.womenData;
 
 export const productMenTshirt = productMen?.filter((item) => {
   return item.subCategory === "tshirt";
@@ -22,8 +17,7 @@ const MenColorCategory = productMenTshirt?.map((item) => {
 });
 export const ColorNameMT = [...new Set(MenColorCategory)];
 export const brandNameMT = [...new Set(MenTshirtCategory)];
-console.log(ColorNameMT);
-console.log(brandNameMT);
+
 export const productMenShirt = productMen?.filter((item) => {
   return item.subCategory === "shirt";
 });
@@ -338,6 +332,12 @@ export const MaroonbrandName = [...new Set(womenProductMaroonBrand)];
 export const productBewakoof = productWomen?.filter((item) => {
   return item.brand === "Bewakoof®";
 });
+console.log(productBewakoof);
+
+const productBewakoofColor = productBewakoof?.map((item) => {
+  return item.color;
+});
+console.log(productBewakoofColor);
 export const productTOMJERRY = productWomen?.filter((item) => {
   return item.brand === "OFFICIAL TOM & JERRY MERCHANDISE";
 });

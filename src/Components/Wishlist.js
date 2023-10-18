@@ -9,7 +9,6 @@ import {
   Container,
 } from "@chakra-ui/react";
 import Footer from "./Footer";
-import MenNav from "./MenNav";
 import { Link } from "react-router-dom";
 import { RxCross2 } from "react-icons/rx";
 import { FaRupeeSign } from "react-icons/fa";
@@ -23,6 +22,7 @@ export default function Wishlist() {
   const { wishlist } = useSelector((state) => state.app);
   const { isLoggedIn } = useSelector((state) => state.user);
   const data = useSelector((state) => {
+    console.log(state);
     return state.app;
   });
   console.log(data);
@@ -34,6 +34,16 @@ export default function Wishlist() {
     }, 300);
   };
 
+  const handleMoveToCart = (productId) => {
+    dispatch(REMOVE_FROM_WISHLIST(productId));
+    setTimeout(() => {
+      dispatch(GET_WISHLIST());
+    }, 100);
+    setTimeout(() => {
+      dispatch(ADD_TO_CART(productId, 1));
+    }, 100);
+  };
+
   useEffect(() => {
     dispatch(GET_WISHLIST());
     // eslint-disable-next-line
@@ -41,7 +51,6 @@ export default function Wishlist() {
 
   return (
     <>
-      <MenNav />
       {wishlist?.length > 0 ? (
         <>
           <Text className="wT">
@@ -81,8 +90,7 @@ export default function Wishlist() {
                     <Button
                       className="buttonCart"
                       onClick={() => {
-                        handleRemoveFromWishlist(item.products?._id);
-                        dispatch(ADD_TO_CART(item.products?._id, 1));
+                        handleMoveToCart(item.products?._id);
                       }}>
                       MOVE TO CART
                     </Button>

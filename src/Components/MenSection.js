@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import Footer from "./Footer";
-import MenNav from "./MenNav";
 import m1 from "../assets/m1.png";
 import m2 from "../assets/m2.png";
 import m3 from "../assets/m3.png";
@@ -35,8 +34,7 @@ export default function MenSection() {
     dispatch(FETCH_PRODUCTS());
   });
   return (
-    <>
-      <MenNav />
+    <Container style={{ overflow: "hidden" }}>
       <ImageSlider w1={m1} w2={m2} w3={m3} w4={m4} />
       <Card className="heading1">CATEGORIES</Card>
       <Container display="flex">
@@ -120,6 +118,6 @@ export default function MenSection() {
       <Card className="heading1">MEMBERSHIP</Card>
       <Image src={member} alt="membership" width="100%" />
       <Footer />
-    </>
+    </Container>
   );
 }

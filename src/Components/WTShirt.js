@@ -1,9 +1,7 @@
-import WomenNav from "./WomenNav";
 import Card from "./Card";
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Box, Text, Grid, Divider, Container, Flex } from "@chakra-ui/react";
-import MenNav from "./MenNav";
 export default function WTShirt() {
   const [sortingOption, setSortingOption] = useState("");
   const [selectedBrands, setSelectedBrands] = useState("");
@@ -13,7 +11,7 @@ export default function WTShirt() {
   const itemList = object.state?.data;
   console.log(itemList);
   console.log(object);
-  const { Banner, Heading, brandName, colorName, gender } = object.state;
+  const { Banner, Heading, brandName, colorName } = object.state;
   const handleSortingAndFiltering = (
     sortingCriteria,
     filterCriteriaBrand,
@@ -105,8 +103,6 @@ export default function WTShirt() {
 
   return (
     <>
-      {gender === "Male" ? <MenNav /> : <WomenNav />}
-
       <img src={Banner ? Banner : null} alt="" style={{ width: "80rem" }} />
       <Container>
         <Text className="categoryH1">

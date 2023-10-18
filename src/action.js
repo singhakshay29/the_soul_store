@@ -9,31 +9,43 @@ import {
   removeWishlist,
   getWishlist,
   getCart,
+  filterMenProducts,
+  filterWomenProducts,
 } from "./fetch";
 
 export const LOGIN_SUCCESS = (payload) => ({
   type: actiontype.LOGIN_SUCCESS,
   payload: payload,
-}); //
+});
 
 export const LOGIN_FAILURE = (payload) => ({
   type: actiontype.LOGIN_FAILURE,
   payload: payload,
-}); //
+});
 
 export const LOADING_ACTION = (payload) => {
   return {
     type: actiontype.LOADING,
     payload: payload,
   };
-}; //
+};
 
 export const LOGOUT_USER = () => ({
   type: actiontype.LOGOUT_USER,
-}); //
+});
 
 export const SET_PRODUCTS = (payload) => ({
   type: actiontype.SET_PRODUCTS,
+  payload: payload,
+});
+
+export const MEN_DATA = (payload) => ({
+  type: actiontype.MEN_DATA,
+  payload: payload,
+});
+
+export const WOMEN_DATA = (payload) => ({
+  type: actiontype.WOMEN_DATA,
   payload: payload,
 });
 
@@ -44,15 +56,19 @@ export const SET_CART = (payload) => ({
 
 export const ADD_TO_CART = (productId, qty) => {
   return async (dispatch) => {
-    const data = await addCart(productId, qty);
-    dispatch(SET_CART(data));
+    await addCart(productId, qty);
+    setTimeout(() => {
+      dispatch(GET_CART());
+    }, 200);
   };
 };
 
-export const REMOVE_FROM_CART = (productId) => {
+export const REMOVE_FROM_CART = (productId, qty) => {
   return async (dispatch) => {
-    const data = removeCart(productId);
-    dispatch(SET_CART(data));
+    await removeCart(productId, qty);
+    setTimeout(() => {
+      dispatch(GET_CART());
+    }, 200);
   };
 };
 
@@ -65,14 +81,14 @@ export const GET_CART = () => {
 };
 export const FETCH_PRODUCTS = () => {
   return async (dispatch) => {
-    const storedproducts = localStorage.getItem("stock");
-    if (storedproducts) {
-      const parsedData = JSON.parse(storedproducts);
-      dispatch(SET_PRODUCTS(parsedData.stock));
-    } else {
-      const products = await productList();
-      dispatch(SET_PRODUCTS(products));
-    }
+    const parsedData = await productList();
+    dispatch(SET_PRODUCTS(parsedData.stock));
+    setTimeout(() => {
+      const productMen = filterMenProducts(parsedData.stock);
+      dispatch(MEN_DATA(productMen));
+      const productWomen = filterWomenProducts(parsedData.stock);
+      dispatch(WOMEN_DATA(productWomen));
+    }, 200);
   };
 };
 
@@ -131,6 +147,7 @@ export const SET_WISHLIST = (payload) => ({
 export const GET_WISHLIST = () => {
   return async (dispatch) => {
     const databox = await getWishlist();
+    console.log(databox);
     dispatch(SET_WISHLIST(databox?.items));
   };
 };
@@ -138,12 +155,16 @@ export const GET_WISHLIST = () => {
 export const ADD_TO_WISHLIST = (productId) => {
   return async (dispatch) => {
     await addWishlist(productId);
-    dispatch(GET_WISHLIST());
+    setTimeout(() => {
+      dispatch(GET_WISHLIST());
+    }, 300);
   };
 };
 export const REMOVE_FROM_WISHLIST = (productId) => {
   return async (dispatch) => {
-    removeWishlist(productId);
-    dispatch(GET_WISHLIST());
+    await removeWishlist(productId);
+    setTimeout(() => {
+      dispatch(GET_WISHLIST());
+    }, 300);
   };
 };

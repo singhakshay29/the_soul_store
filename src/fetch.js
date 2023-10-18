@@ -1,27 +1,34 @@
 import Api from "./Api";
 
 export async function productList() {
-  try {
-    const response = await fetch(Api.productlistAPI, {
-      method: "GET",
-      headers: {
-        projectId: "dm3s7h4e43m1",
-      },
-    });
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
+  const storedproducts = localStorage.getItem("stock");
+  if (storedproducts) {
+    const parsedData = JSON.parse(storedproducts);
+    return parsedData;
+  } else {
+    try {
+      const response = await fetch(Api.productlistAPI, {
+        method: "GET",
+        headers: {
+          projectId: "dm3s7h4e43m1",
+        },
+      });
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      const data = await response.json();
+      const products = data.data;
+      localStorage.setItem(
+        "stock",
+        JSON.stringify({
+          stock: products,
+        })
+      );
+
+      return products;
+    } catch (error) {
+      console.error("Something went wrong");
     }
-    const data = await response.json();
-    const products = data.data;
-    localStorage.setItem(
-      "stock",
-      JSON.stringify({
-        stock: products,
-      })
-    );
-    return products;
-  } catch (error) {
-    console.error("Something went wrong");
   }
 }
 
@@ -122,8 +129,15 @@ export async function getWishlist() {
         },
       });
       const data = await response.json();
-      console.log(data);
       const databox = data.data;
+      const wishlist = databox.items;
+      localStorage.setItem(
+        "wishlist",
+        JSON.stringify({
+          wishlist: wishlist,
+        })
+      );
+      console.log(databox);
       return databox;
     } catch (error) {
       console.log("Somethings went wrong");
@@ -147,9 +161,13 @@ export async function getCart() {
       });
       const data = await response.json();
       console.log(data);
+      localStorage.setItem(
+        "cartItem",
+        JSON.stringify({
+          cartItem: data,
+        })
+      );
       return data;
-      // setResults(data.results);
-      // setProducts(data.data);
     } catch (error) {
       console.log("Somethings went wrong");
     }
@@ -162,7 +180,7 @@ export async function addCart(productId, qty) {
     const parsedData = JSON.parse(user);
     try {
       const baseUrl = Api.cart + productId;
-      const response = await fetch(baseUrl, {
+      await fetch(baseUrl, {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -172,9 +190,6 @@ export async function addCart(productId, qty) {
         },
         body: JSON.stringify({ quantity: qty }),
       });
-      const data = await response.json();
-      console.log(data);
-      return data;
     } catch (error) {
       console.log("Somethings went wrong");
     }
@@ -187,7 +202,7 @@ export async function removeCart(productId, qty) {
     const parsedData = JSON.parse(user);
     try {
       const baseUrl = Api.cart + productId;
-      const response = await fetch(baseUrl, {
+      await fetch(baseUrl, {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -197,10 +212,21 @@ export async function removeCart(productId, qty) {
         },
         body: JSON.stringify({ quantity: qty }),
       });
-      const data = await response.json();
-      return data;
     } catch (error) {
       console.log("Somethings went wrong");
     }
   }
+}
+export function filterWomenProducts(data) {
+  const productWomen = data.filter((item) => {
+    return item.gender === "Women";
+  });
+  return productWomen;
+}
+
+export function filterMenProducts(data) {
+  const productMen = data.filter((item) => {
+    return item.gender === "Men";
+  });
+  return productMen;
 }

@@ -1,14 +1,14 @@
-import React, { useState } from "react";
+import React from "react";
 import { CiMobile3 } from "react-icons/ci";
 import { Link, NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Box, Button, Container } from "@chakra-ui/react";
 
-export default function Topbar() {
+export default function Topbar({ active, setActive }) {
   const isLoggedIn = useSelector((state) => {
     return state.user.isLoggedIn;
   });
-  const [active, setActive] = useState("");
+
   const handleClick = (event) => {
     setActive(event.target.id);
   };

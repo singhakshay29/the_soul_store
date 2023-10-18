@@ -1,4 +1,3 @@
-import MenNav from "./MenNav";
 import React, { useState } from "react";
 import { Box, Button, Container, Grid, Text } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,7 +13,6 @@ export default function Order() {
 
   return (
     <>
-      <MenNav />
       <Text className="text3 mL">My Order</Text>
       <Grid templateColumns="repeat(2,1fr)">
         <Container className="orderContainer">

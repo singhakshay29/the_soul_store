@@ -98,12 +98,11 @@ import eye from "../assets/eye.jpg";
 import { Link } from "react-router-dom";
 import { FaRegUser } from "react-icons/fa";
 import { FaSearch } from "react-icons/fa";
-
 import { BsHandbag } from "react-icons/bs";
 import newlogo from "../assets/newlogo.png";
 import { useEffect, useState } from "react";
 import { AiOutlineHeart } from "react-icons/ai";
-
+import { useSelector } from "react-redux";
 import bB from "../assets/bB.jpg";
 import bP from "../assets/bP.jpg";
 import wB from "../assets/wB.jpg";
@@ -112,12 +111,14 @@ import bL from "../assets/bL.jpg";
 import MBJ from "../assets/MBJ.jpg";
 import MBS from "../assets/MBS.jpg";
 import MBJS from "../assets/MBJS.jpg";
-
 import { RiArrowDropDownLine } from "react-icons/ri";
 
 export default function MenNav() {
   const [scrollY, setScrollY] = useState(0);
   const [active, setActive] = useState("");
+  const { isLoggedIn } = useSelector((state) => state.user);
+  const { results } = useSelector((state) => state.app.cart);
+  const { wishlist } = useSelector((state) => state.app);
   const [isDropdownOpen, setIsDropDownOpen] = useState(null);
 
   const handleMouseEnter = (dropdown) => {
@@ -181,7 +182,6 @@ export default function MenNav() {
                       Heading: "Men's T-Shirts",
                       brandName: brandNameMT,
                       colorName: ColorNameMT,
-                      gender: "Male",
                     }}>
                     <Text className="navdropboxh1 mT10">
                       Oversized T-Shirts
@@ -195,7 +195,6 @@ export default function MenNav() {
                       Heading: "Men's Shirt",
                       brandName: brandNameMS,
                       colorName: ColorNameMS,
-                      gender: "Male",
                     }}>
                     <Text className="navdropboxh1">Shirts</Text>
                   </Link>
@@ -207,7 +206,6 @@ export default function MenNav() {
                       Heading: "Men's T-Shirts",
                       brandName: brandNameMT,
                       colorName: ColorNameMT,
-                      gender: "Male",
                     }}>
                     <Text className="navdropboxh1">T-Shirts</Text>
                   </Link>
@@ -219,7 +217,6 @@ export default function MenNav() {
                       colorName: colorNameMSW,
                       brandName: brandNameMSW,
                       Heading: "Men's Sweater",
-                      gender: "Male",
                     }}>
                     <Text className="navdropboxh1">Sweater</Text>
                   </Link>
@@ -231,7 +228,6 @@ export default function MenNav() {
                       colorName: colorNameKu,
                       brandName: brandNameKu,
                       Heading: "Men's Kurta",
-                      gender: "Male",
                     }}>
                     <Text className="navdropboxh1">Kurta</Text>
                   </Link>
@@ -243,7 +239,6 @@ export default function MenNav() {
                       colorName: colorNameHo,
                       brandName: brandNameHo,
                       Heading: "Men's Hoodie",
-                      gender: "Male",
                     }}>
                     <Text className="navdropboxh1">Hoodie</Text>
                   </Link>
@@ -255,7 +250,6 @@ export default function MenNav() {
                       colorName: colorNameTr,
                       brandName: brandNameTr,
                       Heading: "Men's Tracksuit",
-                      gender: "Male",
                     }}>
                     <Text className="navdropboxh1">Tracksuit</Text>
                   </Link>
@@ -536,7 +530,10 @@ export default function MenNav() {
                       <Link
                         to="/category"
                         style={{ textDecoration: "none" }}
-                        state={{ data: productBewakoof }}>
+                        state={{
+                          data: productBewakoof,
+                          Heading: "Bewakoof® Collection",
+                        }}>
                         <Text className="navdropboxh1 mT10">Bewakoof®</Text>
                       </Link>
                       <Link
@@ -736,214 +733,63 @@ export default function MenNav() {
                 icon={<FaSearch fontSize="23px" color="grey" />}
               />
             </ListItem>
-            <ListItem
-              className={active === "1" ? "activenav navIconL" : "navIconL"}
-              id={"1"}
-              onClick={handleClick}
-              onMouseEnter={() => handleMouseEnter("Fa")}
+            <Link
+              to="/order"
+              style={{ textDecoration: "none", marginLeft: "10px" }}
+              onMouseEnter={() => handleMouseEnter("User")}
               onMouseLeave={() => handleMouseLeave()}>
-              <IconButton
-                variant="outline"
-                colorScheme="teal"
-                aria-label="Call Sage"
-                className="navI"
-                icon={<FaRegUser />}
+              <FaRegUser
+                className={
+                  active === "1" ? "activeIcon navbuttonicon" : "navbuttonicon"
+                }
+                id={"1"}
+                onClick={handleClick}
+                onMouseEnter={() => handleMouseEnter("User")}
               />
-            </ListItem>
+            </Link>
+            {isDropdownOpen === "User" && (
+              <Box
+                onMouseEnter={() => handleMouseEnter("User")}
+                onMouseLeave={() => handleMouseLeave()}
+                className="navdropbox uPT">
+                <Text className="navdropboxh1 mT10"> Orders</Text>
+                <Text className="navdropboxh1"> Profile</Text>
+                <Text className="navdropboxh1">Log Out</Text>
+              </Box>
+            )}
+
             <Link to="/wishlist">
-              <ListItem className="navIconL" onClick={handleClick}>
-                <IconButton
-                  variant="outline"
-                  colorScheme="teal"
-                  aria-label="Call Sage"
-                  style={{ background: "transparent", border: "none" }}
-                  icon={<AiOutlineHeart fontSize="25px" color="grey" />}
-                />
-              </ListItem>
+              {isLoggedIn && (
+                <>
+                  {wishlist?.length > 0 && (
+                    <Text className="length">{wishlist?.length}</Text>
+                  )}
+                </>
+              )}
+
+              <AiOutlineHeart
+                className={
+                  active === "2" ? "activeIcon navbuttonicon" : "navbuttonicon"
+                }
+                id={"2"}
+                onClick={handleClick}
+              />
             </Link>
             <Link to="/shoppingcart">
-              <ListItem className="navIconL">
-                <IconButton
-                  variant="outline"
-                  colorScheme="teal"
-                  aria-label="Call Sage"
-                  style={{ background: "transparent", border: "none" }}
-                  icon={<BsHandbag fontSize="25px" color="grey" />}
-                />
-              </ListItem>
+              {isLoggedIn && (
+                <>{results && <Text className="cartLength">{results}</Text>}</>
+              )}
+              <BsHandbag
+                className={
+                  active === "3" ? "activeIcon navbuttonicon" : "navbuttonicon"
+                }
+                id={"3"}
+                onClick={handleClick}
+              />
             </Link>
           </List>
         </Box>
       </Container>
     </>
-    // <Container className={scrollY > 50 ? "navbar navbarscrolled" : "navbar"}>
-    //   <Image src={logo} alt="logo" width="130px" />
-    //   <Box display="flex" textAlign="center" marginLeft="16%" marginTop="-75">
-    //     <Button
-    //       onMouseEnter={() => handleMouseEnter("TOPWEAR")}
-    //       onMouseLeave={() => handleMouseLeave()}
-    //       className="navbutton">
-    //       TOPWEAR
-    //       <RiArrowDropDownLine fontSize="20px" />
-    //     </Button>
-    //     {isDropdownOpen === "TOPWEAR" && (
-    //       <Box
-    //         onMouseEnter={() => handleMouseEnter("TOPWEAR")}
-    //         onMouseLeave={() => handleMouseLeave()}
-    //         className="navdropbox">
-    //         <Text className="navdropboxh1 mT10"> All Oversized</Text>
-    //         <Text className="navdropboxh1"> New Classic Fit T-shirts</Text>
-    //         <Text className="navdropboxh1">All Graphic T-shirts All</Text>
-    //         <Text className="navdropboxh1">Solid T-shirts</Text>
-    //       </Box>
-    //     )}
-    //     <Button
-    //       onMouseEnter={() => handleMouseEnter("BOTTOMWEAR")}
-    //       onMouseLeave={() => handleMouseLeave()}
-    //       className="navbutton"
-    //       width="130px">
-    //       BOTTOMWEAR
-    //       <RiArrowDropDownLine fontSize="20px" />
-    //     </Button>
-    //     {isDropdownOpen === "BOTTOMWEAR" && (
-    //       <Box
-    //         onMouseEnter={() => handleMouseEnter("BOTTOMWEAR")}
-    //         onMouseLeave={() => handleMouseLeave()}
-    //         className="navdropbox mL7p">
-    //         <Text className="navdropboxh1 mT10"> All Oversized</Text>
-    //         <Text className="navdropboxh1"> New Classic Fit T-shirts</Text>
-    //         <Text className="navdropboxh1">All Graphic T-shirts All</Text>
-    //         <Text className="navdropboxh1">Solid T-shirts</Text>
-    //       </Box>
-    //     )}
-    //     <Button
-    //       onMouseEnter={() => handleMouseEnter("SNEAKERS")}
-    //       onMouseLeave={() => handleMouseLeave()}
-    //       className="navbutton"
-    //       width="180px">
-    //       SNEAKERS
-    //       <RiArrowDropDownLine fontSize="20px" />
-    //     </Button>
-    //     {isDropdownOpen === "SNEAKERS" && (
-    //       <Box
-    //         onMouseEnter={() => handleMouseEnter("SNEAKERS")}
-    //         onMouseLeave={() => handleMouseLeave()}
-    //         className="navdropbox mL16p">
-    //         <Text className="navdropboxh1 mT10"> All Oversized</Text>
-    //         <Text className="navdropboxh1"> New Classic Fit T-shirts</Text>
-    //         <Text className="navdropboxh1">All Graphic T-shirts All</Text>
-    //         <Text className="navdropboxh1">Solid T-shirts</Text>
-    //       </Box>
-    //     )}
-    //     <Button
-    //       onMouseEnter={() => handleMouseEnter("ACCESSORIES")}
-    //       onMouseLeave={() => handleMouseLeave()}
-    //       className="navbutton"
-    //       width="150px">
-    //       ACCESSORIES
-    //       <RiArrowDropDownLine fontSize="20px" />
-    //     </Button>
-    //     {isDropdownOpen === "ACCESSORIES" && (
-    //       <Box
-    //         onMouseEnter={() => handleMouseEnter("ACCESSORIES")}
-    //         onMouseLeave={() => handleMouseLeave()}
-    //         className="navdropbox mL23p">
-    //         <Text className="navdropboxh1 mT10"> All Oversized</Text>
-    //         <Text className="navdropboxh1"> New Classic Fit T-shirts</Text>
-    //         <Text className="navdropboxh1">All Graphic T-shirts All</Text>
-    //         <Text className="navdropboxh1">Solid T-shirts</Text>
-    //       </Box>
-    //     )}
-    //     <Button
-    //       onMouseEnter={() => handleMouseEnter("COLLECTIONS")}
-    //       onMouseLeave={() => handleMouseLeave()}
-    //       className="navbutton"
-    //       width="150px">
-    //       COLLECTIONS
-    //       <RiArrowDropDownLine fontSize="20px" />
-    //     </Button>
-    //     {isDropdownOpen === "COLLECTIONS" && (
-    //       <Box
-    //         onMouseEnter={() => handleMouseEnter("COLLECTIONS")}
-    //         onMouseLeave={() => handleMouseLeave()}
-    //         className="navdropbox mL32p">
-    //         <Text className="navdropboxh1 mT10"> All Oversized</Text>
-    //         <Text className="navdropboxh1"> New Classic Fit T-shirts</Text>
-    //         <Text className="navdropboxh1">All Graphic T-shirts All</Text>
-    //         <Text className="navdropboxh1">Solid T-shirts</Text>
-    //       </Box>
-    //     )}
-    //     <Button
-    //       onMouseEnter={() => handleMouseEnter("SHOP")}
-    //       onMouseLeave={() => handleMouseLeave()}
-    //       className="navbutton"
-    //       width="150px">
-    //       SHOP BY THEMES
-    //       <RiArrowDropDownLine fontSize="20px" />
-    //     </Button>
-    //     {isDropdownOpen === "SHOP" && (
-    //       <Box
-    //         onMouseEnter={() => handleMouseEnter("SHOP")}
-    //         onMouseLeave={() => handleMouseLeave()}
-    //         className="navdropbox mL41p">
-    //         <Text className="navdropboxh1 mT10"> All Oversized</Text>
-    //         <Text className="navdropboxh1"> New Classic Fit T-shirts</Text>
-    //         <Text className="navdropboxh1">All Graphic T-shirts All</Text>
-    //         <Text className="navdropboxh1">Solid T-shirts</Text>
-    //       </Box>
-    //     )}
-    //     <Button className="navbutton" width="110px">
-    //       MEMBERSHIP
-    //       <RiArrowDropDownLine fontSize="20px" />
-    //     </Button>
-    //     <Box display="flex" marginRight="15%">
-    //       <Button className="navbuttonicon">
-    //         <BsSearch fontSize="25px" color="grey" />
-    //       </Button>
-
-    //       <FaUser
-    //         className={
-    //           active === "1" ? "activeIcon navbuttonicon" : "navbuttonicon"
-    //         }
-    //         id={"1"}
-    //         onClick={handleClick}
-    //         onMouseEnter={() => handleMouseEnter("Fa")}
-    //         onMouseLeave={() => handleMouseLeave()}
-    //       />
-
-    //       {isDropdownOpen === "Fa" && (
-    //         <Box
-    //           onMouseEnter={() => handleMouseEnter("Fa")}
-    //           onMouseLeave={() => handleMouseLeave()}
-    //           className="navdropbox mL32p">
-    //           <Text className="navdropboxh1 mT10"> All Oversized</Text>
-    //           <Text className="navdropboxh1"> New Classic Fit T-shirts</Text>
-    //           <Text className="navdropboxh1">All Graphic T-shirts All</Text>
-    //           <Text className="navdropboxh1">Solid T-shirts</Text>
-    //         </Box>
-    //       )}
-
-    //       <Link to="/wishlist">
-    //         <AiOutlineHeart
-    //           className={
-    //             active === "2" ? "activeIcon navbuttonicon" : "navbuttonicon"
-    //           }
-    //           id={"2"}
-    //           onClick={handleClick}
-    //           fontSize="28px"
-    //         />
-    //       </Link>
-    //       <Link to="/shoppingcart">
-    //         <BsHandbag
-    //           className={
-    //             active === "3" ? "activeIcon navbuttonicon" : "navbuttonicon"
-    //           }
-    //           id={"3"}
-    //           onClick={handleClick}
-    //         />
-    //       </Link>
-    //     </Box>
-    //   </Box>
-    // </Container>
   );
 }
