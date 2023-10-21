@@ -6,13 +6,13 @@ import {
   Button,
   Divider,
   GridItem,
-  Container,
   Accordion,
   AccordionItem,
   AccordionButton,
   AccordionPanel,
   AccordionIcon,
   Flex,
+  Container,
 } from "@chakra-ui/react";
 import {
   AiFillHeart,
@@ -42,6 +42,7 @@ export default function Product() {
   const { wishlist } = useSelector((state) => state.app);
   const [productImages, setProductImages] = useState([]);
   const { isLoggedIn } = useSelector((state) => state.user);
+  // const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 800);
   const id = data._id;
   console.log(data);
 
@@ -106,13 +107,21 @@ export default function Product() {
 
   useEffect(() => {
     getTheProductDeatails();
+    // const handleResize = () => {
+    //   setIsSmallScreen(window.innerWidth < 800);
+    // };
+    // window.addEventListener("resize", handleResize);
     // eslint-disable-next-line
   }, []);
 
   return (
+    // <>
+    //   {isSmallScreen ? (
+    //     <></>
+    //   ) : (
     <>
       <Container marginTop="15px" style={{ overflow: "hidden" }}>
-        <Container className="categoryBox2">
+        <Flex className="categoryBox2">
           <Link to="/" style={{ textDecoration: "none", color: "#a7a9ac" }}>
             <Text className="categoryP1">Home</Text>
           </Link>
@@ -122,11 +131,8 @@ export default function Product() {
           </Link>
           <Text className="categoryP1">/</Text>
           <Text className="color">{product?.name}</Text>
-        </Container>
-        <Grid
-          templateColumns="repeat(2, 1fr)"
-          marginTop="0.1rem"
-          marginLeft="2.5%">
+        </Flex>
+        <Flex style={{ marginTop: "0.1rem", marginLeft: "2.5%" }}>
           <Grid templateColumns="repeat(2, 1fr)" gap={1}>
             {productImages?.map((item, index) => (
               <GridItem>
@@ -140,7 +146,7 @@ export default function Product() {
               </GridItem>
             ))}
           </Grid>
-          <Box margin="5px 2rem">
+          <Flex style={{ margin: "5px 2rem", flexDirection: "column" }}>
             <Text className="headingbox" marginTop="0">
               {product?.name}
             </Text>
@@ -294,8 +300,8 @@ export default function Product() {
                 </AccordionPanel>
               </AccordionItem>
             </Accordion>
-          </Box>
-        </Grid>
+          </Flex>
+        </Flex>
         {clickedImg && (
           <Modal
             clickedImg={clickedImg}
@@ -304,8 +310,11 @@ export default function Product() {
             handelRotationLeft={handelRotationLeft}
           />
         )}
+        <Footer />
       </Container>
-      <Footer />
     </>
   );
+  //     )}
+  //   </>
+  // );
 }

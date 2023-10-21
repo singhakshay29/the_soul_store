@@ -4,22 +4,14 @@ const baseInitialState = {
   cart: [],
   wishlist: [],
   productsList: [],
-  menData: [],
-  womenData: [],
 };
-const initialUserData = localStorage.getItem("stock");
 const initialCartData = localStorage.getItem("cartItem");
 const initialWishlistData = localStorage.getItem("wishlist");
 let initialState;
 
-if (initialUserData) {
-  const parsedInitialUserData = JSON.parse(initialUserData);
-  const stock = parsedInitialUserData.stock;
+if (initialCartData) {
   initialState = {
     ...baseInitialState,
-    productsList: stock,
-    menData: stock.filter((item) => item.gender === "Men"),
-    womenData: stock.filter((item) => item.gender === "Women"),
     cart: initialCartData ? JSON.parse(initialCartData).cartItem : [],
     wishlist: initialWishlistData
       ? JSON.parse(initialWishlistData).wishlist
@@ -45,16 +37,6 @@ const appReducer = (state = initialState, action) => {
       return {
         ...state,
         cart: action.payload,
-      };
-    case actiontype.MEN_DATA:
-      return {
-        ...state,
-        menData: action.payload,
-      };
-    case actiontype.WOMEN_DATA:
-      return {
-        ...state,
-        womenData: action.payload,
       };
     default:
       return state;

@@ -9,8 +9,6 @@ import {
   removeWishlist,
   getWishlist,
   getCart,
-  filterMenProducts,
-  filterWomenProducts,
 } from "./fetch";
 
 export const LOGIN_SUCCESS = (payload) => ({
@@ -36,16 +34,6 @@ export const LOGOUT_USER = () => ({
 
 export const SET_PRODUCTS = (payload) => ({
   type: actiontype.SET_PRODUCTS,
-  payload: payload,
-});
-
-export const MEN_DATA = (payload) => ({
-  type: actiontype.MEN_DATA,
-  payload: payload,
-});
-
-export const WOMEN_DATA = (payload) => ({
-  type: actiontype.WOMEN_DATA,
   payload: payload,
 });
 
@@ -82,13 +70,7 @@ export const GET_CART = () => {
 export const FETCH_PRODUCTS = () => {
   return async (dispatch) => {
     const parsedData = await productList();
-    dispatch(SET_PRODUCTS(parsedData.stock));
-    setTimeout(() => {
-      const productMen = filterMenProducts(parsedData.stock);
-      dispatch(MEN_DATA(productMen));
-      const productWomen = filterWomenProducts(parsedData.stock);
-      dispatch(WOMEN_DATA(productWomen));
-    }, 200);
+    dispatch(SET_PRODUCTS(parsedData));
   };
 };
 

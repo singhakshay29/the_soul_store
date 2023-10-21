@@ -15,7 +15,6 @@ import {
 } from "@chakra-ui/react";
 import Footer from "./Footer";
 import Modal from "react-modal";
-import { FaPlus } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { BiRupee } from "react-icons/bi";
 import { GrFormClose } from "react-icons/gr";
@@ -33,7 +32,6 @@ export default function ShoppingCart() {
   const [text, setText] = useState(false);
   const [size, setSize] = useState("S");
   const [modalIsOpen, setIsOpen] = useState(false);
-  const [modalIsOpen2, setIsOpen2] = useState(false);
   const { isLoggedIn } = useSelector((state) => state.user);
   const { cart } = useSelector((state) => state.app);
   let items, totalPrice, results;
@@ -63,10 +61,6 @@ export default function ShoppingCart() {
     setIsOpen(true);
   }
 
-  function openModal2() {
-    setIsOpen2(true);
-  }
-
   function afterOpenModal() {
     // references are now sync'd and can be accessed.
     // subtitle.style.color = "red";
@@ -75,14 +69,13 @@ export default function ShoppingCart() {
   function closeModal() {
     setIsOpen(false);
   }
-  function closeModal2() {
-    setIsOpen2(false);
-  }
-
   const handleRemoveAdd = (productId, qty) => {
     dispatch(REMOVE_FROM_CART(productId, qty));
     setTimeout(() => {
       dispatch(ADD_TO_WISHLIST(productId));
+    }, 200);
+    setTimeout(() => {
+      setIsOpen(false);
     }, 200);
   };
 
@@ -140,35 +133,13 @@ export default function ShoppingCart() {
           </button>
         )}
       </Modal>
-      <Modal
-        isOpen={modalIsOpen2}
-        onRequestClose={closeModal2}
-        style={customStyles}
-        ariaHideApp={false}
-        contentLabel="Example Modal">
-        <Flex>
-          Add New
-          <form>
-            <input type="text" placeholder="First Name"></input>
-            <input type="text" placeholder="Second Name"></input>
-
-            <input type="text" placeholder="Address type"></input>
-            <input type="text" placeholder="House No."></input>
-            <input type="text" placeholder="Street Name"></input>
-            <input type="text" placeholder="City"></input>
-            <input type="text" placeholder="State"></input>
-            <input type="text" placeholder="Country"></input>
-            <input type="text" placeholder="Pin no"></input>
-          </form>
-        </Flex>
-      </Modal>
-
       <Box style={{ display: "flex", justifyContent: "center" }}>
-        <Text className="text2">MY BAG </Text>
+        <Text className="text2 c1">MY BAG </Text>
         <Text>- - - - - - - - - - - -</Text>
-        <Text className="text2">ADDRESS</Text>
+        <Text className="text2 c2">ADDRESS</Text>
         <Text>- - - - - - - - - - - -</Text>
-        <Text className="text2">PAYMENT</Text>
+
+        <Text className="text2 c2">PAYMENT</Text>
       </Box>
       <Divider className="categoryDivider" />
 
@@ -319,7 +290,9 @@ export default function ShoppingCart() {
                 marginLeft: "4%",
                 marginTop: "22px",
               }}>
-              <Box className="shopbox2">PLACE ORDER</Box>
+              <Link to="/address" style={{ textDecoration: "none" }}>
+                <Box className="shopbox2">PLACE ORDER</Box>
+              </Link>
               <Text style={{ color: "#a7a9ac" }}>BILLING DETAILS</Text>
               <Box className="shopbox3">
                 <Flex className="boxS">
@@ -356,7 +329,9 @@ export default function ShoppingCart() {
                   </Text>
                 </Flex>
               </Box>
-              <Box className="shopbox2">PLACE ORDER</Box>
+              <Link to="/address" style={{ textDecoration: "none" }}>
+                <Box className="shopbox2">PLACE ORDER</Box>
+              </Link>
             </Box>
           </Flex>
         </div>
@@ -387,56 +362,6 @@ export default function ShoppingCart() {
             </>
           </Box>
         </>
-      )}
-
-      {results < 0 && (
-        <div>
-          <Flex>
-            <Grid className="cartItem">
-              <GridItem className="shopbox">
-                <Box
-                  className="addresbox"
-                  onClick={() => {
-                    openModal2();
-                  }}>
-                  <FaPlus className="plusIcon" />
-                </Box>
-              </GridItem>
-            </Grid>
-
-            <Box
-              style={{
-                marginLeft: "4%",
-                marginTop: "22px",
-              }}>
-              <Text style={{ color: "#a7a9ac" }}>BILLING DETAILS</Text>
-              <Box className="shopbox4">
-                <Flex className="boxS">
-                  <Text className="shopbox3text"> Cart Total</Text>
-                  <Text className="text2 price">
-                    <BiRupee />
-                    {totalPrice}
-                  </Text>
-                </Flex>
-                <Flex className="boxS">
-                  <Text className="shopbox3text"> GST</Text>
-                  <Text className="text2 price">
-                    <BiRupee />
-                    12%
-                  </Text>
-                </Flex>
-                <Flex className="boxS">
-                  <Text className="shopbox3text"> Total Amount</Text>
-                  <Text className="text2 price">
-                    <BiRupee />
-                    {totalPrice}
-                  </Text>
-                </Flex>
-              </Box>
-              <Box className="shopbox2">PLACE ORDER</Box>
-            </Box>
-          </Flex>
-        </div>
       )}
 
       <Footer />

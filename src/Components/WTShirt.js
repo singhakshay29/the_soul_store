@@ -1,5 +1,5 @@
 import Card from "./Card";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Box, Text, Grid, Divider, Container, Flex } from "@chakra-ui/react";
 export default function WTShirt() {
@@ -7,10 +7,10 @@ export default function WTShirt() {
   const [selectedBrands, setSelectedBrands] = useState("");
   const [selectedColors, setSelectedColors] = useState("");
   const [selectedPrices, setSelectedPrices] = useState("");
+  const [, setIsSmallScreen] = useState(window.innerWidth < 1200);
+
   const object = useLocation();
   const itemList = object.state?.data;
-  console.log(itemList);
-  console.log(object);
   const { Banner, Heading, brandName, colorName } = object.state;
   const handleSortingAndFiltering = (
     sortingCriteria,
@@ -66,15 +66,16 @@ export default function WTShirt() {
   };
 
   const handlePriceSelect = (min, max) => {
-    if (selectedPrices.includes(min, max)) {
-      setSelectedPrices(
-        selectedPrices.filter(
-          (selectedPrice) => selectedPrice !== min && selectedPrice !== max
-        )
-      );
-    } else {
-      setSelectedPrices([...selectedPrices, min, max]);
-    }
+    console.log(selectedPrices);
+    let minmax = [...new Set(selectedPrices)];
+    Array.sort(minmax);
+    setSelectedPrices(
+      selectedPrices.filter(
+        (selectedPrice) =>
+          selectedPrice >= minmax[0] &&
+          selectedPrice <= minmax[minmax.length - 1]
+      )
+    );
   };
 
   //const names = [...brandName];
@@ -100,6 +101,12 @@ export default function WTShirt() {
   //     })
   //     .join(" ");
   // });
+  useEffect(() => {
+    const handleResize = () => {
+      setIsSmallScreen(window.innerWidth < 1200);
+    };
+    window.addEventListener("resize", handleResize);
+  }, []);
 
   return (
     <>
@@ -151,7 +158,8 @@ export default function WTShirt() {
                     />
                     <label
                       htmlFor="categorySearchBoxInput"
-                      className="categorySearchBoxText">
+                      className="categorySearchBoxText"
+                      style={{ textTransform: "captilized" }}>
                       {item}
                     </label>
                   </Flex>

@@ -13,6 +13,37 @@
   border: 1px solid #ed2d2f;
   gap: 0;
 }
+.thirdnav {
+  display: block;
+  padding: 18px 21px;
+  background: transparent;
+  color: #000;
+  font-family: futura-pt, sans-serif;
+  font-weight: 500;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  width: 48%;
+  text-align: center;
+  cursor: pointer;
+  border: none;
+  gap: 0;
+}
+
+.thirdactive {
+  border-bottom: 4px solid #187b7b;
+  font-weight: 900;
+}
+.topbarbuttonRes {
+  background: transparent;
+  outline: none;
+  border: 2px solid white;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: none;
+  border-radius: 10px;
+  height: 35px;
+}
 
 .active1 {
   background-color: white;
@@ -28,6 +59,7 @@
   margin-left: 0.5rem;
   cursor: pointer;
   text-decoration: none;
+  margin-top: 12px;
 }
 
 .navbar {
@@ -36,12 +68,19 @@
   background-color: #fff;
   width: 100%;
   z-index: 10;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.3);
 }
 .navbarscrolled {
   margin-top: -60px;
   position: fixed;
   transition: margin-top ease-in-out;
 }
+.navbarscrolledRes {
+  margin-top: -75px;
+  position: fixed;
+  transition: margin-top ease-in-out;
+}
+
 .log {
   width: 80px;
   height: 49px;
@@ -62,6 +101,9 @@
   margin: 0 0 0 12rem;
   display: flex;
 }
+.listRes {
+  display: flex;
+}
 .list2 {
   display: flex;
   margin: 0;
@@ -79,6 +121,22 @@
   margin-left: 70px;
   z-index: 10;
 }
+
+.logoImgRes {
+  width: 100px;
+  position: absolute;
+  top: 50px;
+  z-index: 1;
+}
+
+.eyeRes {
+  z-index: 2;
+  width: 18px;
+  height: 14px;
+  top: 66px;
+  margin-left: 16px;
+  position: absolute;
+}
 .eye {
   z-index: 20;
   width: 22px;
@@ -87,6 +145,7 @@
   margin-left: 90px;
   position: absolute;
 }
+
 .eyelog {
   width: 16px;
   height: 12px;
@@ -95,6 +154,15 @@
   z-index: 20;
   position: fixed;
 }
+
+/* .eyelogRes {
+  width: 16px;
+  height: 12px;
+  margin-left: 7.7rem;
+  margin-top: 2rem;
+  z-index: 20;
+  position: fixed;
+} */
 
 .navList {
   position: relative;
@@ -283,6 +351,7 @@
   font-stretch: normal;
   line-height: 1.24;
   margin: 1rem;
+  justify-content: center;
 }
 .headingbox {
   width: 100%;
@@ -387,10 +456,10 @@
   color: #ed2d2f;
 }
 .categoryImage {
-  width: 400px;
   transition: transform 0.2s;
   cursor: pointer;
   overflow: hidden;
+  width: 100%;
 }
 .categoryImage:hover {
   transform: scale(1.1);
@@ -669,6 +738,12 @@
   font-size: 14px;
   font-weight: 900;
 }
+.c1 {
+  color: #117a7a;
+}
+.c2 {
+  color: #6d6d6d;
+}
 .text4 {
   font-size: 11px;
   font-weight: 600;
@@ -734,6 +809,9 @@
 }
 .mR10p {
   margin-right: 10%;
+}
+.mR5p {
+  margin-right: 5%;
 }
 .boxZoom {
   transition: transform 0.2s;
@@ -868,7 +946,7 @@
 .shopbox {
   border: 1px solid#eee;
   display: flex;
-  width: 45rem;
+  width: 50rem;
 }
 .addresbox {
   border: 1px solid #ccc;
@@ -876,9 +954,35 @@
   height: 12rem;
   margin: 30px;
   display: flex;
+  padding: 20px;
   justify-content: center;
   align-items: center;
   cursor: pointer;
+}
+.saveadd {
+  border: 1px solid #ccc;
+  width: 20rem;
+  height: 12rem;
+  margin: 30px;
+  padding: 20px;
+  cursor: pointer;
+  background-color: #f3f1f1;
+}
+.saveAddtext {
+  margin: 0;
+}
+.normalText {
+  margin: 4px 0;
+  font-size: 14px;
+}
+.addedit {
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  padding: 5px 14px;
+  color: #000;
+  font-weight: 700;
+  font-size: 10px;
+  background-color: white;
 }
 
 .plusIcon {
@@ -896,10 +1000,30 @@
   color: white;
   background-color: red;
   border-radius: 50%;
-  width: 13px;
   font-weight: 700;
-  padding: 2px;
-  margin-left: 2%;
+  padding: 2px 4px;
+  left: calc((100% - 22px) - 55px);
+}
+.length2 {
+  position: absolute;
+  font-size: x-small;
+  color: white;
+  background-color: red;
+  border-radius: 50%;
+  font-weight: 700;
+  padding: 2px 4px;
+  left: calc((100% - 22px) - 45px);
+}
+
+.cartLength2 {
+  position: absolute;
+  font-size: x-small;
+  color: white;
+  background-color: red;
+  border-radius: 50%;
+  font-weight: 700;
+  padding: 2px 4px;
+  left: calc((100% - 22px) - 1px);
 }
 
 .cartLength {
@@ -908,10 +1032,9 @@
   color: white;
   background-color: red;
   border-radius: 50%;
-  width: 13px;
   font-weight: 700;
-  padding: 2px;
-  margin-left: 2%;
+  padding: 2px 4px;
+  left: calc((100% - 22px) - 12px);
 }
 
 .shopboxImg {
@@ -1086,11 +1209,11 @@
 }
 .iBox {
   overflow: hidden;
-  width: 400px;
-  height: 25rem;
+  max-height: 24rem;
   margin-left: 1rem;
   margin-right: 1rem;
 }
+
 .loginBox {
   flex-direction: column;
   background-color: #e6e7e8;
@@ -1120,4 +1243,60 @@
   width: 345.5px;
   margin: 0.3rem;
   cursor: pointer;
+}
+
+.formInputf {
+  padding: 10px;
+  margin: 50px 13px 10px 10px;
+  border-radius: 10px;
+  width: 220px;
+  outline: none;
+  border: 1px solid #d6d4d4;
+}
+
+.formInput {
+  padding: 10px;
+  margin: 10px 10px;
+  border-radius: 10px;
+  width: 220px;
+  outline: none;
+  border: 1px solid #d6d4d4;
+}
+.formInputtype2 {
+  padding: 10px;
+  margin: 10px 10px;
+  border-radius: 10px;
+  width: 90%;
+  outline: none;
+  border: 1px solid #d6d4d4;
+}
+.addcancel {
+  color: black;
+  font-weight: 900;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #a7a9ac;
+  width: 100px;
+  cursor: pointer;
+  background-color: transparent;
+}
+.addSave {
+  color: white;
+  font-weight: 900;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: red;
+  border: none;
+  width: 100px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+.buttonbox {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  margin: 20px;
+}
+.selectIcon {
+  color: #148c8d;
 }

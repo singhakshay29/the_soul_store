@@ -3,10 +3,6 @@ const actiontype = {
 
   GET_CART: "GET_CART",
 
-  MEN_DATA: "MEN_DATA",
-
-  WOMEN_DATA: "WOMEN_DATA",
-
   LOGIN_USER: "LOGIN_USER",
 
   ADD_TO_CART: "ADD_TO_CART",

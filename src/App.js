@@ -15,9 +15,11 @@ import { useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import WomenNav from "./Components/WomenNav";
 import MenNav from "./Components/MenNav";
+import Address from "./Components/Address";
 
 function App() {
   const [active, setActive] = useState("1");
+
   return (
     <>
       <Router>
@@ -34,6 +36,7 @@ function App() {
           <Route path="product" element={<Product />}></Route>
           <Route path="wishlist" element={<Wishlist />}></Route>
           <Route path="order" element={<Order />}></Route>
+          <Route path="address" element={<Address />} />
           <Route path="shoppingcart" element={<ShoppingCart />}></Route>
         </Routes>
       </Router>

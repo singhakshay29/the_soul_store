@@ -1,412 +1,508 @@
-import mystore from "./store";
-const store = mystore.getState();
-console.log(store);
+export let productMen;
+export let productWomen;
+export let productMenTshirt;
+export let ColorNameMT;
+export let brandNameMT;
+export let productMenShirt;
+export let brandNameMS;
+export let ColorNameMS;
+export let productMenSweater;
+export let colorNameMSW;
+export let brandNameMSW;
+export let productMenKurta;
+export let colorNameKu;
+export let brandNameKu;
+export let productMenHoodie;
+export let colorNameHo;
+export let brandNameHo;
+export let colorNameMJS;
+export let brandNameMJS;
+export let productMenJeans;
+export let brandNameJg;
+export let colorNameJg;
+export let productMenJoggers;
+export let brandNameTr;
+export let colorNameTr;
+export let productMenTracksuit;
+export let productMenShorts;
+export let colorNameSh;
+export let brandNameSh;
+export let colorNamePy;
+export let brandNamePy;
+export let productMenPyjamas;
+export let productMenTrouser;
+export let colorNameTRS;
+export let brandNameTRS;
+export let productWomenTshirt;
+export let productWomenJoggers;
+export let productWomenJeans;
+export let productWomenshirts;
+export let productWomenJump;
+export let productWomenKurti;
+export let productWhite;
+export let productPink;
+export let productBlack;
+export let productBlue;
+export let productL;
+export let productBrown;
+export let productGrey;
+export let productOrange;
+export let productGreen;
+export let productYellow;
+export let productKhahki;
+export let productMaroon;
+export let productPurple;
+export let productRed;
+export let colorName;
+export let brandName;
+export let colorNameJ;
+export let brandNameJ;
+export let colorNameJS;
+export let brandNameJS;
+export let colorNameS;
+export let brandNameS;
+export let colorNameJP;
+export let brandNameJP;
+export let colorNameK;
+export let brandNameK;
+export let whitebrandName;
+export let pinkbrandName;
+export let blackbrandName;
+export let bluebrandName;
+export let LbrandName;
+export let brownbrandName;
+export let greybrandName;
+export let orangebrandName;
+export let GreenbrandName;
+export let RedbrandName;
+export let YellowbrandName;
+export let PurplebrandName;
+export let KhahkibrandName;
+export let MaroonbrandName;
+export let productBewakoof;
+export let productTOMJERRY;
+export let productCARTOONNETWORK;
+export let productDISNEYMERCHANDISE;
+export let productCHIMPAAANZEE;
+export let productCampusSutra;
+export let productLoungeDreams;
+export let productInstafabPlus;
+export let productStyleQuotient;
+export let productBewakoofAir;
+export let productRICKANDMORTY;
+export let productHARRYPOTTER;
+export let productMARVEL;
+export let productBelliskey;
+export let productDRYSTATE;
+export let productPEANUTS;
+export let productLOONEYTUNES;
+export let productGARFIELDMERCHANDISE;
+export let productMINIONSMERCHANDISE;
+export let productNARUTOMERCHANDISE;
+export let productTALESSTORIES;
+export let productDCMERCHANDISE;
+export let productKotty;
+export let productHubberholme;
+export let productCOCACOLA;
 
-const productMen = store.app.menData;
-const productWomen = store.app.womenData;
+export function service(productList) {
+  console.log(productList);
+  productMen = productList.filter((item) => {
+    return item.gender === "Men";
+  });
+  console.log(productMen);
+  productWomen = productList.filter((item) => {
+    return item.gender === "Women";
+  });
+  productMenTshirt = productMen.filter((item) => {
+    return item.subCategory === "tshirt";
+  });
+  const MenTshirtCategory = productMenTshirt?.map((item) => {
+    return item.brand;
+  });
+  const MenColorCategory = productMenTshirt?.map((item) => {
+    return item.color;
+  });
+  ColorNameMT = [...new Set(MenColorCategory)];
+  brandNameMT = [...new Set(MenTshirtCategory)];
+  productMenShirt = productMen?.filter((item) => {
+    return item.subCategory === "shirt";
+  });
+  const MenShirtCategory = productMenShirt?.map((item) => {
+    return item.brand;
+  });
 
-export const productMenTshirt = productMen?.filter((item) => {
-  return item.subCategory === "tshirt";
-});
-const MenTshirtCategory = productMenTshirt?.map((item) => {
-  return item.brand;
-});
+  const MenColorCategoryS = productMenShirt?.map((item) => {
+    return item.color;
+  });
+  ColorNameMS = [...new Set(MenColorCategoryS)];
+  brandNameMS = [...new Set(MenShirtCategory)];
 
-const MenColorCategory = productMenTshirt?.map((item) => {
-  return item.color;
-});
-export const ColorNameMT = [...new Set(MenColorCategory)];
-export const brandNameMT = [...new Set(MenTshirtCategory)];
+  productMenSweater = productMen?.filter((item) => {
+    return item.subCategory === "sweater";
+  });
 
-export const productMenShirt = productMen?.filter((item) => {
-  return item.subCategory === "shirt";
-});
+  const MenSweaterCategory = productMenSweater?.map((item) => {
+    return item.brand;
+  });
 
-const MenShirtCategory = productMenShirt?.map((item) => {
-  return item.brand;
-});
+  const MenColorCategorySweater = productMenSweater?.map((item) => {
+    return item.color;
+  });
+  colorNameMSW = [...new Set(MenColorCategorySweater)];
+  brandNameMSW = [...new Set(MenSweaterCategory)];
+  productMenKurta = productMen?.filter((item) => {
+    return item.subCategory === "kurta";
+  });
 
-const MenColorCategoryS = productMenShirt?.map((item) => {
-  return item.color;
-});
-export const ColorNameMS = [...new Set(MenColorCategoryS)];
-export const brandNameMS = [...new Set(MenShirtCategory)];
+  const MenKurtaCategory = productMenKurta?.map((item) => {
+    return item.brand;
+  });
 
-export const productMenSweater = productMen?.filter((item) => {
-  return item.subCategory === "sweater";
-});
+  const MenColorCategoryKurta = productMenKurta?.map((item) => {
+    return item.color;
+  });
+  colorNameKu = [...new Set(MenColorCategoryKurta)];
+  brandNameKu = [...new Set(MenKurtaCategory)];
+  productMenHoodie = productMen?.filter((item) => {
+    return item.subCategory === "hoodie";
+  });
 
-const MenSweaterCategory = productMenSweater?.map((item) => {
-  return item.brand;
-});
+  const MenHoodieCategory = productMenHoodie?.map((item) => {
+    return item.brand;
+  });
 
-const MenColorCategorySweater = productMenSweater?.map((item) => {
-  return item.color;
-});
-export const colorNameMSW = [...new Set(MenColorCategorySweater)];
-export const brandNameMSW = [...new Set(MenSweaterCategory)];
+  const MenColorCategoryHoodie = productMenHoodie?.map((item) => {
+    return item.color;
+  });
+  colorNameHo = [...new Set(MenColorCategoryHoodie)];
+  brandNameHo = [...new Set(MenHoodieCategory)];
+  productMenTracksuit = productMen?.filter((item) => {
+    return item.subCategory === "tracksuit";
+  });
 
-export const productMenKurta = productMen?.filter((item) => {
-  return item.subCategory === "kurta";
-});
+  const MentracksuitCategory = productMenTracksuit?.map((item) => {
+    return item.brand;
+  });
 
-const MenKurtaCategory = productMenKurta?.map((item) => {
-  return item.brand;
-});
+  const MenColorCategorytracksuit = productMenTracksuit?.map((item) => {
+    return item.color;
+  });
+  colorNameTr = [...new Set(MenColorCategorytracksuit)];
+  brandNameTr = [...new Set(MentracksuitCategory)];
 
-const MenColorCategoryKurta = productMenKurta?.map((item) => {
-  return item.color;
-});
-export const colorNameKu = [...new Set(MenColorCategoryKurta)];
-export const brandNameKu = [...new Set(MenKurtaCategory)];
+  productMenJoggers = productMen?.filter((item) => {
+    return item.subCategory === "jogger";
+  });
 
-export const productMenHoodie = productMen?.filter((item) => {
-  return item.subCategory === "hoodie";
-});
+  const MenJoggersCategory = productMenJoggers?.map((item) => {
+    return item.brand;
+  });
 
-const MenHoodieCategory = productMenHoodie?.map((item) => {
-  return item.brand;
-});
+  const MenColorCategoryJoggers = productMenJoggers?.map((item) => {
+    return item.color;
+  });
+  colorNameJg = [...new Set(MenColorCategoryJoggers)];
+  brandNameJg = [...new Set(MenJoggersCategory)];
+  productMenJeans = productMen?.filter((item) => {
+    return item.subCategory === "jeans";
+  });
 
-const MenColorCategoryHoodie = productMenHoodie?.map((item) => {
-  return item.color;
-});
-export const colorNameHo = [...new Set(MenColorCategoryHoodie)];
-export const brandNameHo = [...new Set(MenHoodieCategory)];
-//
-export const productMenTracksuit = productMen?.filter((item) => {
-  return item.subCategory === "tracksuit";
-});
+  const MenJeansCategory = productMenJeans?.map((item) => {
+    return item.brand;
+  });
 
-const MentracksuitCategory = productMenTracksuit?.map((item) => {
-  return item.brand;
-});
+  const MenColorCategoryJeans = productMenJeans?.map((item) => {
+    return item.color;
+  });
+  colorNameMJS = [...new Set(MenColorCategoryJeans)];
+  brandNameMJS = [...new Set(MenJeansCategory)];
+  productMenShorts = productMen?.filter((item) => {
+    return item.subCategory === "shorts";
+  });
 
-const MenColorCategorytracksuit = productMenTracksuit?.map((item) => {
-  return item.color;
-});
-export const colorNameTr = [...new Set(MenColorCategorytracksuit)];
-export const brandNameTr = [...new Set(MentracksuitCategory)];
-//
+  const MenShortsCategory = productMenShorts?.map((item) => {
+    return item.brand;
+  });
 
-export const productMenJoggers = productMen?.filter((item) => {
-  return item.subCategory === "jogger";
-});
+  const MenColorCategoryShorts = productMenShorts?.map((item) => {
+    return item.color;
+  });
+  colorNameSh = [...new Set(MenColorCategoryShorts)];
+  brandNameSh = [...new Set(MenShortsCategory)];
 
-const MenJoggersCategory = productMenJoggers?.map((item) => {
-  return item.brand;
-});
+  productMenPyjamas = productMen?.filter((item) => {
+    return item.subCategory === "pyjamas";
+  });
+  const MenPyjamasCategory = productMenPyjamas?.map((item) => {
+    return item.brand;
+  });
 
-const MenColorCategoryJoggers = productMenJoggers?.map((item) => {
-  return item.color;
-});
-export const colorNameJg = [...new Set(MenColorCategoryJoggers)];
-export const brandNameJg = [...new Set(MenJoggersCategory)];
+  const MenColorCategoryPyjamas = productMenPyjamas?.map((item) => {
+    return item.color;
+  });
+  colorNamePy = [...new Set(MenColorCategoryPyjamas)];
+  brandNamePy = [...new Set(MenPyjamasCategory)];
+  productMenTrouser = productMen?.filter((item) => {
+    return item.subCategory === "trouser";
+  });
 
-export const productMenJeans = productMen?.filter((item) => {
-  return item.subCategory === "jeans";
-});
+  const MenTrouserCategory = productMenTrouser?.map((item) => {
+    return item.brand;
+  });
 
-const MenJeansCategory = productMenJeans?.map((item) => {
-  return item.brand;
-});
+  const MenColorCategoryTrouser = productMenTrouser?.map((item) => {
+    return item.color;
+  });
+  colorNameTRS = [...new Set(MenColorCategoryTrouser)];
+  brandNameTRS = [...new Set(MenTrouserCategory)];
+  //
+  productWomenTshirt = productWomen?.filter((item) => {
+    return item.subCategory === "tshirt";
+  });
+  productWomenJoggers = productWomen?.filter((item) => {
+    return item.subCategory === "jogger";
+  });
+  productWomenJeans = productWomen?.filter((item) => {
+    return item.subCategory === "jeans";
+  });
+  productWomenshirts = productWomen?.filter((item) => {
+    return item.subCategory === "shirt";
+  });
+  productWomenJump = productWomen?.filter((item) => {
+    return item.subCategory === "jumpsuit";
+  });
+  productWomenKurti = productWomen?.filter((item) => {
+    return item.subCategory === "kurti";
+  });
 
-const MenColorCategoryJeans = productMenJeans?.map((item) => {
-  return item.color;
-});
-export const colorNameMJS = [...new Set(MenColorCategoryJeans)];
-export const brandNameMJS = [...new Set(MenJeansCategory)];
+  productWhite = productWomen?.filter((item) => {
+    return item.color === "WHITE";
+  });
+  productPink = productWomen?.filter((item) => {
+    return item.color === "PINK";
+  });
+  productBlack = productWomen?.filter((item) => {
+    return item.color === "BLACK";
+  });
+  productBlue = productWomen?.filter((item) => {
+    return item.color === "BLUE";
+  });
+  productL = productWomen?.filter((item) => {
+    return item.color === "LAVENDER";
+  });
+  productBrown = productWomen?.filter((item) => {
+    return item.color === "BROWN";
+  });
+  productGrey = productWomen?.filter((item) => {
+    return item.color === "GREY";
+  });
+  productOrange = productWomen?.filter((item) => {
+    return item.color === "ORANGE";
+  });
+  productGreen = productWomen?.filter((item) => {
+    return item.color === "GREEN";
+  });
+  productYellow = productWomen?.filter((item) => {
+    return item.color === "YELLOW";
+  });
+  productKhahki = productWomen?.filter((item) => {
+    return item.color === "KHAKI";
+  });
+  productMaroon = productWomen?.filter((item) => {
+    return item.color === "MAROON";
+  });
+  productPurple = productWomen?.filter((item) => {
+    return item.color === "PURPLE";
+  });
+  productRed = productWomen?.filter((item) => {
+    return item.color === "RED";
+  });
+  const womenTshirtCategory = productWomenTshirt?.map((item) => {
+    return item.brand;
+  });
+  const womenTshirtColor = productWomenTshirt?.map((item) => {
+    return item.color;
+  });
+  const womenJoggersCategory = productWomenJoggers?.map((item) => {
+    return item.brand;
+  });
+  const womenJoggersColor = productWomenJoggers?.map((item) => {
+    return item.color;
+  });
+  const womenJeansCategory = productWomenJeans?.map((item) => {
+    return item.brand;
+  });
+  const womenJeansColor = productWomenJeans?.map((item) => {
+    return item.color;
+  });
+  const womenShirtsCategory = productWomenshirts?.map((item) => {
+    return item.brand;
+  });
+  const womenShirtsColor = productWomenshirts?.map((item) => {
+    return item.color;
+  });
+  const womenJumpCategory = productWomenJump?.map((item) => {
+    return item.brand;
+  });
+  const womenJumpColor = productWomenJump?.map((item) => {
+    return item.color;
+  });
+  const womenKurtiCategory = productWomenKurti?.map((item) => {
+    return item.brand;
+  });
+  const womenKurtiColor = productWomenKurti?.map((item) => {
+    return item.color;
+  });
+  const womenProductWhiteBrand = productWhite?.map((item) => {
+    return item.brand;
+  });
+  const womenProductPinkBrand = productPink?.map((item) => {
+    return item.brand;
+  });
+  const womenProductBlackBrand = productBlack?.map((item) => {
+    return item.brand;
+  });
+  const womenProductBlueBrand = productBlue?.map((item) => {
+    return item.brand;
+  });
+  const womenProductBrownBrand = productBrown?.map((item) => {
+    return item.brand;
+  });
 
-export const productMenShorts = productMen?.filter((item) => {
-  return item.subCategory === "shorts";
-});
+  const womenProductGreyBrand = productGrey?.map((item) => {
+    return item.brand;
+  });
 
-const MenShortsCategory = productMenShorts?.map((item) => {
-  return item.brand;
-});
+  const womenProductOrangeBrand = productOrange?.map((item) => {
+    return item.brand;
+  });
+  const womenProductLBrand = productL?.map((item) => {
+    return item.brand;
+  });
+  const womenProductGreenBrand = productGreen?.map((item) => {
+    return item.brand;
+  });
+  const womenProductRedBrand = productRed?.map((item) => {
+    return item.brand;
+  });
+  const womenProductYellowBrand = productYellow?.map((item) => {
+    return item.brand;
+  });
 
-const MenColorCategoryShorts = productMenShorts?.map((item) => {
-  return item.color;
-});
-export const colorNameSh = [...new Set(MenColorCategoryShorts)];
-export const brandNameSh = [...new Set(MenShortsCategory)];
+  const womenProductPurpleBrand = productPurple?.map((item) => {
+    return item.brand;
+  });
+  const womenProductKhahkiBrand = productKhahki?.map((item) => {
+    return item.brand;
+  });
+  const womenProductMaroonBrand = productMaroon?.map((item) => {
+    return item.brand;
+  });
+  colorName = [...new Set(womenTshirtColor)];
+  brandName = [...new Set(womenTshirtCategory)];
+  colorNameJ = [...new Set(womenJoggersColor)];
+  brandNameJ = [...new Set(womenJoggersCategory)];
+  colorNameJS = [...new Set(womenJeansColor)];
+  brandNameJS = [...new Set(womenJeansCategory)];
+  colorNameS = [...new Set(womenShirtsColor)];
+  brandNameS = [...new Set(womenShirtsCategory)];
+  colorNameJP = [...new Set(womenJumpColor)];
+  brandNameJP = [...new Set(womenJumpCategory)];
+  colorNameK = [...new Set(womenKurtiColor)];
+  brandNameK = [...new Set(womenKurtiCategory)];
+  whitebrandName = [...new Set(womenProductWhiteBrand)];
+  pinkbrandName = [...new Set(womenProductPinkBrand)];
+  blackbrandName = [...new Set(womenProductBlackBrand)];
+  bluebrandName = [...new Set(womenProductBlueBrand)];
+  LbrandName = [...new Set(womenProductLBrand)];
+  brownbrandName = [...new Set(womenProductBrownBrand)];
+  greybrandName = [...new Set(womenProductGreyBrand)];
+  orangebrandName = [...new Set(womenProductOrangeBrand)];
+  GreenbrandName = [...new Set(womenProductGreenBrand)];
+  RedbrandName = [...new Set(womenProductRedBrand)];
+  YellowbrandName = [...new Set(womenProductYellowBrand)];
+  PurplebrandName = [...new Set(womenProductPurpleBrand)];
+  KhahkibrandName = [...new Set(womenProductKhahkiBrand)];
+  MaroonbrandName = [...new Set(womenProductMaroonBrand)];
+  productBewakoof = productWomen?.filter((item) => {
+    return item.brand === "Bewakoof®";
+  });
 
-export const productMenPyjamas = productMen?.filter((item) => {
-  return item.subCategory === "pyjamas";
-});
+  // const productBewakoofColor = productBewakoof?.map((item) => {
+  //   return item.color;
+  // });
 
-const MenPyjamasCategory = productMenPyjamas?.map((item) => {
-  return item.brand;
-});
-
-const MenColorCategoryPyjamas = productMenPyjamas?.map((item) => {
-  return item.color;
-});
-export const colorNamePy = [...new Set(MenColorCategoryPyjamas)];
-export const brandNamePy = [...new Set(MenPyjamasCategory)];
-
-export const productMenTrouser = productMen?.filter((item) => {
-  return item.subCategory === "trouser";
-});
-
-const MenTrouserCategory = productMenTrouser?.map((item) => {
-  return item.brand;
-});
-
-const MenColorCategoryTrouser = productMenTrouser?.map((item) => {
-  return item.color;
-});
-export const colorNameTRS = [...new Set(MenColorCategoryTrouser)];
-export const brandNameTRS = [...new Set(MenTrouserCategory)];
-//
-export const productWomenTshirt = productWomen?.filter((item) => {
-  return item.subCategory === "tshirt";
-});
-console.log(productWomenTshirt);
-export const productWomenJoggers = productWomen?.filter((item) => {
-  return item.subCategory === "jogger";
-});
-export const productWomenJeans = productWomen?.filter((item) => {
-  return item.subCategory === "jeans";
-});
-export const productWomenshirts = productWomen?.filter((item) => {
-  return item.subCategory === "shirt";
-});
-export const productWomenJump = productWomen?.filter((item) => {
-  return item.subCategory === "jumpsuit";
-});
-export const productWomenKurti = productWomen?.filter((item) => {
-  return item.subCategory === "kurti";
-});
-export const productWhite = productWomen?.filter((item) => {
-  return item.color === "WHITE";
-});
-export const productPink = productWomen?.filter((item) => {
-  return item.color === "PINK";
-});
-export const productBlack = productWomen?.filter((item) => {
-  return item.color === "BLACK";
-});
-export const productBlue = productWomen?.filter((item) => {
-  return item.color === "BLUE";
-});
-export const productL = productWomen?.filter((item) => {
-  return item.color === "LAVENDER";
-});
-export const productBrown = productWomen?.filter((item) => {
-  return item.color === "BROWN";
-});
-export const productGrey = productWomen?.filter((item) => {
-  return item.color === "GREY";
-});
-export const productOrange = productWomen?.filter((item) => {
-  return item.color === "ORANGE";
-});
-export const productGreen = productWomen?.filter((item) => {
-  return item.color === "GREEN";
-});
-export const productYellow = productWomen?.filter((item) => {
-  return item.color === "YELLOW";
-});
-export const productKhahki = productWomen?.filter((item) => {
-  return item.color === "KHAKI";
-});
-export const productMaroon = productWomen?.filter((item) => {
-  return item.color === "MAROON";
-});
-export const productPurple = productWomen?.filter((item) => {
-  return item.color === "PURPLE";
-});
-export const productRed = productWomen?.filter((item) => {
-  return item.color === "RED";
-});
-const womenTshirtCategory = productWomenTshirt?.map((item) => {
-  return item.brand;
-});
-const womenTshirtColor = productWomenTshirt?.map((item) => {
-  return item.color;
-});
-const womenJoggersCategory = productWomenJoggers?.map((item) => {
-  return item.brand;
-});
-const womenJoggersColor = productWomenJoggers?.map((item) => {
-  return item.color;
-});
-const womenJeansCategory = productWomenJeans?.map((item) => {
-  return item.brand;
-});
-const womenJeansColor = productWomenJeans?.map((item) => {
-  return item.color;
-});
-const womenShirtsCategory = productWomenshirts?.map((item) => {
-  return item.brand;
-});
-const womenShirtsColor = productWomenshirts?.map((item) => {
-  return item.color;
-});
-const womenJumpCategory = productWomenJump?.map((item) => {
-  return item.brand;
-});
-const womenJumpColor = productWomenJump?.map((item) => {
-  return item.color;
-});
-const womenKurtiCategory = productWomenKurti?.map((item) => {
-  return item.brand;
-});
-const womenKurtiColor = productWomenKurti?.map((item) => {
-  return item.color;
-});
-const womenProductWhiteBrand = productWhite?.map((item) => {
-  return item.brand;
-});
-const womenProductPinkBrand = productPink?.map((item) => {
-  return item.brand;
-});
-const womenProductBlackBrand = productBlack?.map((item) => {
-  return item.brand;
-});
-const womenProductBlueBrand = productBlue?.map((item) => {
-  return item.brand;
-});
-const womenProductBrownBrand = productBrown?.map((item) => {
-  return item.brand;
-});
-
-const womenProductGreyBrand = productGrey?.map((item) => {
-  return item.brand;
-});
-
-const womenProductOrangeBrand = productOrange?.map((item) => {
-  return item.brand;
-});
-const womenProductLBrand = productL?.map((item) => {
-  return item.brand;
-});
-const womenProductGreenBrand = productGreen?.map((item) => {
-  return item.brand;
-});
-const womenProductRedBrand = productRed?.map((item) => {
-  return item.brand;
-});
-const womenProductYellowBrand = productYellow?.map((item) => {
-  return item.brand;
-});
-
-const womenProductPurpleBrand = productPurple?.map((item) => {
-  return item.brand;
-});
-const womenProductKhahkiBrand = productKhahki?.map((item) => {
-  return item.brand;
-});
-const womenProductMaroonBrand = productMaroon?.map((item) => {
-  return item.brand;
-});
-
-export const colorName = [...new Set(womenTshirtColor)];
-export const brandName = [...new Set(womenTshirtCategory)];
-export const colorNameJ = [...new Set(womenJoggersColor)];
-export const brandNameJ = [...new Set(womenJoggersCategory)];
-export const colorNameJS = [...new Set(womenJeansColor)];
-export const brandNameJS = [...new Set(womenJeansCategory)];
-export const colorNameS = [...new Set(womenShirtsColor)];
-export const brandNameS = [...new Set(womenShirtsCategory)];
-export const colorNameJP = [...new Set(womenJumpColor)];
-export const brandNameJP = [...new Set(womenJumpCategory)];
-export const colorNameK = [...new Set(womenKurtiColor)];
-export const brandNameK = [...new Set(womenKurtiCategory)];
-export const whitebrandName = [...new Set(womenProductWhiteBrand)];
-export const pinkbrandName = [...new Set(womenProductPinkBrand)];
-export const blackbrandName = [...new Set(womenProductBlackBrand)];
-export const bluebrandName = [...new Set(womenProductBlueBrand)];
-export const LbrandName = [...new Set(womenProductLBrand)];
-export const brownbrandName = [...new Set(womenProductBrownBrand)];
-export const greybrandName = [...new Set(womenProductGreyBrand)];
-export const orangebrandName = [...new Set(womenProductOrangeBrand)];
-export const GreenbrandName = [...new Set(womenProductGreenBrand)];
-export const RedbrandName = [...new Set(womenProductRedBrand)];
-export const YellowbrandName = [...new Set(womenProductYellowBrand)];
-export const PurplebrandName = [...new Set(womenProductPurpleBrand)];
-export const KhahkibrandName = [...new Set(womenProductKhahkiBrand)];
-export const MaroonbrandName = [...new Set(womenProductMaroonBrand)];
-
-export const productBewakoof = productWomen?.filter((item) => {
-  return item.brand === "Bewakoof®";
-});
-console.log(productBewakoof);
-
-const productBewakoofColor = productBewakoof?.map((item) => {
-  return item.color;
-});
-console.log(productBewakoofColor);
-export const productTOMJERRY = productWomen?.filter((item) => {
-  return item.brand === "OFFICIAL TOM & JERRY MERCHANDISE";
-});
-export const productCARTOONNETWORK = productWomen?.filter((item) => {
-  return item.brand === "OFFICIAL CARTOON NETWORK MERCHANDISE";
-});
-export const productDISNEYMERCHANDISE = productWomen?.filter((item) => {
-  return item.brand === "OFFICIAL DISNEY MERCHANDISE";
-});
-export const productCHIMPAAANZEE = productWomen?.filter((item) => {
-  return item.brand === "CHIMPAAANZEE";
-});
-export const productCampusSutra = productWomen?.filter((item) => {
-  return item.brand === "Campus Sutra";
-});
-export const productLoungeDreams = productWomen?.filter((item) => {
-  return item.brand === "Lounge Dreams";
-});
-export const productInstafabPlus = productWomen?.filter((item) => {
-  return item.brand === "Instafab Plus";
-});
-export const productStyleQuotient = productWomen?.filter((item) => {
-  return item.brand === "Style Quotient";
-});
-export const productBewakoofAir = productWomen?.filter((item) => {
-  return item.brand === "Bewakoof Air® 1.0";
-});
-export const productRICKANDMORTY = productWomen?.filter((item) => {
-  return item.brand === "OFFICIAL RICK AND MORTY MERCHANDISE";
-});
-export const productHARRYPOTTER = productWomen?.filter((item) => {
-  return item.brand === "OFFICIAL HARRY POTTER MERCHANDISE";
-});
-export const productMARVEL = productWomen?.filter((item) => {
-  return item.brand === "OFFICIAL MARVEL MERCHANDISE";
-});
-export const productBelliskey = productWomen?.filter((item) => {
-  return item.brand === "Belliskey";
-});
-export const productDRYSTATE = productWomen?.filter((item) => {
-  return item.brand === "THE DRY STATE";
-});
-export const productPEANUTS = productWomen?.filter((item) => {
-  return item.brand === "OFFICIAL PEANUTS MERCHANDISE";
-});
-export const productLOONEYTUNES = productWomen?.filter((item) => {
-  return item.brand === "OFFICIAL LOONEY TUNES MERCHANDISE";
-});
-export const productGARFIELDMERCHANDISE = productWomen?.filter((item) => {
-  return item.brand === "OFFICIAL GARFIELD MERCHANDISE";
-});
-export const productMINIONSMERCHANDISE = productWomen?.filter((item) => {
-  return item.brand === "OFFICIAL MINIONS MERCHANDISE";
-});
-export const productNARUTOMERCHANDISE = productWomen?.filter((item) => {
-  return item.brand === "OFFICIAL NARUTO MERCHANDISE";
-});
-export const productTALESSTORIES = productWomen?.filter((item) => {
-  return item.brand === "TALES and STORIES";
-});
-export const productDCMERCHANDISE = productWomen?.filter((item) => {
-  return item.brand === "OFFICIAL DC MERCHANDISE";
-});
-export const productKotty = productWomen?.filter((item) => {
-  return item.brand === "Kotty";
-});
-export const productHubberholme = productWomen?.filter((item) => {
-  return item.brand === "Hubberholme";
-});
-export const productCOCACOLA = productWomen?.filter((item) => {
-  return item.brand === "OFFICIAL COCA COLA MERCHANDISE";
-});
+  productTOMJERRY = productWomen?.filter((item) => {
+    return item.brand === "OFFICIAL TOM & JERRY MERCHANDISE";
+  });
+  productCARTOONNETWORK = productWomen?.filter((item) => {
+    return item.brand === "OFFICIAL CARTOON NETWORK MERCHANDISE";
+  });
+  productDISNEYMERCHANDISE = productWomen?.filter((item) => {
+    return item.brand === "OFFICIAL DISNEY MERCHANDISE";
+  });
+  productCHIMPAAANZEE = productWomen?.filter((item) => {
+    return item.brand === "CHIMPAAANZEE";
+  });
+  productCampusSutra = productWomen?.filter((item) => {
+    return item.brand === "Campus Sutra";
+  });
+  productLoungeDreams = productWomen?.filter((item) => {
+    return item.brand === "Lounge Dreams";
+  });
+  productInstafabPlus = productWomen?.filter((item) => {
+    return item.brand === "Instafab Plus";
+  });
+  productStyleQuotient = productWomen?.filter((item) => {
+    return item.brand === "Style Quotient";
+  });
+  productBewakoofAir = productWomen?.filter((item) => {
+    return item.brand === "Bewakoof Air® export let .";
+  });
+  productRICKANDMORTY = productWomen?.filter((item) => {
+    return item.brand === "OFFICIAL RICK AND MORTY MERCHANDISE";
+  });
+  productHARRYPOTTER = productWomen?.filter((item) => {
+    return item.brand === "OFFICIAL HARRY POTTER MERCHANDISE";
+  });
+  productMARVEL = productWomen?.filter((item) => {
+    return item.brand === "OFFICIAL MARVEL MERCHANDISE";
+  });
+  productBelliskey = productWomen?.filter((item) => {
+    return item.brand === "Belliskey";
+  });
+  productDRYSTATE = productWomen?.filter((item) => {
+    return item.brand === "THE DRY STATE";
+  });
+  productPEANUTS = productWomen?.filter((item) => {
+    return item.brand === "OFFICIAL PEANUTS MERCHANDISE";
+  });
+  productLOONEYTUNES = productWomen?.filter((item) => {
+    return item.brand === "OFFICIAL LOONEY TUNES MERCHANDISE";
+  });
+  productGARFIELDMERCHANDISE = productWomen?.filter((item) => {
+    return item.brand === "OFFICIAL GARFIELD MERCHANDISE";
+  });
+  productMINIONSMERCHANDISE = productWomen?.filter((item) => {
+    return item.brand === "OFFICIAL MINIONS MERCHANDISE";
+  });
+  productNARUTOMERCHANDISE = productWomen?.filter((item) => {
+    return item.brand === "OFFICIAL NARUTO MERCHANDISE";
+  });
+  productTALESSTORIES = productWomen?.filter((item) => {
+    return item.brand === "TALES and STORIES";
+  });
+  productDCMERCHANDISE = productWomen?.filter((item) => {
+    return item.brand === "OFFICIAL DC MERCHANDISE";
+  });
+  productKotty = productWomen?.filter((item) => {
+    return item.brand === "Kotty";
+  });
+  productHubberholme = productWomen?.filter((item) => {
+    return item.brand === "Hubberholme";
+  });
+  productCOCACOLA = productWomen?.filter((item) => {
+    return item.brand === "OFFICIAL COCA COLA MERCHANDISE";
+  });
+}

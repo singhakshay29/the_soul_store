@@ -1,34 +1,21 @@
 import Api from "./Api";
 
 export async function productList() {
-  const storedproducts = localStorage.getItem("stock");
-  if (storedproducts) {
-    const parsedData = JSON.parse(storedproducts);
-    return parsedData;
-  } else {
-    try {
-      const response = await fetch(Api.productlistAPI, {
-        method: "GET",
-        headers: {
-          projectId: "dm3s7h4e43m1",
-        },
-      });
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-      const data = await response.json();
-      const products = data.data;
-      localStorage.setItem(
-        "stock",
-        JSON.stringify({
-          stock: products,
-        })
-      );
-
-      return products;
-    } catch (error) {
-      console.error("Something went wrong");
+  try {
+    const response = await fetch(Api.productlistAPI, {
+      method: "GET",
+      headers: {
+        projectId: "dm3s7h4e43m1",
+      },
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
     }
+    const data = await response.json();
+    const products = data.data;
+    return products;
+  } catch (error) {
+    console.error("Something went wrong");
   }
 }
 
@@ -203,7 +190,7 @@ export async function removeCart(productId, qty) {
     try {
       const baseUrl = Api.cart + productId;
       await fetch(baseUrl, {
-        method: "POST",
+        method: "DELETE",
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
