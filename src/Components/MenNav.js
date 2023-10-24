@@ -1,57 +1,4 @@
 import {
-  productL,
-  productRed,
-  productPink,
-  productGrey,
-  productBlue,
-  productWhite,
-  productBrown,
-  productBlack,
-  productKotty,
-  productGreen,
-  productYellow,
-  productPurple,
-  productKhahki,
-  productMaroon,
-  productOrange,
-  productMARVEL,
-  productPEANUTS,
-  productBewakoof,
-  productTOMJERRY,
-  productDRYSTATE,
-  productCOCACOLA,
-  productBelliskey,
-  productLOONEYTUNES,
-  productHubberholme,
-  productCampusSutra,
-  productBewakoofAir,
-  productHARRYPOTTER,
-  productCHIMPAAANZEE,
-  productLoungeDreams,
-  productInstafabPlus,
-  productRICKANDMORTY,
-  productStyleQuotient,
-  productTALESSTORIES,
-  productDCMERCHANDISE,
-  productCARTOONNETWORK,
-  productDISNEYMERCHANDISE,
-  productGARFIELDMERCHANDISE,
-  productMINIONSMERCHANDISE,
-  productNARUTOMERCHANDISE,
-  whitebrandName,
-  blackbrandName,
-  pinkbrandName,
-  brownbrandName,
-  greybrandName,
-  orangebrandName,
-  bluebrandName,
-  GreenbrandName,
-  RedbrandName,
-  YellowbrandName,
-  PurplebrandName,
-  LbrandName,
-  KhahkibrandName,
-  MaroonbrandName,
   productMenShirt,
   productMenTshirt,
   productMenJoggers,
@@ -82,6 +29,89 @@ import {
   colorNameTRS,
   brandNameTRS,
   productMenTrouser,
+  productBlackM,
+  blackbrandNameM,
+  productBrownM,
+  BrownbrandNameM,
+  productWhiteM,
+  whitebrandNameM,
+  productGreyM,
+  GreybrandNameM,
+  productOrangeM,
+  OrangebrandNameM,
+  productBlueM,
+  BluebrandNameM,
+  productGreenM,
+  GreenbrandNameM,
+  productRedM,
+  RedbrandNameM,
+  productPinkM,
+  PinkbrandNameM,
+  productYellowM,
+  YellowbrandNameM,
+  productPurpleM,
+  PurplebrandNameM,
+  BeigebrandNameM,
+  productBeige,
+  productKhahkiM,
+  KhahkibrandNameM,
+  productMaroonM,
+  MaroonbrandNameM,
+  CharcoalbrandNameM,
+  productCharcoal,
+  SilverbrandNameM,
+  productSilver,
+  CreambrandNameM,
+  productCreamM,
+  OlivebrandNameM,
+  productOlive,
+  productBewakoofM,
+  productTOMJERRYM,
+  productCARTOONNETWORKM,
+  productDISNEYMERCHANDISEM,
+  productBrownMochaM,
+  productCampusSutraM,
+  productRodamoM,
+  productInstafabPlusM,
+  productBewakoofAirM,
+  productSAVVAOM,
+  productHARRYPOTTERM,
+  productShoresM,
+  productMARVELMERCHANDISEM,
+  productBelliskeyM,
+  productTISTABENEM,
+  productPEANUTSM,
+  productRigoM,
+  productGARFIELDMERCHANDISEM,
+  productNARUTOM,
+  productXYXXM,
+  productDCMERCHANDISEM,
+  productKottyM,
+  productHubberholmeM,
+  productChkokkoM,
+  productMINIONSMERCHANDISEM,
+  productBreakbounceM,
+  productTrueBuyWorldM,
+  productBushirtM,
+  productINDICLUBM,
+  productBstoriesM,
+  productShopolicsM,
+  productNASAM,
+  productHOUSEDRAGONM,
+  productBLANCKM,
+  productThomasScottM,
+  productDAILYOUTFITSM,
+  productUrbanScottishM,
+  productBlueTygaM,
+  productBEWAKOOFXSTREETWEARM,
+  productBewakoofAmericanPimaM,
+  productSTARWARS,
+  productOldGreyM,
+  productAlstyleM,
+  productKraniumM,
+  productMadOverPrintM,
+  productSmugglerzM,
+  productFlynoffM,
 } from "../service";
 import {
   Box,
@@ -112,11 +142,6 @@ import newlogo from "../assets/newlogo.png";
 import { useEffect, useState, useRef } from "react";
 import { AiOutlineHeart } from "react-icons/ai";
 import { useSelector } from "react-redux";
-import bB from "../assets/bB.jpg";
-import bP from "../assets/bP.jpg";
-import wB from "../assets/wB.jpg";
-import blueBanner from "../assets/bluebanner.jpg";
-import bL from "../assets/bL.jpg";
 import MBJ from "../assets/MBJ.jpg";
 import MBS from "../assets/MBS.jpg";
 import MBJS from "../assets/MBJS.jpg";
@@ -482,6 +507,383 @@ export default function MenNav() {
                 </ListItem>
                 <ListItem
                   className={scrollY > 43 ? "navlist2" : "navList"}
+                  onMouseEnter={() => handleMouseEnter("SHOP BY THEMES")}
+                  onMouseLeave={() => handleMouseLeave()}>
+                  SHOP BY THEMES
+                  <IconButton
+                    variant="outline"
+                    colorScheme="teal"
+                    aria-label="Call Sage"
+                    style={{ background: "transparent", border: "none" }}
+                    icon={<RiArrowDropDownLine fontSize="20px" />}
+                  />
+                  {isDropdownOpen === "SHOP BY THEMES" && (
+                    <Box
+                      onMouseEnter={() => handleMouseEnter("SHOP BY THEMES")}
+                      onMouseLeave={() => handleMouseLeave()}
+                      className={
+                        scrollY > 43 ? "navdropbox sBT2" : "navdropbox sBT "
+                      }>
+                      <Flex>
+                        <Flex className="themeFlex">
+                          <Link
+                            to="/category"
+                            style={{ textDecoration: "none" }}
+                            state={{
+                              data: productBewakoofM,
+                              Heading: "Bewakoof® Collection",
+                            }}>
+                            <Text className="navdropboxh1 mT10">Bewakoof®</Text>
+                          </Link>
+                          <Link
+                            to="/category"
+                            style={{ textDecoration: "none" }}
+                            state={{ data: productTOMJERRYM }}>
+                            <Text className="navdropboxh1 mR10p">
+                              TOM & JERRY
+                            </Text>
+                          </Link>
+                          <Link
+                            to="/category"
+                            style={{ textDecoration: "none" }}
+                            state={{ data: productCARTOONNETWORKM }}>
+                            <Text className="navdropboxh1 mR10p">
+                              CARTOON NETWORK
+                            </Text>
+                          </Link>
+                          <Link
+                            to="/category"
+                            style={{ textDecoration: "none" }}
+                            state={{ data: productDISNEYMERCHANDISEM }}>
+                            <Text className="navdropboxh1 mR10p">
+                              DISNEY MERCHANDISE
+                            </Text>
+                          </Link>
+                          <Link
+                            to="/category"
+                            style={{ textDecoration: "none" }}
+                            state={{ data: productBrownMochaM }}>
+                            <Text className="navdropboxh1">Brown Mocha</Text>
+                          </Link>
+                          <Link
+                            to="/category"
+                            style={{ textDecoration: "none" }}
+                            state={{ data: productCampusSutraM }}>
+                            <Text className="navdropboxh1">Campus Sutra</Text>
+                          </Link>
+                          <Link
+                            to="/category"
+                            style={{ textDecoration: "none" }}
+                            state={{ data: productRodamoM }}>
+                            <Text className="navdropboxh1">Rodamo</Text>
+                          </Link>
+                          <Link
+                            to="/category"
+                            style={{ textDecoration: "none" }}
+                            state={{ data: productInstafabPlusM }}>
+                            <Text className="navdropboxh1">Instafab Plus</Text>
+                          </Link>
+                          <Link
+                            to="/category"
+                            style={{ textDecoration: "none" }}
+                            state={{ data: productBewakoofAirM }}>
+                            <Text className="navdropboxh1">
+                              Bewakoof Air® 1.0
+                            </Text>
+                          </Link>
+                          <Link
+                            to="/category"
+                            style={{ textDecoration: "none" }}
+                            state={{ data: productSAVVAOM }}>
+                            <Text className="navdropboxh1">SAVVAO</Text>
+                          </Link>
+                          <Link
+                            to="/category"
+                            style={{ textDecoration: "none" }}
+                            state={{ data: productShoresM }}>
+                            <Text className="navdropboxh1">7 Shores</Text>
+                          </Link>
+                        </Flex>
+                        <Flex className="themeFlex">
+                          <Link
+                            to="/category"
+                            style={{ textDecoration: "none" }}
+                            state={{ data: productBelliskeyM }}>
+                            <Text className="navdropboxh1 mT10">Belliskey</Text>
+                          </Link>
+                          <Link
+                            to="/category"
+                            style={{ textDecoration: "none" }}
+                            state={{ data: productTISTABENEM }}>
+                            <Text className="navdropboxh1">TISTABENE</Text>
+                          </Link>
+                          <Link
+                            to="/category"
+                            style={{ textDecoration: "none" }}
+                            state={{ data: productPEANUTSM }}>
+                            <Text className="navdropboxh1 mR10p">
+                              PEANUTS MERCHANDISE
+                            </Text>
+                          </Link>
+                          <Link
+                            to="/category"
+                            style={{ textDecoration: "none" }}
+                            state={{ data: productRigoM }}>
+                            <Text className="navdropboxh1 mR10p">Rigo</Text>
+                          </Link>
+                          <Link
+                            to="/category"
+                            style={{ textDecoration: "none" }}
+                            state={{ data: productGARFIELDMERCHANDISEM }}>
+                            <Text className="navdropboxh1 mR10p">
+                              GARFIELD MERCHANDISE
+                            </Text>
+                          </Link>
+                          <Link
+                            to="/category"
+                            style={{ textDecoration: "none" }}
+                            state={{ data: productMINIONSMERCHANDISEM }}>
+                            <Text className="navdropboxh1 mR10p">
+                              MINIONS MERCHANDISE
+                            </Text>
+                          </Link>
+                          <Link
+                            to="/category"
+                            style={{ textDecoration: "none" }}
+                            state={{ data: productNARUTOM }}>
+                            <Text className="navdropboxh1 mR10p">
+                              NARUTO MERCHANDISE
+                            </Text>
+                          </Link>
+                          <Link
+                            to="/category"
+                            style={{ textDecoration: "none" }}
+                            state={{ data: productXYXXM }}>
+                            <Text className="navdropboxh1">XYXX</Text>
+                          </Link>
+                          <Link
+                            to="/category"
+                            style={{ textDecoration: "none" }}
+                            state={{ data: productDCMERCHANDISEM }}>
+                            <Text className="navdropboxh1 mR10p">
+                              DC MERCHANDISE
+                            </Text>
+                          </Link>
+                          <Link
+                            to="/category"
+                            style={{ textDecoration: "none" }}
+                            state={{ data: productKottyM }}>
+                            <Text className="navdropboxh1">Kotty</Text>
+                          </Link>
+                        </Flex>
+                        <Flex className="themeFlex">
+                          <Link
+                            to="/category"
+                            style={{ textDecoration: "none" }}
+                            state={{ data: productTrueBuyWorldM }}>
+                            <Text className="navdropboxh1 mT10 ">
+                              TrueBuyWorld
+                            </Text>
+                          </Link>
+                          <Link
+                            to="/category"
+                            style={{ textDecoration: "none" }}
+                            state={{ data: productBushirtM }}>
+                            <Text className="navdropboxh1">Bushirt</Text>
+                          </Link>
+                          <Link
+                            to="/category"
+                            style={{ textDecoration: "none" }}
+                            state={{ data: productINDICLUBM }}>
+                            <Text className="navdropboxh1 mR10p">INDICLUB</Text>
+                          </Link>
+                          <Link
+                            to="/category"
+                            style={{ textDecoration: "none" }}
+                            state={{ data: productBstoriesM }}>
+                            <Text className="navdropboxh1 mR10p">Bstories</Text>
+                          </Link>
+                          <Link
+                            to="/category"
+                            style={{ textDecoration: "none" }}
+                            state={{ data: productShopolicsM }}>
+                            <Text className="navdropboxh1 mR10p">
+                              Shopolics
+                            </Text>
+                          </Link>
+                          <Link
+                            to="/category"
+                            style={{ textDecoration: "none" }}
+                            state={{ data: productNASAM }}>
+                            <Text className="navdropboxh1 mR10p">
+                              NASA MERCHANDISE
+                            </Text>
+                          </Link>
+                          <Link
+                            to="/category"
+                            style={{ textDecoration: "none" }}
+                            state={{ data: productHOUSEDRAGONM }}>
+                            <Text className="navdropboxh1 mR10p">
+                              HOUSE OF THE DRAGON
+                            </Text>
+                          </Link>
+                          <Link
+                            to="/category"
+                            style={{ textDecoration: "none" }}
+                            state={{ data: productBLANCKM }}>
+                            <Text className="navdropboxh1">BLANCK</Text>
+                          </Link>
+                          <Link
+                            to="/category"
+                            style={{ textDecoration: "none" }}
+                            state={{ data: productThomasScottM }}>
+                            <Text className="navdropboxh1 mR10p">
+                              Thomas Scott
+                            </Text>
+                          </Link>
+                          <Link
+                            to="/category"
+                            style={{ textDecoration: "none" }}
+                            state={{ data: productDAILYOUTFITSM }}>
+                            <Text className="navdropboxh1">
+                              THE DAILY OUTFITS
+                            </Text>
+                          </Link>
+                        </Flex>
+                        <Flex className="themeFlex">
+                          <Link
+                            to="/category"
+                            style={{ textDecoration: "none" }}
+                            state={{ data: productBewakoofAmericanPimaM }}>
+                            <Text className="navdropboxh1 mT10">
+                              Bewakoof American Pima
+                            </Text>
+                          </Link>
+                          <Link
+                            to="/category"
+                            style={{ textDecoration: "none" }}
+                            state={{ data: productSTARWARS }}>
+                            <Text className="navdropboxh1 mT10">
+                              STAR WARS MERCHANDISE
+                            </Text>
+                          </Link>
+                          <Link
+                            to="/category"
+                            style={{ textDecoration: "none" }}
+                            state={{ data: productOldGreyM }}>
+                            <Text className="navdropboxh1 mR10p">Old Grey</Text>
+                          </Link>
+                          <Link
+                            to="/category"
+                            style={{ textDecoration: "none" }}
+                            state={{ data: productAlstyleM }}>
+                            <Text className="navdropboxh1 mR10p">Alstyle</Text>
+                          </Link>
+                          <Link
+                            to="/category"
+                            style={{ textDecoration: "none" }}
+                            state={{ data: productKraniumM }}>
+                            <Text className="navdropboxh1 mR10p">Kranium</Text>
+                          </Link>
+                          <Link
+                            to="/category"
+                            style={{ textDecoration: "none" }}
+                            state={{ data: productMadOverPrintM }}>
+                            <Text className="navdropboxh1 mR10p">
+                              MadOverPrint
+                            </Text>
+                          </Link>
+                          <Link
+                            to="/category"
+                            style={{ textDecoration: "none" }}
+                            state={{ data: productSmugglerzM }}>
+                            <Text className="navdropboxh1 mR10p">
+                              Smugglerz
+                            </Text>
+                          </Link>
+                          <Link
+                            to="/category"
+                            style={{ textDecoration: "none" }}
+                            state={{ data: productFlynoffM }}>
+                            <Text className="navdropboxh1">Flynoff</Text>
+                          </Link>
+                          <Link
+                            to="/category"
+                            style={{ textDecoration: "none" }}
+                            state={{ data: productBreakbounceM }}>
+                            <Text className="navdropboxh1 mR10p">
+                              Breakbounce
+                            </Text>
+                          </Link>
+                          <Link
+                            to="/category"
+                            style={{ textDecoration: "none" }}
+                            state={{ data: productChkokkoM }}>
+                            <Text className="navdropboxh1">Chkokko</Text>
+                          </Link>
+                        </Flex>
+                        <Flex className="themeFlex">
+                          <Link
+                            to="/category"
+                            style={{ textDecoration: "none" }}
+                            state={{ data: productHARRYPOTTERM }}>
+                            <Text className="navdropboxh1 mT10">
+                              OFFICIAL HARRY POTTER MERCHANDISE
+                            </Text>
+                          </Link>
+                          <Link
+                            to="/category"
+                            style={{ textDecoration: "none" }}
+                            state={{ data: productMARVELMERCHANDISEM }}>
+                            <Text className="navdropboxh1 mR10p">
+                              OFFICIAL MARVEL MERCHANDISE
+                            </Text>
+                          </Link>
+                          <Link
+                            to="/category"
+                            style={{ textDecoration: "none" }}
+                            state={{ data: productHubberholmeM }}>
+                            <Text className="navdropboxh1">Hubberholme</Text>
+                          </Link>
+                          <Link
+                            to="/category"
+                            style={{ textDecoration: "none" }}
+                            state={{ data: productChkokkoM }}>
+                            <Text className="navdropboxh1">Chkokko</Text>
+                          </Link>
+                          <Link
+                            to="/category"
+                            style={{ textDecoration: "none" }}
+                            state={{ data: productBreakbounceM }}>
+                            <Text className="navdropboxh1">Breakbounce</Text>
+                          </Link>
+                          <Link
+                            to="/category"
+                            style={{ textDecoration: "none" }}
+                            state={{ data: productUrbanScottishM }}>
+                            <Text className="navdropboxh1">Urban Scottish</Text>
+                          </Link>
+                          <Link
+                            to="/category"
+                            style={{ textDecoration: "none" }}
+                            state={{ data: productBlueTygaM }}>
+                            <Text className="navdropboxh1">Blue Tyga</Text>
+                          </Link>
+                          <Link
+                            to="/category"
+                            style={{ textDecoration: "none" }}
+                            state={{ data: productBEWAKOOFXSTREETWEARM }}>
+                            <Text className="navdropboxh1">
+                              BEWAKOOF X STREETWEAR
+                            </Text>
+                          </Link>
+                        </Flex>
+                      </Flex>
+                    </Box>
+                  )}
+                </ListItem>
+                <ListItem
+                  className={scrollY > 43 ? "navlist2" : "navList"}
                   onMouseEnter={() => handleMouseEnter(" SHOES BY COLOR")}
                   onMouseLeave={() => handleMouseLeave()}>
                   SHOES BY COLOR
@@ -503,10 +905,9 @@ export default function MenNav() {
                         to="/category"
                         style={{ textDecoration: "none" }}
                         state={{
-                          data: productBlack,
-                          Banner: bB,
-                          brandName: blackbrandName,
-                          Heading: "Women Black Collection",
+                          data: productBlackM,
+                          brandName: blackbrandNameM,
+                          Heading: "Men Black Collection",
                         }}>
                         <Text className="navdropboxh1 mT10"> Black</Text>
                       </Link>
@@ -514,9 +915,9 @@ export default function MenNav() {
                         to="/category"
                         style={{ textDecoration: "none" }}
                         state={{
-                          data: productBrown,
-                          brandName: brownbrandName,
-                          Heading: "Women Brown Collection",
+                          data: productBrownM,
+                          brandName: BrownbrandNameM,
+                          Heading: "Men Brown Collection",
                         }}>
                         <Text className="navdropboxh1">Brown</Text>
                       </Link>
@@ -524,10 +925,9 @@ export default function MenNav() {
                         to="/category"
                         style={{ textDecoration: "none" }}
                         state={{
-                          Banner: wB,
-                          data: productWhite,
-                          brandName: whitebrandName,
-                          Heading: "Women White Collection",
+                          data: productWhiteM,
+                          brandName: whitebrandNameM,
+                          Heading: "Men White Collection",
                         }}>
                         <Text className="navdropboxh1">White</Text>
                       </Link>
@@ -535,9 +935,9 @@ export default function MenNav() {
                         to="/category"
                         style={{ textDecoration: "none" }}
                         state={{
-                          data: productGrey,
-                          brandName: greybrandName,
-                          Heading: "Women Grey Collection",
+                          data: productGreyM,
+                          brandName: GreybrandNameM,
+                          Heading: "Men Grey Collection",
                         }}>
                         <Text className="navdropboxh1">Grey</Text>
                       </Link>
@@ -545,9 +945,9 @@ export default function MenNav() {
                         to="/category"
                         style={{ textDecoration: "none" }}
                         state={{
-                          data: productOrange,
-                          brandName: orangebrandName,
-                          Heading: "Women Orange Collection",
+                          data: productOrangeM,
+                          brandName: OrangebrandNameM,
+                          Heading: "Men Orange Collection",
                         }}>
                         <Text className="navdropboxh1 mT10"> Orange</Text>
                       </Link>
@@ -555,10 +955,9 @@ export default function MenNav() {
                         to="/category"
                         style={{ textDecoration: "none" }}
                         state={{
-                          data: productBlue,
-                          brandName: bluebrandName,
-                          Heading: "Women Blue Collection",
-                          Banner: blueBanner,
+                          data: productBlueM,
+                          brandName: BluebrandNameM,
+                          Heading: "Men Blue Collection",
                         }}>
                         <Text className="navdropboxh1">Blue</Text>
                       </Link>
@@ -566,9 +965,9 @@ export default function MenNav() {
                         to="/category"
                         style={{ textDecoration: "none" }}
                         state={{
-                          data: productGreen,
-                          brandName: GreenbrandName,
-                          Heading: "Women Green Collection",
+                          data: productGreenM,
+                          brandName: GreenbrandNameM,
+                          Heading: "Men Green Collection",
                         }}>
                         <Text className="navdropboxh1">Green</Text>
                       </Link>
@@ -576,9 +975,9 @@ export default function MenNav() {
                         to="/category"
                         style={{ textDecoration: "none" }}
                         state={{
-                          data: productRed,
-                          brandName: RedbrandName,
-                          Heading: "Women Red Collection",
+                          data: productRedM,
+                          brandName: RedbrandNameM,
+                          Heading: "Men Red Collection",
                         }}>
                         <Text className="navdropboxh1">Red</Text>
                       </Link>
@@ -586,10 +985,10 @@ export default function MenNav() {
                         to="/category"
                         style={{ textDecoration: "none" }}
                         state={{
-                          data: productPink,
-                          Banner: bP,
-                          brandName: pinkbrandName,
-                          Heading: "Women Pink Collection",
+                          data: productPinkM,
+
+                          brandName: PinkbrandNameM,
+                          Heading: "Men Pink Collection",
                         }}>
                         <Text className="navdropboxh1 mT10">Pink</Text>
                       </Link>
@@ -597,9 +996,9 @@ export default function MenNav() {
                         to="/category"
                         style={{ textDecoration: "none" }}
                         state={{
-                          data: productYellow,
-                          brandName: YellowbrandName,
-                          Heading: "Women Yellow Collection",
+                          data: productYellowM,
+                          brandName: YellowbrandNameM,
+                          Heading: "Men Yellow Collection",
                         }}>
                         <Text className="navdropboxh1">Yellow</Text>
                       </Link>
@@ -607,9 +1006,9 @@ export default function MenNav() {
                         to="/category"
                         style={{ textDecoration: "none" }}
                         state={{
-                          data: productPurple,
-                          brandName: PurplebrandName,
-                          Heading: "Women Purple Collection",
+                          data: productPurpleM,
+                          brandName: PurplebrandNameM,
+                          Heading: "Men Purple Collection",
                         }}>
                         <Text className="navdropboxh1">Purple</Text>
                       </Link>
@@ -617,20 +1016,20 @@ export default function MenNav() {
                         to="/category"
                         style={{ textDecoration: "none" }}
                         state={{
-                          data: productL,
-                          Banner: bL,
-                          brandName: LbrandName,
-                          Heading: "Women Lavender Collection",
+                          data: productBeige,
+
+                          brandName: BeigebrandNameM,
+                          Heading: "Men Beige Collection",
                         }}>
-                        <Text className="navdropboxh1">Lavender</Text>
+                        <Text className="navdropboxh1">Beige</Text>
                       </Link>
                       <Link
                         to="/category"
                         style={{ textDecoration: "none" }}
                         state={{
-                          data: productKhahki,
-                          brandName: KhahkibrandName,
-                          Heading: "Women Khaki Collection",
+                          data: productKhahkiM,
+                          brandName: KhahkibrandNameM,
+                          Heading: "Men Khaki Collection",
                         }}>
                         <Text className="navdropboxh1">Khaki</Text>
                       </Link>
@@ -638,228 +1037,57 @@ export default function MenNav() {
                         to="/category"
                         style={{ textDecoration: "none" }}
                         state={{
-                          data: productMaroon,
-                          brandName: MaroonbrandName,
-                          Heading: "Women Maroon Collection",
+                          data: productMaroonM,
+                          brandName: MaroonbrandNameM,
+                          Heading: "Men Maroon Collection",
                         }}>
                         <Text className="navdropboxh1">Maroon</Text>
+                      </Link>
+
+                      <Link
+                        to="/category"
+                        style={{ textDecoration: "none" }}
+                        state={{
+                          data: productCharcoal,
+                          brandName: CharcoalbrandNameM,
+                          Heading: "Men Charcoal Collection",
+                        }}>
+                        <Text className="navdropboxh1">Charcoal</Text>
+                      </Link>
+                      <Link
+                        to="/category"
+                        style={{ textDecoration: "none" }}
+                        state={{
+                          data: productSilver,
+                          brandName: SilverbrandNameM,
+                          Heading: "Men Silver Collection",
+                        }}>
+                        <Text className="navdropboxh1">Silver</Text>
+                      </Link>
+                      <Link
+                        to="/category"
+                        style={{ textDecoration: "none" }}
+                        state={{
+                          data: productCreamM,
+                          brandName: CreambrandNameM,
+                          Heading: "Men Cream Collection",
+                        }}>
+                        <Text className="navdropboxh1">Cream</Text>
+                      </Link>
+                      <Link
+                        to="/category"
+                        style={{ textDecoration: "none" }}
+                        state={{
+                          data: productOlive,
+                          brandName: OlivebrandNameM,
+                          Heading: "Men Olive Collection",
+                        }}>
+                        <Text className="navdropboxh1">Olive</Text>
                       </Link>
                     </Box>
                   )}
                 </ListItem>
-                <ListItem
-                  className={scrollY > 43 ? "navlist2" : "navList"}
-                  onMouseEnter={() => handleMouseEnter("SHOP BY THEMES")}
-                  onMouseLeave={() => handleMouseLeave()}>
-                  SHOP BY THEMES
-                  <IconButton
-                    variant="outline"
-                    colorScheme="teal"
-                    aria-label="Call Sage"
-                    style={{ background: "transparent", border: "none" }}
-                    icon={<RiArrowDropDownLine fontSize="20px" />}
-                  />
-                  {isDropdownOpen === "SHOP BY THEMES" && (
-                    <Box
-                      onMouseEnter={() => handleMouseEnter("SHOP BY THEMES")}
-                      onMouseLeave={() => handleMouseLeave()}
-                      className={
-                        scrollY > 43 ? "navdropbox sBT2" : "navdropbox sBT "
-                      }>
-                      <Flex>
-                        <Flex style={{ flexDirection: "column" }}>
-                          <Link
-                            to="/category"
-                            style={{ textDecoration: "none" }}
-                            state={{
-                              data: productBewakoof,
-                              Heading: "Bewakoof® Collection",
-                            }}>
-                            <Text className="navdropboxh1 mT10">Bewakoof®</Text>
-                          </Link>
-                          <Link
-                            to="/category"
-                            style={{ textDecoration: "none" }}
-                            state={{ data: productTOMJERRY }}>
-                            <Text className="navdropboxh1 mR10p">
-                              OFFICIAL TOM & JERRY MERCHANDISE
-                            </Text>
-                          </Link>
-                          <Link
-                            to="/category"
-                            style={{ textDecoration: "none" }}
-                            state={{ data: productCARTOONNETWORK }}>
-                            <Text className="navdropboxh1 mR10p">
-                              OFFICIAL CARTOON NETWORK MERCHANDISE
-                            </Text>
-                          </Link>
-                          <Link
-                            to="/category"
-                            style={{ textDecoration: "none" }}
-                            state={{ data: productDISNEYMERCHANDISE }}>
-                            <Text className="navdropboxh1 mR10p">
-                              OFFICIAL DISNEY MERCHANDISE
-                            </Text>
-                          </Link>
-                          <Link
-                            to="/category"
-                            style={{ textDecoration: "none" }}
-                            state={{ data: productCHIMPAAANZEE }}>
-                            <Text className="navdropboxh1">CHIMPAAANZEE</Text>
-                          </Link>
-                          <Link
-                            to="/category"
-                            style={{ textDecoration: "none" }}
-                            state={{ data: productCampusSutra }}>
-                            <Text className="navdropboxh1">Campus Sutra</Text>
-                          </Link>
-                          <Link
-                            to="/category"
-                            style={{ textDecoration: "none" }}
-                            state={{ data: productLoungeDreams }}>
-                            <Text className="navdropboxh1">Lounge Dreams</Text>
-                          </Link>
-                          <Link
-                            to="/category"
-                            style={{ textDecoration: "none" }}
-                            state={{ data: productInstafabPlus }}>
-                            <Text className="navdropboxh1">Instafab Plus</Text>
-                          </Link>
-                          <Link
-                            to="/category"
-                            style={{ textDecoration: "none" }}
-                            state={{ data: productBewakoofAir }}>
-                            <Text className="navdropboxh1">
-                              Bewakoof Air® 1.0
-                            </Text>
-                          </Link>
-                          <Link
-                            to="/category"
-                            style={{ textDecoration: "none" }}
-                            state={{ data: productStyleQuotient }}>
-                            <Text className="navdropboxh1">Style Quotient</Text>
-                          </Link>
-                          <Link
-                            to="/category"
-                            style={{ textDecoration: "none" }}
-                            state={{ data: productRICKANDMORTY }}>
-                            <Text className="navdropboxh1">
-                              OFFICIAL RICK AND MORTY MERCHANDISE
-                            </Text>
-                          </Link>
-                          <Link
-                            to="/category"
-                            style={{ textDecoration: "none" }}
-                            state={{ data: productHARRYPOTTER }}>
-                            <Text className="navdropboxh1 mR10p">
-                              OFFICIAL HARRY POTTER MERCHANDISE
-                            </Text>
-                          </Link>
-                          <Link
-                            to="/category"
-                            style={{ textDecoration: "none" }}
-                            state={{ data: productMARVEL }}>
-                            <Text className="navdropboxh1 mR10p">
-                              OFFICIAL MARVEL MERCHANDISE
-                            </Text>
-                          </Link>
-                        </Flex>
-                        <Flex style={{ flexDirection: "column" }}>
-                          <Link
-                            to="/category"
-                            style={{ textDecoration: "none" }}
-                            state={{ data: productBelliskey }}>
-                            <Text className="navdropboxh1">Belliskey</Text>
-                          </Link>
-                          <Link
-                            to="/category"
-                            style={{ textDecoration: "none" }}
-                            state={{ data: productDRYSTATE }}>
-                            <Text className="navdropboxh1 mT10">
-                              THE DRY STATE
-                            </Text>
-                          </Link>
-                          <Link
-                            to="/category"
-                            style={{ textDecoration: "none" }}
-                            state={{ data: productPEANUTS }}>
-                            <Text className="navdropboxh1 mR10p">
-                              OFFICIAL PEANUTS MERCHANDISE
-                            </Text>
-                          </Link>
-                          <Link
-                            to="/category"
-                            style={{ textDecoration: "none" }}
-                            state={{ data: productLOONEYTUNES }}>
-                            <Text className="navdropboxh1 mR10p">
-                              OFFICIAL LOONEY TUNES MERCHANDISE
-                            </Text>
-                          </Link>
-                          <Link
-                            to="/category"
-                            style={{ textDecoration: "none" }}
-                            state={{ data: productGARFIELDMERCHANDISE }}>
-                            <Text className="navdropboxh1 mR10p">
-                              OFFICIAL GARFIELD MERCHANDISE
-                            </Text>
-                          </Link>
-                          <Link
-                            to="/category"
-                            style={{ textDecoration: "none" }}
-                            state={{ data: productMINIONSMERCHANDISE }}>
-                            <Text className="navdropboxh1 mR10p">
-                              OFFICIAL MINIONS MERCHANDISE
-                            </Text>
-                          </Link>
-                          <Link
-                            to="/category"
-                            style={{ textDecoration: "none" }}
-                            state={{ data: productNARUTOMERCHANDISE }}>
-                            <Text className="navdropboxh1 mR10p">
-                              OFFICIAL NARUTO MERCHANDISE
-                            </Text>
-                          </Link>
-                          <Link
-                            to="/category"
-                            style={{ textDecoration: "none" }}
-                            state={{ data: productTALESSTORIES }}>
-                            <Text className="navdropboxh1">
-                              TALES and STORIES
-                            </Text>
-                          </Link>
-                          <Link
-                            to="/category"
-                            style={{ textDecoration: "none" }}
-                            state={{ data: productDCMERCHANDISE }}>
-                            <Text className="navdropboxh1 mR10p">
-                              OFFICIAL DC MERCHANDISE
-                            </Text>
-                          </Link>{" "}
-                          <Link
-                            to="/category"
-                            style={{ textDecoration: "none" }}
-                            state={{ data: productKotty }}>
-                            <Text className="navdropboxh1">Kotty</Text>
-                          </Link>
-                          <Link
-                            to="/category"
-                            style={{ textDecoration: "none" }}
-                            state={{ data: productHubberholme }}>
-                            <Text className="navdropboxh1">Hubberholme</Text>
-                          </Link>
-                          <Link
-                            to="/category"
-                            style={{ textDecoration: "none" }}
-                            state={{ data: productCOCACOLA }}>
-                            <Text className="navdropboxh1">
-                              OFFICIAL COCA COLA MERCHANDISE
-                            </Text>
-                          </Link>
-                        </Flex>
-                      </Flex>
-                    </Box>
-                  )}
-                </ListItem>
+
                 <ListItem className={scrollY > 43 ? "navlist2" : "navList"}>
                   MEMBERSHIP
                 </ListItem>

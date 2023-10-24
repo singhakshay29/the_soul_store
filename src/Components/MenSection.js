@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Footer from "./Footer";
 import m1 from "../assets/m1.png";
 import m2 from "../assets/m2.png";
 import m3 from "../assets/m3.png";
@@ -148,7 +147,6 @@ export default function MenSection() {
 
         <Card className="heading1">MEMBERSHIP</Card>
         <Image src={member} alt="membership" width="100%" />
-        <Footer />
       </Container>
     </>
   );

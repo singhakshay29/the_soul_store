@@ -204,16 +204,61 @@ export async function removeCart(productId, qty) {
     }
   }
 }
-export function filterWomenProducts(data) {
-  const productWomen = data.filter((item) => {
-    return item.gender === "Women";
-  });
-  return productWomen;
+export async function placeOrder(productId, address, quantity) {
+  const { addressType, streetName, state, country, city, pinNo } = address;
+  const user = localStorage.getItem("userDetails");
+  if (user) {
+    const parsedData = JSON.parse(user);
+    try {
+      const baseUrl = Api.order;
+      await fetch(baseUrl, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${parsedData.signup.token}`,
+          projectid: "dm3s7h4e43m1",
+        },
+        body: JSON.stringify({
+          productId: productId,
+          quantity: quantity,
+          addressType: addressType,
+          address: {
+            street: streetName,
+            city: city,
+            state: state,
+            country: country,
+            zipCode: pinNo,
+          },
+        }),
+      });
+    } catch (error) {
+      console.log("Somethings went wrong");
+    }
+  }
 }
 
-export function filterMenProducts(data) {
-  const productMen = data.filter((item) => {
-    return item.gender === "Men";
-  });
-  return productMen;
+export async function getOrderList() {
+  const user = localStorage.getItem("userDetails");
+  if (user) {
+    const parsedData = JSON.parse(user);
+    try {
+      const response = await fetch(Api.order, {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${parsedData.signup.token}`,
+          projectId: "dm3s7h4e43m1",
+        },
+      });
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error("Something went wrong");
+    }
+  }
 }

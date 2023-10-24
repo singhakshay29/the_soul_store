@@ -4,6 +4,7 @@ const Api = {
   cart: "https://academics.newtonschool.co/api/v1/ecommerce/cart/",
   product: "https://academics.newtonschool.co/api/v1/ecommerce/product/",
   wishlist: "https://academics.newtonschool.co/api/v1/ecommerce/wishlist/",
+  order: "https://academics.newtonschool.co/api/v1/ecommerce/order/",
   productlistAPI:
     "https://academics.newtonschool.co/api/v1/ecommerce/clothes/products?limit=1599",
 };

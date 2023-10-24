@@ -29,7 +29,6 @@ import { Link, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { ADD_TO_WISHLIST, REMOVE_FROM_WISHLIST } from "../action";
 import { addCart } from "../fetch";
-import Footer from "./Footer";
 
 export default function Product() {
   const dispatch = useDispatch();
@@ -310,11 +309,7 @@ export default function Product() {
             handelRotationLeft={handelRotationLeft}
           />
         )}
-        <Footer />
       </Container>
     </>
   );
-  //     )}
-  //   </>
-  // );
 }

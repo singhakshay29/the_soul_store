@@ -63,7 +63,6 @@ export const REMOVE_FROM_CART = (productId, qty) => {
 export const GET_CART = () => {
   return async (dispatch) => {
     const data = await getCart();
-    console.log(data);
     dispatch(SET_CART(data));
   };
 };

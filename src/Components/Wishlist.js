@@ -8,7 +8,6 @@ import {
   GridItem,
   Container,
 } from "@chakra-ui/react";
-import Footer from "./Footer";
 import { Link } from "react-router-dom";
 import { RxCross2 } from "react-icons/rx";
 import { FaRupeeSign } from "react-icons/fa";
@@ -136,8 +135,6 @@ export default function Wishlist() {
           </Box>
         </>
       )}
-
-      <Footer />
     </>
   );
 }

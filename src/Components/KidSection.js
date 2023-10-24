@@ -1,5 +1,4 @@
 import React from "react";
-import Footer from "./Footer";
 import k1 from "../assets/k1.png";
 import k2 from "../assets/k2.png";
 import k3 from "../assets/k3.png";
@@ -55,7 +54,6 @@ export default function KidSection() {
         </Box>
       </Container>
       <ImageSlider w1={k1} w2={k2} w3={k3} w4={k4} />
-      <Footer />
     </>
   );
 }

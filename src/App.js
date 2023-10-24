@@ -16,6 +16,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import WomenNav from "./Components/WomenNav";
 import MenNav from "./Components/MenNav";
 import Address from "./Components/Address";
+import Footer from "./Components/Footer";
 
 function App() {
   const [active, setActive] = useState("1");
@@ -39,6 +40,7 @@ function App() {
           <Route path="address" element={<Address />} />
           <Route path="shoppingcart" element={<ShoppingCart />}></Route>
         </Routes>
+        <Footer />
       </Router>
     </>
   );

@@ -15,9 +15,9 @@ import {
   productWomenTshirt,
   productWomenJoggers,
   service,
+  // service2,
 } from "../service";
 import React, { useEffect, useState } from "react";
-import Footer from "./Footer";
 import w1 from "../assets/w1.png";
 import w2 from "../assets/w2.png";
 import w3 from "../assets/w3.png";
@@ -52,6 +52,7 @@ export default function WomenSection() {
   console.log(productsList);
   if (productsList.length > 0) {
     service(productsList);
+    // service2(productsList);
   }
 
   const dispatch = useDispatch();
@@ -413,7 +414,6 @@ export default function WomenSection() {
 
         <Card className="heading1">MEMBERSHIP</Card>
         <Image src={member} alt="membership" width="100%" />
-        <Footer />
       </Container>
     </>
   );
