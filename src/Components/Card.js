@@ -1,11 +1,4 @@
-import {
-  Text,
-  // Image,
-  // Button,
-  // Popover,
-  Divider,
-  GridItem,
-} from "@chakra-ui/react";
+import { Text, Divider, Container } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import INA from "../assets/INA.jpg";
 import React, { useState, useEffect } from "react";
@@ -14,14 +7,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { ADD_TO_WISHLIST, REMOVE_FROM_WISHLIST } from "../action";
 
-export default function Card({ item, index }) {
+export default function Card({ item, index, openPopover }) {
   const dispatch = useDispatch();
   const [displayImage, setDisplayImage] = useState("");
   const { wishlist } = useSelector((state) => state.app);
   const { isLoggedIn } = useSelector((state) => state.user);
   const [isInWishlist, setIsInWishlist] = useState(false);
   const productId = item?._id;
-  // const [isPopoverOpen, setIsPopoverOpen] = useState(false);
 
   const handleToggleFavorite = (productId) => {
     if (isLoggedIn) {
@@ -57,20 +49,9 @@ export default function Card({ item, index }) {
     fetchImage();
   }, [item.displayImage]);
 
-  // const openPopover = () => {
-  //   setIsPopoverOpen(true);
-  //   setTimeout(() => {
-  //     setIsPopoverOpen(false);
-  //   }, 2000);
-  // };
   return (
     <>
-      {/* {isPopoverOpen && (
-        <Popover>
-          <Button className="popoverbody">Product Add to wishlist</Button>
-        </Popover>
-      )} */}
-      <GridItem key={index} margin="0 0.6rem">
+      <Container key={index} className="cardContainerbox">
         {isLoggedIn ? (
           <>
             {isInWishlist ? (
@@ -79,7 +60,7 @@ export default function Card({ item, index }) {
                   className="favIconadded"
                   onClick={() => {
                     handleToggleFavorite(item?._id);
-                    // openPopover();
+                    openPopover("Product Removed from your Wishlist");
                   }}
                 />
               </>
@@ -89,7 +70,7 @@ export default function Card({ item, index }) {
                   className="favIcon"
                   onClick={() => {
                     handleToggleFavorite(item?._id);
-                    // openPopover();
+                    openPopover("Product Added to your Wishlist");
                   }}
                 />
               </>
@@ -124,7 +105,7 @@ export default function Card({ item, index }) {
           {item?.price}
           <Text marginLeft="0.5rem">ONLY</Text>
         </Text>
-      </GridItem>
+      </Container>
     </>
   );
 }

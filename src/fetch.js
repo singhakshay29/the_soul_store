@@ -21,7 +21,7 @@ export async function productList() {
 
 export async function loginUser(email, password) {
   const url = Api.login;
-  console.log(url);
+
   const response = await fetch(url, {
     method: "POST",
     headers: {
@@ -124,7 +124,7 @@ export async function getWishlist() {
           wishlist: wishlist,
         })
       );
-      console.log(databox);
+
       return databox;
     } catch (error) {
       console.log("Somethings went wrong");
@@ -147,7 +147,6 @@ export async function getCart() {
         },
       });
       const data = await response.json();
-      console.log(data);
       localStorage.setItem(
         "cartItem",
         JSON.stringify({

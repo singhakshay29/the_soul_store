@@ -1156,7 +1156,9 @@ export default function MenNav() {
               <Link to="/shoppingcart">
                 {isLoggedIn && (
                   <>
-                    {results && <Text className="cartLength">{results}</Text>}
+                    {results > 0 && (
+                      <Text className="cartLength">{results}</Text>
+                    )}
                   </>
                 )}
                 <BsHandbag

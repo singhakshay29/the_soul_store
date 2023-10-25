@@ -6,9 +6,7 @@ import { Box, Button, Flex, Text } from "@chakra-ui/react";
 
 export default function Topbar({ active, setActive }) {
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 1200);
-  const isLoggedIn = useSelector((state) => {
-    return state.user.isLoggedIn;
-  });
+  const { isLoggedIn } = useSelector((state) => state.user);
 
   const handleClick = (event) => {
     setActive(event.target.id);
@@ -74,16 +72,6 @@ export default function Topbar({ active, setActive }) {
                 id={"2"}
                 onClick={handleClick}>
                 Men
-              </Button>
-            </NavLink>
-            <NavLink to="/kid">
-              <Button
-                className={
-                  active === "3" ? "active1 topbarbutton" : "topbarbutton"
-                }
-                id={"3"}
-                onClick={handleClick}>
-                Kids
               </Button>
             </NavLink>
           </Box>

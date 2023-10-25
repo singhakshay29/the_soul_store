@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Text } from "@chakra-ui/react";
+import { Container, Flex, Text } from "@chakra-ui/react";
 
 export default function Footer() {
   return (
@@ -12,15 +12,15 @@ export default function Footer() {
         <span style={{ fontWeight: "600", margin: "0 10px" }}>6 Million</span>
         Happy Customers
       </Text>
-      <Container className="bottom">
-        <Container className="bottomText">
+      <Flex className="bottom">
+        <Flex className="bottomText">
           <Text className="bottomTexth1">NEED HELP</Text>
           <Text className="bottomTexth2">CONTACT US</Text>
           <Text className="bottomTexth2">TRACK ORDER</Text>
           <Text className="bottomTexth2">RETURN & REFUNDS</Text>
           <Text className="bottomTexth2">FAQ's</Text>
           <Text className="bottomTexth2">My ACCOUNT</Text>
-        </Container>
+        </Flex>
         <Container className="bottomText">
           <Text className="bottomTexth1">COMPANY</Text>
           <Text className="bottomTexth2">About Us</Text>
@@ -41,7 +41,7 @@ export default function Footer() {
           <Text className="bottomTexth2">Lucknow</Text>
           <Text className="bottomTexth2">Kanpur</Text>
         </Container>
-      </Container>
+      </Flex>
     </>
   );
 }

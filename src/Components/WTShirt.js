@@ -1,14 +1,13 @@
 import Card from "./Card";
 import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Box, Text, Grid, Divider, Container, Flex } from "@chakra-ui/react";
-export default function WTShirt() {
+import { Text, Divider, Container, Flex } from "@chakra-ui/react";
+export default function WTShirt({ setIsPopoverOpen, setMessage, openPopover }) {
   const [sortingOption, setSortingOption] = useState("");
   const [selectedBrands, setSelectedBrands] = useState("");
   const [selectedColors, setSelectedColors] = useState("");
   const [selectedPrices, setSelectedPrices] = useState("");
-  const [, setIsSmallScreen] = useState(window.innerWidth < 1200);
-
+  const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 800);
   const object = useLocation();
   const itemList = object.state?.data;
   const { Banner, Heading, brandName, colorName } = object.state;
@@ -66,7 +65,6 @@ export default function WTShirt() {
   };
 
   const handlePriceSelect = (min, max) => {
-    console.log(selectedPrices);
     let minmax = [...new Set(selectedPrices)];
     Array.sort(minmax);
     setSelectedPrices(
@@ -103,14 +101,14 @@ export default function WTShirt() {
   // });
   useEffect(() => {
     const handleResize = () => {
-      setIsSmallScreen(window.innerWidth < 1200);
+      setIsSmallScreen(window.innerWidth < 800);
     };
     window.addEventListener("resize", handleResize);
   }, []);
 
   return (
     <>
-      <img src={Banner ? Banner : null} alt="" style={{ width: "80rem" }} />
+      <img src={Banner ? Banner : null} alt="" style={{ width: "100%" }} />
       <Container>
         <Text className="categoryH1">
           <Link to="/" style={{ textDecoration: "none", color: "#a7a9ac" }}>
@@ -138,119 +136,118 @@ export default function WTShirt() {
       </Container>
       <Divider
         className="categoryDivider"
-        width="81%"
+        width="auto"
         marginLeft="14.5rem"
         marginBottom="0.5rem"
       />
-
-      <Grid templateColumns="repeat(2, 13.5rem)">
-        <Box className="categorySearchBox">
-          {brandName && (
-            <>
-              <Text className="catHeading">BRANDS</Text>
-              <Flex className="catFlex">
-                {brandName?.map((item) => (
-                  <Flex>
-                    <input
-                      type="checkbox"
-                      className="categorySearchBoxInput"
-                      onChange={() => handleBrandSelect(item)}
-                    />
-                    <label
-                      htmlFor="categorySearchBoxInput"
-                      className="categorySearchBoxText"
-                      style={{ textTransform: "captilized" }}>
-                      {item}
-                    </label>
+      {isSmallScreen ? (
+        <></>
+      ) : (
+        <>
+          <Flex>
+            <Flex className="categorySearchBox">
+              {brandName && (
+                <>
+                  <Text className="catHeading">BRANDS</Text>
+                  <Flex className="catFlex">
+                    {brandName?.map((item) => (
+                      <Flex>
+                        <input
+                          type="checkbox"
+                          className="categorySearchBoxInput"
+                          onChange={() => handleBrandSelect(item)}
+                        />
+                        <label
+                          htmlFor="categorySearchBoxInput"
+                          className="categorySearchBoxText"
+                          style={{ textTransform: "captilized" }}>
+                          {item}
+                        </label>
+                      </Flex>
+                    ))}
                   </Flex>
-                ))}
-              </Flex>
-            </>
-          )}
-          {colorName && (
-            <>
-              <Text className="catHeading">COLOR</Text>
-              <Flex className="catFlex">
-                {colorName?.map((item) => (
-                  <Flex>
-                    <input
-                      type="checkbox"
-                      className="categorySearchBoxInput"
-                      onChange={() => handleColorSelect(item)}
-                    />
-                    <label
-                      htmlFor="categorySearchBoxInput"
-                      className="categorySearchBoxText">
-                      {item}
-                    </label>
+                </>
+              )}
+              {colorName && (
+                <>
+                  <Text className="catHeading">COLOR</Text>
+                  <Flex className="catFlex">
+                    {colorName?.map((item) => (
+                      <Flex>
+                        <input
+                          type="checkbox"
+                          className="categorySearchBoxInput"
+                          onChange={() => handleColorSelect(item)}
+                        />
+                        <label
+                          htmlFor="categorySearchBoxInput"
+                          className="categorySearchBoxText">
+                          {item}
+                        </label>
+                      </Flex>
+                    ))}
                   </Flex>
-                ))}
+                </>
+              )}
+              <Text className="catHeading">PRICE</Text>
+              <Flex>
+                <input
+                  type="checkbox"
+                  className="categorySearchBoxInput"
+                  onChange={() => handlePriceSelect(219, 418)}
+                />
+                <label
+                  htmlFor="categorySearchBoxInput"
+                  className="categorySearchBoxText">
+                  Rs. 219 To 418
+                </label>
               </Flex>
-            </>
-          )}
-          <Text className="catHeading">PRICE</Text>
-          <Flex>
-            <input
-              type="checkbox"
-              className="categorySearchBoxInput"
-              onChange={() => handlePriceSelect(219, 418)}
-            />
-            <label
-              htmlFor="categorySearchBoxInput"
-              className="categorySearchBoxText">
-              Rs. 219 To 418
-            </label>
-          </Flex>
-          <Flex>
-            <input
-              type="checkbox"
-              className="categorySearchBoxInput"
-              onChange={() => handlePriceSelect(419, 638)}
-            />
-            <label
-              htmlFor="categorySearchBoxInput"
-              className="categorySearchBoxText">
-              Rs. 419 To 638
-            </label>
-          </Flex>
-          <Flex>
-            <input
-              type="checkbox"
-              className="categorySearchBoxInput"
-              onChange={() => handlePriceSelect(639, 838)}
-            />
-            <label
-              htmlFor="categorySearchBoxInput"
-              className="categorySearchBoxText">
-              Rs. 639 To 838
-            </label>
-          </Flex>
-          <Flex>
-            <input
-              type="checkbox"
-              className="categorySearchBoxInput"
-              onChange={() => handlePriceSelect(839, 1049)}
-            />
-            <label
-              htmlFor="categorySearchBoxInput"
-              className="categorySearchBoxText">
-              Rs. 839 To 1049
-            </label>
-          </Flex>
-        </Box>
+              <Flex>
+                <input
+                  type="checkbox"
+                  className="categorySearchBoxInput"
+                  onChange={() => handlePriceSelect(419, 638)}
+                />
+                <label
+                  htmlFor="categorySearchBoxInput"
+                  className="categorySearchBoxText">
+                  Rs. 419 To 638
+                </label>
+              </Flex>
+              <Flex>
+                <input
+                  type="checkbox"
+                  className="categorySearchBoxInput"
+                  onChange={() => handlePriceSelect(639, 838)}
+                />
+                <label
+                  htmlFor="categorySearchBoxInput"
+                  className="categorySearchBoxText">
+                  Rs. 639 To 838
+                </label>
+              </Flex>
+              <Flex>
+                <input
+                  type="checkbox"
+                  className="categorySearchBoxInput"
+                  onChange={() => handlePriceSelect(839, 1049)}
+                />
+                <label
+                  htmlFor="categorySearchBoxInput"
+                  className="categorySearchBoxText">
+                  Rs. 839 To 1049
+                </label>
+              </Flex>
+            </Flex>
 
-        <Grid
-          style={{
-            flexWrap: "wrap",
-            minWidth: "65rem",
-          }}
-          templateColumns="repeat(4, 1fr)"
-          gap={6}>
-          {filteredItems.map((item, index) => (
-            <Card item={item} index={index} />
-          ))}
-        </Grid>
-      </Grid>
+            <Flex display="flex" flexWrap="wrap" justifyContent="space-evenly">
+              {filteredItems.map((item, index) => (
+                <Card openPopover={openPopover} item={item} index={index} />
+              ))}
+            </Flex>
+          </Flex>
+        </>
+      )}
     </>
   );
 }

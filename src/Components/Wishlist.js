@@ -16,17 +16,12 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { GET_WISHLIST, REMOVE_FROM_WISHLIST, ADD_TO_CART } from "../action";
 
-export default function Wishlist() {
+export default function Wishlist({ openPopover }) {
   const dispatch = useDispatch();
   const { wishlist } = useSelector((state) => state.app);
   const { isLoggedIn } = useSelector((state) => state.user);
-  const data = useSelector((state) => {
-    console.log(state);
-    return state.app;
-  });
-  console.log(data);
-
   const handleRemoveFromWishlist = (productId) => {
+    openPopover("Product removed from your Wishlist");
     dispatch(REMOVE_FROM_WISHLIST(productId));
     setTimeout(() => {
       dispatch(GET_WISHLIST());
@@ -34,6 +29,7 @@ export default function Wishlist() {
   };
 
   const handleMoveToCart = (productId) => {
+    openPopover("Product Added to your cart successfully");
     dispatch(REMOVE_FROM_WISHLIST(productId));
     setTimeout(() => {
       dispatch(GET_WISHLIST());

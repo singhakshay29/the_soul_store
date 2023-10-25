@@ -312,17 +312,34 @@
   margin-top: 39.5rem;
   width: 143px;
 }
+.sBCW {
+  margin-top: 31.8rem;
+  width: 143px;
+}
+
 .sBC2 {
   margin-top: 39.1rem;
+  width: 143px;
+}
+.sBC2W {
+  margin-top: 31.4rem;
   width: 143px;
 }
 .sBT {
   margin-top: 28.4rem;
   width: 50rem;
 }
+.sBTW {
+  margin-top: 34.2rem;
+  width: 35rem;
+}
 .sBT2 {
   margin-top: 28rem;
   width: 50rem;
+}
+.sBT2 {
+  margin-top: 34rem;
+  width: 35rem;
 }
 .themeFlex {
   flex-direction: column;
@@ -436,13 +453,14 @@
   margin-top: 0;
 }
 .bottom {
-  display: flex;
   flex-direction: row;
+  justify-content: space-evenly;
 }
 .bottomText {
   display: flex;
   flex-direction: column;
-  margin-left: 150px;
+
+  min-width: 10rem;
 }
 
 .bottomTexth1 {
@@ -493,7 +511,6 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  width: 65rem;
   margin-left: 18%;
 }
 .categoryBox2 {
@@ -541,13 +558,15 @@
   color: grey;
 }
 .categorySearchBox {
-  /* height: 1100px; */
-  height: auto;
   border: 1px solid #eee;
-  width: 200px;
-  margin-left: 0.3rem;
-  display: flex;
+  margin-left: 1rem;
   flex-direction: column;
+  min-width: 12rem;
+}
+.cardContainerbox {
+  margin: 0 0.7rem;
+  width: 15rem;
+  position: relative;
 }
 .accodianbutton {
   background: transparent;
@@ -709,9 +728,9 @@
   box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.16);
   font-size: 18px;
   padding: 5px;
-  margin-left: 16%;
-  margin-top: 1%;
   cursor: pointer;
+  top: 10px;
+  right: 10px;
 }
 .favIconadded {
   color: #148c8d;
@@ -721,8 +740,8 @@
   box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.16);
   font-size: 18px;
   padding: 5px;
-  margin-left: 16%;
-  margin-top: 1%;
+  top: 10px;
+  right: 10px;
   cursor: pointer;
 }
 .favremove {
@@ -1368,4 +1387,19 @@
   margin-left: 12.5rem;
   cursor: pointer;
   color: #148c8d;
+}
+.popup {
+  color: white;
+  background-color: #ed2d2f;
+  margin: 0;
+  position: fixed;
+  top: 10rem;
+  z-index: 999;
+  right: 90px;
+  transform: translateY(-35px);
+  touch-action: pan-y;
+  padding: 10px;
+  font-size: small;
+  border-radius: 5px;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }

@@ -43,7 +43,6 @@ export default function Product() {
   const { isLoggedIn } = useSelector((state) => state.user);
   // const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 800);
   const id = data._id;
-  console.log(data);
 
   const favId = wishlist.map((item) => {
     return item.products._id;

@@ -43,7 +43,6 @@ export default function SignUp() {
       dispatch(LOGIN_FAILURE("Password does not match"));
       setErrorColor("red");
     } else {
-      console.log("billo");
       dispatch(SIGNUP_USER(username, email, password));
     }
   };

@@ -137,7 +137,7 @@ import { useSelector } from "react-redux";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { FaBars } from "react-icons/fa";
 export default function WomenNav() {
-  const [active, setActive] = useState("1");
+  const [active, setActive] = useState();
   const [scrollY, setScrollY] = useState(0);
   const [isDropdownOpen, setIsDropDownOpen] = useState(null);
   const { isLoggedIn } = useSelector((state) => state.user);
@@ -447,7 +447,7 @@ export default function WomenNav() {
                     onMouseEnter={() => handleMouseEnter(" SHOES BY COLOR")}
                     onMouseLeave={() => handleMouseLeave()}
                     className={
-                      scrollY > 43 ? "navdropbox sBC2" : "navdropbox sBC"
+                      scrollY > 43 ? "navdropbox sBC2W" : "navdropbox sBCW"
                     }>
                     <Link
                       to="/category"
@@ -614,7 +614,7 @@ export default function WomenNav() {
                     onMouseEnter={() => handleMouseEnter("SHOP BY THEMES")}
                     onMouseLeave={() => handleMouseLeave()}
                     className={
-                      scrollY > 43 ? "navdropbox sBT2" : "navdropbox sBT "
+                      scrollY > 43 ? "navdropbox sBT2" : "navdropbox sBTW "
                     }>
                     <Flex>
                       <Flex style={{ flexDirection: "column" }}>

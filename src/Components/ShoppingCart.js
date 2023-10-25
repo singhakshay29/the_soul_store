@@ -21,7 +21,7 @@ import { ChevronDownIcon } from "@chakra-ui/icons";
 import { ADD_TO_WISHLIST, GET_CART, REMOVE_FROM_CART } from "../action";
 import { useDispatch, useSelector } from "react-redux";
 
-export default function ShoppingCart() {
+export default function ShoppingCart({ openPopover }) {
   const dispatch = useDispatch();
   const [id, setId] = useState("");
   const [qty, setQty] = useState(1);
@@ -67,6 +67,7 @@ export default function ShoppingCart() {
     setIsOpen(false);
   }
   const handleRemoveAdd = (productId, qty) => {
+    openPopover("Product Added to your Wishlist");
     dispatch(REMOVE_FROM_CART(productId, qty));
     setTimeout(() => {
       dispatch(ADD_TO_WISHLIST(productId));
@@ -77,6 +78,7 @@ export default function ShoppingCart() {
   };
 
   const handleRemove = (productId, qty) => {
+    openPopover("Product removed from your cart");
     dispatch(REMOVE_FROM_CART(productId, qty));
     setTimeout(() => {
       dispatch(GET_CART());

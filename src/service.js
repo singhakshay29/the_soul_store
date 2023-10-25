@@ -262,11 +262,11 @@ export function service(productList) {
     return item.gender === "Men";
   });
 
-  console.log(productMen);
+  // console.log(productMen);
   productMenTshirt = productMen.filter((item) => {
     return item.subCategory === "tshirt";
   });
-  console.log(productMenTshirt);
+  // console.log(productMenTshirt);
   const MenTshirtCategory = productMenTshirt?.map((item) => {
     return item.brand;
   });
@@ -275,7 +275,7 @@ export function service(productList) {
   });
   ColorNameMT = [...new Set(MenColorCategory)];
   brandNameMT = [...new Set(MenTshirtCategory)];
-  console.log(brandNameMT);
+  // console.log(brandNameMT);
   productWomen = productList.filter((item) => {
     return item.gender === "Women";
   });
@@ -570,13 +570,12 @@ export function service(productList) {
   });
   BeigebrandNameM = [...new Set(menProductBeigeBrand)];
 
-  const productMenBrand = productMen.map((item) => {
-    return item.brand;
-  });
+  // const productMenBrand = productMen.map((item) => {
+  //   return item.brand;
+  // });
 
-  const MenbrandNameM = [...new Set(productMenBrand)];
-  console.log(MenbrandNameM);
-  //
+  // const MenbrandNameM = [...new Set(productMenBrand)];
+
   productTrueBuyWorldM = productMen?.filter((item) => {
     return item.brand === "TrueBuyWorld";
   });

@@ -7,7 +7,6 @@ export default function Modal({
   handelRotationLeft,
   handelRotationRight,
 }) {
-  console.log(clickedImg);
   const handleClick = (e) => {
     if (e.target.classList.contains("dismiss")) {
       setClickedImg(null);

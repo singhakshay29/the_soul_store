@@ -76,11 +76,9 @@ export const FETCH_PRODUCTS = () => {
 export const LOGIN_USER = (email, password) => {
   return async (dispatch) => {
     const response = await loginUser(email, password);
-    console.log(response);
     try {
       if (response.ok) {
         const responseData = await response.json();
-        console.log(responseData);
         localStorage.setItem(
           "userDetails",
           JSON.stringify({
@@ -128,7 +126,6 @@ export const SET_WISHLIST = (payload) => ({
 export const GET_WISHLIST = () => {
   return async (dispatch) => {
     const databox = await getWishlist();
-    console.log(databox);
     dispatch(SET_WISHLIST(databox?.items));
   };
 };

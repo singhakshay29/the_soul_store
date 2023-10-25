@@ -106,10 +106,7 @@ export default function Address() {
     },
   };
   const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-  console.log(items);
   const handleOrder = async (address) => {
-    console.log(items);
-
     for (const product of items) {
       await delay(200);
       await placeOrder(product.product._id, address, product.quantity);

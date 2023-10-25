@@ -6,15 +6,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { Box, Text, Grid, Divider } from "@chakra-ui/react";
 import { FETCH_PRODUCTS } from "../action";
 
-export default function TShirt() {
+export default function TShirt({ setIsPopoverOpen }) {
   const dispatch = useDispatch();
   const [selectedBrands, setSelectedBrands] = useState([]);
   const [selectedColors, setSelectedColors] = useState([]);
   const [selectedPriceRange, setSelectedPriceRange] = useState([]);
-  console.log(selectedPriceRange);
-
-  const { isLoggedIn } = useSelector((state) => state.user);
-  console.log(isLoggedIn);
   const { productsList } = useSelector((state) => state.app);
   function handleBewakoof(checked) {}
   const filterProducts = (
@@ -43,7 +39,6 @@ export default function TShirt() {
         selectedColors.includes(product.color)
       );
     }
-    console.log(selectedPriceRange.length);
     if (selectedPriceRange.length === 2) {
       const [minPrice, maxPrice] = selectedPriceRange[0];
       filteredProducts = filteredProducts.filter(
@@ -432,11 +427,19 @@ export default function TShirt() {
         <Grid templateColumns="repeat(4, 1fr)" gap={6}>
           {filteredProducts.length > 0
             ? filteredProducts.map((item, index) => (
-                <Card item={item} index={index} />
+                <Card
+                  setIsPopoverOpen={setIsPopoverOpen}
+                  item={item}
+                  index={index}
+                />
               ))
             : productsList.length > 0 &&
               productsList.map((item, index) => (
-                <Card item={item} index={index} />
+                <Card
+                  setIsPopoverOpen={setIsPopoverOpen}
+                  item={item}
+                  index={index}
+                />
               ))}
         </Grid>
       </Grid>
