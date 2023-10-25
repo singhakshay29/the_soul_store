@@ -1,16 +1,19 @@
-import Card from "./Card";
+import Card, { Card2 } from "./Card";
+import c1 from "../assets/c1.png";
+import { RiFilter2Line } from "react-icons/ri";
+import { BsSortUp } from "react-icons/bs";
 import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Text, Divider, Container, Flex } from "@chakra-ui/react";
-export default function WTShirt({ setIsPopoverOpen, setMessage, openPopover }) {
+import { Text, Divider, Container, Flex, Button } from "@chakra-ui/react";
+export default function WTShirt({ openPopover }) {
   const [sortingOption, setSortingOption] = useState("");
   const [selectedBrands, setSelectedBrands] = useState("");
   const [selectedColors, setSelectedColors] = useState("");
   const [selectedPrices, setSelectedPrices] = useState("");
-  const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 800);
+  const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 1100);
   const object = useLocation();
   const itemList = object.state?.data;
-  const { Banner, Heading, brandName, colorName } = object.state;
+  const { Banner, Heading, brandName, colorName, BannerRes } = object.state;
   const handleSortingAndFiltering = (
     sortingCriteria,
     filterCriteriaBrand,
@@ -101,49 +104,74 @@ export default function WTShirt({ setIsPopoverOpen, setMessage, openPopover }) {
   // });
   useEffect(() => {
     const handleResize = () => {
-      setIsSmallScreen(window.innerWidth < 800);
+      setIsSmallScreen(window.innerWidth < 1100);
     };
     window.addEventListener("resize", handleResize);
   }, []);
 
   return (
     <>
-      <img src={Banner ? Banner : null} alt="" style={{ width: "100%" }} />
-      <Container>
-        <Text className="categoryH1">
-          <Link to="/" style={{ textDecoration: "none", color: "#a7a9ac" }}>
-            Home
-          </Link>
-          / {Heading}
-        </Text>
-      </Container>
-      <Container className="categoryBox">
-        <Container className="categoryHeading">
-          {Heading} - {filteredItems?.length} items
-        </Container>
-        <Container>
-          <select
-            value={sortingOption}
-            onChange={(e) => setSortingOption(e.target.value)}
-            className="categoryInput"
-            placeholder="Select Sorting Options">
-            <option>Select Sorting Options</option>
-            <option>Price-Low to High</option>
-            <option>Price-High to Low</option>
-            <option>A to Z</option>
-          </select>
-        </Container>
-      </Container>
-      <Divider
-        className="categoryDivider"
-        width="auto"
-        marginLeft="14.5rem"
-        marginBottom="0.5rem"
-      />
       {isSmallScreen ? (
-        <></>
+        <>
+          <img
+            src={BannerRes ? BannerRes : c1}
+            alt=""
+            style={{ width: "100%" }}
+          />
+          <Flex flexWrap="wrap" justifyContent="center">
+            {filteredItems.map((item, index) => (
+              <Card2 openPopover={openPopover} item={item} index={index} />
+            ))}
+          </Flex>
+          <Flex className="bottomNav">
+            <Button
+              // onClick={() => dispatch(ADD_TO_WISHLIST(product._id))}
+              className="filterbuttonNav">
+              <RiFilter2Line style={{ fontSize: "1rem", margin: "0 1rem" }} />
+              FILTER
+            </Button>
+            <Button
+              // onClick={() => addCart(product._id, quantity)}
+              className="filterbuttonNav">
+              <BsSortUp style={{ fontSize: "1rem", margin: "0 1rem" }} />
+              SORT
+            </Button>
+          </Flex>
+        </>
       ) : (
         <>
+          <img src={Banner ? Banner : null} alt="" style={{ width: "100%" }} />
+          <Container>
+            <Text className="categoryH1">
+              <Link to="/" style={{ textDecoration: "none", color: "#a7a9ac" }}>
+                Home
+              </Link>
+              / {Heading}
+            </Text>
+          </Container>
+          <Container className="categoryBox">
+            <Container className="categoryHeading">
+              {Heading} - {filteredItems?.length} items
+            </Container>
+            <Container>
+              <select
+                value={sortingOption}
+                onChange={(e) => setSortingOption(e.target.value)}
+                className="categoryInput"
+                placeholder="Select Sorting Options">
+                <option>Select Sorting Options</option>
+                <option>Price-Low to High</option>
+                <option>Price-High to Low</option>
+                <option>A to Z</option>
+              </select>
+            </Container>
+          </Container>
+          <Divider
+            className="categoryDivider"
+            width="auto"
+            marginLeft="14.5rem"
+            marginBottom="0.5rem"
+          />
           <Flex>
             <Flex className="categorySearchBox">
               {brandName && (
@@ -240,7 +268,7 @@ export default function WTShirt({ setIsPopoverOpen, setMessage, openPopover }) {
               </Flex>
             </Flex>
 
-            <Flex display="flex" flexWrap="wrap" justifyContent="space-evenly">
+            <Flex flexWrap="wrap">
               {filteredItems.map((item, index) => (
                 <Card openPopover={openPopover} item={item} index={index} />
               ))}

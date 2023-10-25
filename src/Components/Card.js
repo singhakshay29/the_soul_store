@@ -46,6 +46,7 @@ export default function Card({ item, index, openPopover }) {
         setDisplayImage(INA);
       }
     }
+
     fetchImage();
   }, [item.displayImage]);
 
@@ -94,13 +95,119 @@ export default function Card({ item, index, openPopover }) {
           />
         </Link>
 
-        <Text className="heading2" height="28px">
+        <Text className="heading2" height="20px">
           {item?.name}
         </Text>
         <Divider className="categoryDivider" />
-        <Text>{item?.type}</Text>
-        <Text>{item?.color}</Text>
-        <Text display="flex" className="heading2">
+        <Text style={{ marginTop: 0, marginLeft: "10px", marginBottom: 0 }}>
+          {item?.brand}
+        </Text>
+        <Text
+          display="flex"
+          className="heading2"
+          style={{ marginTop: 0, marginLeft: "10px", marginBottom: 0 }}>
+          <FaRupeeSign fontSize="12px" />
+          {item?.price}
+          <Text marginLeft="0.5rem">ONLY</Text>
+        </Text>
+      </Container>
+    </>
+  );
+}
+
+export function Card2({ item, index, openPopover }) {
+  const dispatch = useDispatch();
+  const [displayImage, setDisplayImage] = useState("");
+  const { wishlist } = useSelector((state) => state.app);
+  const { isLoggedIn } = useSelector((state) => state.user);
+  const [isInWishlist, setIsInWishlist] = useState(false);
+  const productId = item?._id;
+
+  const handleToggleFavorite = (productId) => {
+    if (isLoggedIn) {
+      if (isInWishlist) {
+        dispatch(REMOVE_FROM_WISHLIST(productId));
+        setIsInWishlist(false);
+      } else {
+        dispatch(ADD_TO_WISHLIST(productId));
+        setIsInWishlist(true);
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (wishlist.some((wish) => wish.products._id === productId)) {
+      setIsInWishlist(true);
+    }
+  }, [wishlist, productId]);
+
+  useEffect(() => {
+    async function fetchImage() {
+      try {
+        const response = await fetch(item.displayImage);
+        if (response.status === 404) {
+          setDisplayImage(INA);
+        } else {
+          setDisplayImage(item.displayImage);
+        }
+      } catch (error) {
+        setDisplayImage(INA);
+      }
+    }
+
+    fetchImage();
+  }, [item.displayImage]);
+
+  return (
+    <>
+      <Container key={index} className="cardContainerboxRes">
+        {isLoggedIn ? (
+          <>
+            {isInWishlist ? (
+              <>
+                <AiFillHeart
+                  className="favIconadded"
+                  onClick={() => {
+                    handleToggleFavorite(item?._id);
+                    openPopover("Product Removed from your Wishlist");
+                  }}
+                />
+              </>
+            ) : (
+              <>
+                <AiOutlineHeart
+                  className="favIcon"
+                  onClick={() => {
+                    handleToggleFavorite(item?._id);
+                    openPopover("Product Added to your Wishlist");
+                  }}
+                />
+              </>
+            )}
+          </>
+        ) : (
+          <>
+            <Link to="/login">
+              <AiOutlineHeart className="favIcon" />
+            </Link>
+          </>
+        )}
+
+        <Link to="/product" state={{ data: item }}>
+          <img src={displayImage} alt="" height="449px" cursor="pointer" />
+        </Link>
+
+        <Text className="heading2" height="20px">
+          {item?.name}
+        </Text>
+        <Divider className="categoryDivider" />
+        <Text style={{ marginTop: 0, marginLeft: "10px", marginBottom: 0 }}>
+          {item?.brand}
+        </Text>
+        <Text
+          display="flex"
+          className="heading2"
+          style={{ marginTop: 0, marginLeft: "10px", marginBottom: 0 }}>
           <FaRupeeSign fontSize="12px" />
           {item?.price}
           <Text marginLeft="0.5rem">ONLY</Text>

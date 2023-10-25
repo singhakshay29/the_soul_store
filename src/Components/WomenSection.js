@@ -49,6 +49,7 @@ export default function WomenSection() {
     window.innerWidth < 500
   );
   const { productsList } = useSelector((state) => state.app);
+
   if (productsList.length > 0) {
     service(productsList);
     // service2(productsList);

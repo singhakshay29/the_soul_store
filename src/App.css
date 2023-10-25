@@ -403,7 +403,6 @@
   color: #282c3f;
   font-size: 14px;
   font-stretch: normal;
-  line-height: 1.24;
 }
 
 .buttonCartP {
@@ -584,6 +583,21 @@
   margin: 0 0.7rem;
   width: 15rem;
   position: relative;
+  border-radius: 5px;
+  color: #58595b;
+  box-shadow: 0 1px 2px rgb(0 0 0/20%);
+  -webkit-box-shadow: 0 1.5px 2px rgb(0 0 0/20%);
+  margin-bottom: 10px;
+}
+.cardContainerboxRes {
+  margin: 0 0.1rem;
+  /* height: 449px; */
+  position: relative;
+  border-radius: 5px;
+  color: #58595b;
+  box-shadow: 0 1px 2px rgb(0 0 0/20%);
+  -webkit-box-shadow: 0 1.5px 2px rgb(0 0 0/20%);
+  margin-bottom: 10px;
 }
 .accodianbutton {
   background: transparent;
@@ -1449,6 +1463,8 @@
   padding: 10px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
   background: #fff;
+  justify-content: space-evenly;
+  min-height: 45px;
 }
 .wishlistbuttonNav {
   display: block;
@@ -1461,7 +1477,21 @@
   height: 35px;
   border: 1px solid #eee;
   border-radius: 5px;
-  margin-left: 5px;
+}
+.filterbuttonNav {
+  display: block;
+  background-color: white;
+  width: 46%;
+  text-align: center;
+  cursor: pointer;
+  border: none;
+  height: 35px;
+  border: 1px solid #eee;
+  border-radius: 5px;
+  color: #58595b;
+  font-size: 14px;
+  font-weight: 900;
+  font-family: Source\Sans\Pro\semibold, sans-serif;
 }
 .buttonCartNav {
   display: block;
@@ -1473,7 +1503,6 @@
   border: none;
   gap: 0;
   border-radius: 5px;
-  margin-left: 25px;
 }
 .image-sliderRes {
   width: 100%;
