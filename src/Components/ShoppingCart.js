@@ -30,6 +30,7 @@ export default function ShoppingCart({ openPopover }) {
   const [text, setText] = useState(false);
   const [modalIsOpen, setIsOpen] = useState(false);
   const { isLoggedIn } = useSelector((state) => state.user);
+  const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 1000);
   const { cart } = useSelector((state) => state.app);
   let items, totalPrice, results;
   if (cart.results > 0) {
@@ -88,8 +89,154 @@ export default function ShoppingCart({ openPopover }) {
     }, 200);
   };
 
+  const renderCartItems = () => (
+    <>
+      <Flex className="cartItem">
+        {items.map((item) => (
+          <Flex className="shopbox">
+            <Image
+              className="shopboxImg"
+              alt={item?.product?.name}
+              src={item?.product?.displayImage}
+            />
+            <Box>
+              <Flex style={{ justifyContent: "space-between" }}>
+                <Text className="text2">{item?.product?.name}</Text>
+                <Text className="text2">{item?.product?.price}</Text>
+              </Flex>
+              <Menu>
+                {({ isOpen }) => (
+                  <>
+                    <MenuButton
+                      className="shopboxbutton"
+                      isActive={isOpen}
+                      as={Button}
+                      rightIcon={<ChevronDownIcon className="shopboxIcon" />}>
+                      Size:{size}
+                    </MenuButton>
+                    <MenuList>
+                      {["S", "M", "L", "XL", "XXL"].map((size, index) => (
+                        <MenuItem
+                          key={index}
+                          onClick={() => setSize(size)}
+                          className="bbutton">
+                          {size}
+                        </MenuItem>
+                      ))}
+                    </MenuList>
+                  </>
+                )}
+              </Menu>
+              <Menu>
+                {({ isOpen }) => (
+                  <>
+                    <MenuButton
+                      className="shopboxbutton"
+                      isActive={isOpen}
+                      as={Button}
+                      rightIcon={<ChevronDownIcon className="shopboxIcon" />}>
+                      Qty:{qty}
+                    </MenuButton>
+                    <MenuList>
+                      {[1, 2, 3, 4].map((qty) => (
+                        <MenuItem
+                          key={qty}
+                          onClick={() => setQty(qty)}
+                          className="bbutton">
+                          {qty}
+                        </MenuItem>
+                      ))}
+                    </MenuList>
+                  </>
+                )}
+              </Menu>
+
+              <Divider className="categoryDivider mTTp" />
+              <Flex>
+                <Button
+                  className="shopboxbutton2 "
+                  onClick={() => {
+                    openModal(
+                      item?.product?.displayImage,
+                      false,
+                      item?.product?._id
+                    );
+                  }}>
+                  Remove
+                </Button>
+                <Button
+                  className="shopboxbutton2 btn3 "
+                  onClick={() => {
+                    openModal(
+                      item?.product?.displayImage,
+                      true,
+                      item?.product?._id
+                    );
+                  }}>
+                  MOVE TO WIHLIST
+                </Button>
+              </Flex>
+            </Box>
+          </Flex>
+        ))}
+      </Flex>
+
+      <Box
+        style={{
+          marginTop: "22px",
+        }}>
+        <Link to="/address" style={{ textDecoration: "none" }}>
+          <Box className="shopbox2">PLACE ORDER</Box>
+        </Link>
+        <Text style={{ color: "#a7a9ac" }}>BILLING DETAILS</Text>
+        <Box className="shopbox3">
+          <Flex className="boxS">
+            <Text className="shopbox3text"> Cart Total</Text>
+            <Text className="text2 price">
+              <BiRupee />
+              {totalPrice}
+            </Text>
+          </Flex>
+          <Flex className="boxS">
+            <Text className="shopbox3text"> Discount</Text>
+            <Text className="text2 price">
+              <BiRupee />0
+            </Text>
+          </Flex>
+          <Flex className="boxS">
+            <Text className="shopbox3text"> GST</Text>
+            <Text className="text2 price">
+              <BiRupee />
+              12%
+            </Text>
+          </Flex>
+          <Flex className="boxS">
+            <Text className="shopbox3text"> Shipping Charges</Text>
+            <Text className="text2 price c">
+              <BiRupee />0
+            </Text>
+          </Flex>
+          <Flex className="boxS">
+            <Text className="shopbox3text"> Total Amount</Text>
+            <Text className="text2 price">
+              <BiRupee />
+              {totalPrice}
+            </Text>
+          </Flex>
+        </Box>
+        <Link to="/address" style={{ textDecoration: "none" }}>
+          <Box className="shopbox2">PLACE ORDER</Box>
+        </Link>
+      </Box>
+    </>
+  );
+
   useEffect(() => {
     dispatch(GET_CART());
+    const handleResize = () => {
+      setIsSmallScreen(window.innerWidth < 1000);
+    };
+    window.addEventListener("resize", handleResize);
     // eslint-disable-next-line
   }, []);
   return (
@@ -132,161 +279,39 @@ export default function ShoppingCart({ openPopover }) {
           </button>
         )}
       </Modal>
-      <Box style={{ display: "flex", justifyContent: "center" }}>
+      <Box
+        style={{
+          display: "flex",
+          justifyContent: "center",
+        }}>
         <Text className="text2 c1">MY BAG </Text>
         <Text>- - - - - - - - - - - -</Text>
         <Text className="text2 c2">ADDRESS</Text>
         <Text>- - - - - - - - - - - -</Text>
-
         <Text className="text2 c2">PAYMENT</Text>
       </Box>
       <Divider className="categoryDivider" />
 
       {results > 0 ? (
-        <Flex style={{ justifyContent: "space-evenly" }}>
-          <Flex className="cartItem">
-            {items.map((item) => (
-              <Flex className="shopbox">
-                <Image
-                  className="shopboxImg"
-                  alt={item?.product?.name}
-                  src={item?.product?.displayImage}
-                />
-                <Box>
-                  <Flex style={{ justifyContent: "space-between" }}>
-                    <Text className="text2">{item?.product?.name}</Text>
-                    <Text className="text2">{item?.product?.price}</Text>
-                  </Flex>
-                  <Menu>
-                    {({ isOpen }) => (
-                      <>
-                        <MenuButton
-                          className="shopboxbutton"
-                          isActive={isOpen}
-                          as={Button}
-                          rightIcon={
-                            <ChevronDownIcon className="shopboxIcon" />
-                          }>
-                          Size:{size}
-                        </MenuButton>
-                        <MenuList>
-                          {["S", "M", "L", "XL", "XXL"].map((size, index) => (
-                            <MenuItem
-                              key={index}
-                              onClick={() => setSize(size)}
-                              className="bbutton">
-                              {size}
-                            </MenuItem>
-                          ))}
-                        </MenuList>
-                      </>
-                    )}
-                  </Menu>
-                  <Menu>
-                    {({ isOpen }) => (
-                      <>
-                        <MenuButton
-                          className="shopboxbutton"
-                          isActive={isOpen}
-                          as={Button}
-                          rightIcon={
-                            <ChevronDownIcon className="shopboxIcon" />
-                          }>
-                          Qty:{qty}
-                        </MenuButton>
-                        <MenuList>
-                          {[1, 2, 3, 4].map((qty) => (
-                            <MenuItem
-                              key={qty}
-                              onClick={() => setQty(qty)}
-                              className="bbutton">
-                              {qty}
-                            </MenuItem>
-                          ))}
-                        </MenuList>
-                      </>
-                    )}
-                  </Menu>
-
-                  <Divider className="categoryDivider mTTp" />
-                  <Flex>
-                    <Button
-                      className="shopboxbutton2 "
-                      onClick={() => {
-                        openModal(
-                          item?.product?.displayImage,
-                          false,
-                          item?.product?._id
-                        );
-                      }}>
-                      Remove
-                    </Button>
-                    <Button
-                      className="shopboxbutton2 btn3 "
-                      onClick={() => {
-                        openModal(
-                          item?.product?.displayImage,
-                          true,
-                          item?.product?._id
-                        );
-                      }}>
-                      MOVE TO WIHLIST
-                    </Button>
-                  </Flex>
-                </Box>
+        <>
+          {isSmallScreen ? (
+            <>
+              <Flex
+                style={{
+                  alignItems: "center",
+                  flexDirection: "column",
+                }}>
+                {renderCartItems()}
               </Flex>
-            ))}
-          </Flex>
-
-          <Box
-            style={{
-              marginLeft: "4%",
-              marginTop: "22px",
-            }}>
-            <Link to="/address" style={{ textDecoration: "none" }}>
-              <Box className="shopbox2">PLACE ORDER</Box>
-            </Link>
-            <Text style={{ color: "#a7a9ac" }}>BILLING DETAILS</Text>
-            <Box className="shopbox3">
-              <Flex className="boxS">
-                <Text className="shopbox3text"> Cart Total</Text>
-                <Text className="text2 price">
-                  <BiRupee />
-                  {totalPrice}
-                </Text>
+            </>
+          ) : (
+            <>
+              <Flex style={{ justifyContent: "space-evenly" }}>
+                {renderCartItems()}
               </Flex>
-              <Flex className="boxS">
-                <Text className="shopbox3text"> Discount</Text>
-                <Text className="text2 price">
-                  <BiRupee />0
-                </Text>
-              </Flex>
-              <Flex className="boxS">
-                <Text className="shopbox3text"> GST</Text>
-                <Text className="text2 price">
-                  <BiRupee />
-                  12%
-                </Text>
-              </Flex>
-              <Flex className="boxS">
-                <Text className="shopbox3text"> Shipping Charges</Text>
-                <Text className="text2 price c">
-                  <BiRupee />0
-                </Text>
-              </Flex>
-              <Flex className="boxS">
-                <Text className="shopbox3text"> Total Amount</Text>
-                <Text className="text2 price">
-                  <BiRupee />
-                  {totalPrice}
-                </Text>
-              </Flex>
-            </Box>
-            <Link to="/address" style={{ textDecoration: "none" }}>
-              <Box className="shopbox2">PLACE ORDER</Box>
-            </Link>
-          </Box>
-        </Flex>
+            </>
+          )}
+        </>
       ) : (
         <>
           <Container display="flex" justifyContent="center" marginTop="80px">

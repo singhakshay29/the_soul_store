@@ -1,12 +1,11 @@
 import {
   Box,
   Text,
-  Grid,
   Image,
   Button,
   Divider,
-  GridItem,
   Container,
+  Flex,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { RxCross2 } from "react-icons/rx";
@@ -51,48 +50,47 @@ export default function Wishlist({ openPopover }) {
           <Text className="wT">
             My Wishlist - <span>({wishlist.length} items)</span>
           </Text>
-          <Grid
-            templateColumns="repeat(4, 19rem)"
-            style={{ marginLeft: "1rem" }}
-            gap={6}>
+          <Flex
+            style={{
+              marginLeft: "1rem",
+              flexWrap: "wrap",
+            }}>
             {wishlist.length > 0 &&
               wishlist.map((item, index) => (
-                <GridItem key={index} margin="2rem">
-                  <Box style={{ border: "1px solid #eee" }}>
-                    <RxCross2
-                      onClick={() => {
-                        handleRemoveFromWishlist(item.products._id);
-                      }}
-                      className="favremove"
+                <Box key={index} className="removeCard">
+                  <RxCross2
+                    onClick={() => {
+                      handleRemoveFromWishlist(item.products._id);
+                    }}
+                    className="favremove"
+                  />
+                  <Link to="/product" state={{ data: item }}>
+                    <Image
+                      src={item?.products?.displayImage}
+                      alt={item?.products?.name}
+                      width="14.9rem"
+                      cursor="pointer"
                     />
-                    <Link to="/product" state={{ data: item }}>
-                      <Image
-                        src={item?.products?.displayImage}
-                        alt={item?.products?.name}
-                        width="14.9rem"
-                        cursor="pointer"
-                      />
-                    </Link>
+                  </Link>
 
-                    <Text className="wTT">{item.products?.name}</Text>
-                    <Divider className="categoryDivider" />
-                    <Text display="flex" className="heading2 mL10">
-                      <FaRupeeSign fontSize="12px" />
-                      {item.products?.price}
-                      <Text marginLeft="0.5rem">ONLY</Text>
-                    </Text>
-                    <Divider className="categoryDivider" />
-                    <Button
-                      className="buttonCart"
-                      onClick={() => {
-                        handleMoveToCart(item.products?._id);
-                      }}>
-                      MOVE TO CART
-                    </Button>
-                  </Box>
-                </GridItem>
+                  <Text className="wTT">{item.products?.name}</Text>
+                  <Divider className="categoryDivider" />
+                  <Text display="flex" className="heading2 mL10">
+                    <FaRupeeSign fontSize="12px" />
+                    {item.products?.price}
+                    <Text marginLeft="0.5rem">ONLY</Text>
+                  </Text>
+                  <Divider className="categoryDivider" />
+                  <Button
+                    className="buttonCart"
+                    onClick={() => {
+                      handleMoveToCart(item.products?._id);
+                    }}>
+                    MOVE TO CART
+                  </Button>
+                </Box>
               ))}
-          </Grid>
+          </Flex>
         </>
       ) : (
         <>

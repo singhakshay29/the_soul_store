@@ -27,6 +27,7 @@ export default function Address() {
     const savedData = localStorage.getItem("userDetailsList");
     return savedData ? JSON.parse(savedData).length : 0;
   });
+  const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 1000);
   const [modalIsOpen2, setIsOpen2] = useState(false);
   const [userDetailsList, setUserDetailsList] = useState(() => {
     const savedData = localStorage.getItem("userDetailsList");
@@ -124,6 +125,10 @@ export default function Address() {
   //};
 
   useEffect(() => {
+    const handleResize = () => {
+      setIsSmallScreen(window.innerWidth < 1000);
+    };
+    window.addEventListener("resize", handleResize);
     localStorage.setItem("userDetailsList", JSON.stringify(userDetailsList));
   }, [userDetailsList]);
 
@@ -257,103 +262,211 @@ export default function Address() {
       </Text>
       {results > 0 && (
         <div>
-          <Flex>
-            <Flex className="cartItem cart2">
-              <Flex className="shopbox">
-                {addCount > 0 && (
-                  <>
-                    {userDetailsList.map((formData, index) => (
-                      <>
-                        <Box className="saveadd" key={index}>
-                          <input
-                            className="inputRadio"
-                            type="radio"
-                            name={index}
-                            checked={selectedAddress === index}
-                            onChange={() => setSelectedAddress(index)}
-                          />
-                          <Text className="text2 saveAddtext">
-                            {formData.firstName + " "}
-                            {formData.lastName}
-                          </Text>
-                          <Text className="normalText">
-                            {formData.addressType}
-                          </Text>
-                          <Text className="normalText">{formData.houseNo}</Text>
-                          <Text className="normalText">
-                            {formData.streetName}
-                          </Text>
-                          <Text className="normalText">{formData.pinNo}</Text>
-                          <Text className="normalText">{formData.city}</Text>
-                          <Text className="normalText">{formData.state}</Text>
-                          <Text className="normalText">{formData.country}</Text>
-                          <button
-                            className="addedit "
-                            onClick={() => handleEdit(index)}>
-                            EDIT
-                          </button>
-                          <button
-                            className="addedit mL10 "
-                            onClick={() => handleRemove(index)}>
-                            REMOVE
-                          </button>
-                        </Box>
-                      </>
-                    ))}
-                  </>
-                )}
-                {addCount < 2 && (
-                  <>
-                    <Box
-                      className="addresbox"
-                      onClick={() => {
-                        openModal2();
-                      }}>
-                      <FaPlus className="plusIcon" />
-                    </Box>
-                  </>
-                )}
-              </Flex>
-            </Flex>
-
-            <Box
-              style={{
-                marginLeft: "2%",
-                marginTop: "22px",
-              }}>
-              <Text style={{ color: "#a7a9ac" }}>BILLING DETAILS</Text>
-              <Box className="shopbox4">
-                <Flex className="boxS">
-                  <Text className="shopbox3text"> Cart Total</Text>
-                  <Text className="text2 price">
-                    <BiRupee />
-                    {totalPrice}
-                  </Text>
+          {isSmallScreen ? (
+            <>
+              <Flex flexDirection="column" alignItems="center">
+                <Flex className="shopboxAddRes">
+                  {addCount > 0 && (
+                    <>
+                      {userDetailsList.map((formData, index) => (
+                        <>
+                          <Box className="saveadd" key={index}>
+                            <input
+                              className="inputRadio"
+                              type="radio"
+                              name={index}
+                              checked={selectedAddress === index}
+                              onChange={() => setSelectedAddress(index)}
+                            />
+                            <Text className="text2 saveAddtext">
+                              {formData.firstName + " "}
+                              {formData.lastName}
+                            </Text>
+                            <Text className="normalText">
+                              {formData.addressType}
+                            </Text>
+                            <Text className="normalText">
+                              {formData.houseNo}
+                            </Text>
+                            <Text className="normalText">
+                              {formData.streetName}
+                            </Text>
+                            <Text className="normalText">{formData.pinNo}</Text>
+                            <Text className="normalText">{formData.city}</Text>
+                            <Text className="normalText">{formData.state}</Text>
+                            <Text className="normalText">
+                              {formData.country}
+                            </Text>
+                            <button
+                              className="addedit "
+                              onClick={() => handleEdit(index)}>
+                              EDIT
+                            </button>
+                            <button
+                              className="addedit mL10 "
+                              onClick={() => handleRemove(index)}>
+                              REMOVE
+                            </button>
+                          </Box>
+                        </>
+                      ))}
+                    </>
+                  )}
+                  {addCount < 2 && (
+                    <>
+                      <Box
+                        className="addresbox"
+                        onClick={() => {
+                          openModal2();
+                        }}>
+                        <FaPlus className="plusIcon" />
+                      </Box>
+                    </>
+                  )}
                 </Flex>
-                <Flex className="boxS">
-                  <Text className="shopbox3text"> GST(Included)</Text>
-                  <Text className="text2 price">
-                    <BiRupee />
-                    12%
-                  </Text>
-                </Flex>
-                <Flex className="boxS">
-                  <Text className="shopbox3text"> Total Amount</Text>
-                  <Text className="text2 price">
-                    <BiRupee />
-                    {totalPrice}
-                  </Text>
-                </Flex>
-              </Box>
-              <Link to="/shoppingcart">
                 <Box
-                  onClick={() => handleOrder(userDetailsList[selectedAddress])}
-                  className="shopbox2">
-                  PLACE ORDER
+                  style={{
+                    marginTop: "22px",
+                  }}>
+                  <Text style={{ color: "#a7a9ac" }}>BILLING DETAILS</Text>
+                  <Box className="shopbox4">
+                    <Flex className="boxS">
+                      <Text className="shopbox3text"> Cart Total</Text>
+                      <Text className="text2 price">
+                        <BiRupee />
+                        {totalPrice}
+                      </Text>
+                    </Flex>
+                    <Flex className="boxS">
+                      <Text className="shopbox3text"> GST(Included)</Text>
+                      <Text className="text2 price">
+                        <BiRupee />
+                        12%
+                      </Text>
+                    </Flex>
+                    <Flex className="boxS">
+                      <Text className="shopbox3text"> Total Amount</Text>
+                      <Text className="text2 price">
+                        <BiRupee />
+                        {totalPrice}
+                      </Text>
+                    </Flex>
+                  </Box>
+                  <Link to="/shoppingcart" style={{ textDecoration: "none" }}>
+                    <Box
+                      onClick={() =>
+                        handleOrder(userDetailsList[selectedAddress])
+                      }
+                      className="shopbox2">
+                      PLACE ORDER
+                    </Box>
+                  </Link>
                 </Box>
-              </Link>
-            </Box>
-          </Flex>
+              </Flex>
+            </>
+          ) : (
+            <>
+              <Flex justifyContent="space-evenly">
+                <Flex className="shopboxAdd">
+                  {addCount > 0 && (
+                    <>
+                      {userDetailsList.map((formData, index) => (
+                        <>
+                          <Box className="saveadd" key={index}>
+                            <input
+                              className="inputRadio"
+                              type="radio"
+                              name={index}
+                              checked={selectedAddress === index}
+                              onChange={() => setSelectedAddress(index)}
+                            />
+                            <Text className="text2 saveAddtext">
+                              {formData.firstName + " "}
+                              {formData.lastName}
+                            </Text>
+                            <Text className="normalText">
+                              {formData.addressType}
+                            </Text>
+                            <Text className="normalText">
+                              {formData.houseNo}
+                            </Text>
+                            <Text className="normalText">
+                              {formData.streetName}
+                            </Text>
+                            <Text className="normalText">{formData.pinNo}</Text>
+                            <Text className="normalText">{formData.city}</Text>
+                            <Text className="normalText">{formData.state}</Text>
+                            <Text className="normalText">
+                              {formData.country}
+                            </Text>
+                            <button
+                              className="addedit "
+                              onClick={() => handleEdit(index)}>
+                              EDIT
+                            </button>
+                            <button
+                              className="addedit mL10 "
+                              onClick={() => handleRemove(index)}>
+                              REMOVE
+                            </button>
+                          </Box>
+                        </>
+                      ))}
+                    </>
+                  )}
+                  {addCount < 2 && (
+                    <>
+                      <Box
+                        className="addresbox"
+                        onClick={() => {
+                          openModal2();
+                        }}>
+                        <FaPlus className="plusIcon" />
+                      </Box>
+                    </>
+                  )}
+                </Flex>
+                <Box
+                  style={{
+                    marginTop: "22px",
+                  }}>
+                  <Text style={{ color: "#a7a9ac" }}>BILLING DETAILS</Text>
+                  <Box className="shopbox4">
+                    <Flex className="boxS">
+                      <Text className="shopbox3text"> Cart Total</Text>
+                      <Text className="text2 price">
+                        <BiRupee />
+                        {totalPrice}
+                      </Text>
+                    </Flex>
+                    <Flex className="boxS">
+                      <Text className="shopbox3text"> GST(Included)</Text>
+                      <Text className="text2 price">
+                        <BiRupee />
+                        12%
+                      </Text>
+                    </Flex>
+                    <Flex className="boxS">
+                      <Text className="shopbox3text"> Total Amount</Text>
+                      <Text className="text2 price">
+                        <BiRupee />
+                        {totalPrice}
+                      </Text>
+                    </Flex>
+                  </Box>
+                  <Link to="/shoppingcart" style={{ textDecoration: "none" }}>
+                    <Box
+                      onClick={() =>
+                        handleOrder(userDetailsList[selectedAddress])
+                      }
+                      className="shopbox2">
+                      PLACE ORDER
+                    </Box>
+                  </Link>
+                </Box>
+              </Flex>
+            </>
+          )}
         </div>
       )}
     </>
