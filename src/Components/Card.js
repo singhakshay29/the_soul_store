@@ -194,10 +194,16 @@ export function Card2({ item, index, openPopover }) {
         )}
 
         <Link to="/product" state={{ data: item }}>
-          <img src={displayImage} alt="" height="449px" cursor="pointer" />
+          <img
+            src={displayImage}
+            alt=""
+            height="449px"
+            width="380px"
+            cursor="pointer"
+          />
         </Link>
 
-        <Text className="heading2" height="20px">
+        <Text className="heading2" height="20px" marginLeft="10px">
           {item?.name}
         </Text>
         <Divider className="categoryDivider" />

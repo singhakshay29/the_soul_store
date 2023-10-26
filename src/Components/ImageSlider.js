@@ -4,7 +4,7 @@ import "react-slideshow-image/dist/styles.css";
 
 const divStyle = {
   display: "flex",
-  height: "27rem",
+  maxHeight: "27rem",
   alignItems: "center",
   backgroundSize: "cover",
   justifyContent: "center",
@@ -49,9 +49,7 @@ export default function ImageSlider({ w1, w2, w3, w4 }) {
               top: 0,
               margin: 0,
               padding: 0,
-              maxHeight: "50rem",
-              width: "100%",
-              marginTop: "2rem",
+              marginTop: "-0.1rem",
             }}>
             <Fade {...properties}>
               {slideImages.map((image, index) => (
@@ -60,7 +58,7 @@ export default function ImageSlider({ w1, w2, w3, w4 }) {
                     style={{
                       ...divStyle,
                     }}>
-                    <img src={image.url} width="fit-content" alt="" />
+                    <img src={image.url} width="100%" alt="" />
                   </div>
                 </div>
               ))}
@@ -69,34 +67,26 @@ export default function ImageSlider({ w1, w2, w3, w4 }) {
         </>
       ) : (
         <div
+          id="fade-container"
           style={{
             top: 0,
             margin: 0,
             padding: 0,
-            width: "100%",
             marginTop: "-0.1rem",
           }}>
-          <FadeComponent slideImages={slideImages} />
+          <Fade {...properties}>
+            {slideImages.map((image, index) => (
+              <div
+                key={index}
+                style={{
+                  ...divStyle,
+                }}>
+                <img src={image.url} maxHeight="27rem" width="100%" alt="" />
+              </div>
+            ))}
+          </Fade>
         </div>
       )}
     </>
   );
 }
-
-const FadeComponent = ({ slideImages }) => {
-  return (
-    <Fade {...properties}>
-      {slideImages.map((image, index) => (
-        <div key={index}>
-          <div
-            style={{
-              ...divStyle,
-              maxWidth: "100rem",
-            }}>
-            <img src={image.url} width="100%" alt="" />
-          </div>
-        </div>
-      ))}
-    </Fade>
-  );
-};

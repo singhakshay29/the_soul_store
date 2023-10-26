@@ -202,7 +202,7 @@ export default function WomenNav() {
               style={{
                 display: "flex",
               }}>
-              {/* <Box
+              <Box
                 style={{
                   marginLeft: "20px",
                   marginTop: "17px",
@@ -213,7 +213,7 @@ export default function WomenNav() {
                     color: "grey",
                   }}
                 />
-              </Box> */}
+              </Box>
               {isDropdownOpen === "User" && (
                 <Box
                   onMouseEnter={() => handleMouseEnter("User")}

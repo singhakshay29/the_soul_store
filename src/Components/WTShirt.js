@@ -112,7 +112,7 @@ export default function WTShirt({ openPopover }) {
   return (
     <>
       {isSmallScreen ? (
-        <>
+        <Container style={{ overflow: "hidden" }}>
           <img
             src={BannerRes ? BannerRes : c1}
             alt=""
@@ -137,7 +137,7 @@ export default function WTShirt({ openPopover }) {
               SORT
             </Button>
           </Flex>
-        </>
+        </Container>
       ) : (
         <>
           <img src={Banner ? Banner : null} alt="" style={{ width: "100%" }} />
