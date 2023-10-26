@@ -24,12 +24,12 @@ export default function Topbar({ active, setActive }) {
       {isSmallScreen ? (
         <>
           <Flex
-            minHeight="55px"
+            minHeight="45px"
             bg="#e11b23"
             p="0"
             zIndex="1"
-            justifyContent="space-between"
-            padding="20px 1rem 0 1rem"
+            justifyContent="space-evenly"
+            paddingTop="10px"
             alignContent="center">
             <Text
               style={{

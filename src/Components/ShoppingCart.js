@@ -20,6 +20,7 @@ import React, { useEffect, useState } from "react";
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import { ADD_TO_WISHLIST, GET_CART, REMOVE_FROM_CART } from "../action";
 import { useDispatch, useSelector } from "react-redux";
+import NavRes from "./NavRes";
 
 export default function ShoppingCart({ openPopover }) {
   const dispatch = useDispatch();
@@ -279,6 +280,7 @@ export default function ShoppingCart({ openPopover }) {
           </button>
         )}
       </Modal>
+      {isSmallScreen && <NavRes />}
       <Box
         style={{
           display: "flex",

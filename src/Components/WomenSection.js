@@ -43,12 +43,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { FETCH_PRODUCTS } from "../action";
 import { Card, Image, Container, Flex, Box, Button } from "@chakra-ui/react";
 import ImageSlider from "./ImageSlider";
+import NavRes from "./NavRes";
 
 export default function WomenSection() {
   const [active, setActive] = useState("1");
   const { productsList } = useSelector((state) => state.app);
   const [isSmallScreenMini, setIsSmallScreenMini] = useState(
-    window.innerWidth < 1000
+    window.innerWidth < 750
   );
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 1200);
   if (productsList.length > 0) {
@@ -76,6 +77,7 @@ export default function WomenSection() {
   }, []);
   return (
     <>
+      {isSmallScreen && <NavRes />}
       {isSmallScreenMini && (
         <Box>
           <NavLink to="/">

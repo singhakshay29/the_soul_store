@@ -45,7 +45,7 @@ iframe#webpack-dev-server-client-overlay {
   cursor: pointer;
   text-decoration: none;
   border-radius: 10px;
-  height: 35px;
+  height: 28px;
 }
 
 .active1 {
@@ -70,7 +70,7 @@ iframe#webpack-dev-server-client-overlay {
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
   background-color: #fff;
   width: 100%;
-  z-index: 10;
+  z-index: 2;
   border-bottom: 1px solid rgba(0, 0, 0, 0.3);
 }
 .navbarscrolled {
@@ -79,7 +79,7 @@ iframe#webpack-dev-server-client-overlay {
   transition: margin-top ease-in-out;
 }
 .navbarscrolledRes {
-  margin-top: -75px;
+  margin-top: -60px;
   position: fixed;
   transition: margin-top ease-in-out;
   width: 100%;
@@ -123,7 +123,15 @@ iframe#webpack-dev-server-client-overlay {
   position: absolute;
   top: 22px;
   margin-left: 70px;
-  z-index: 10;
+  z-index: 1;
+}
+
+.logoImgbar {
+  width: 125px;
+  z-index: 1;
+  position: absolute;
+  top: 20px;
+  left: 20px;
 }
 
 .logoImgRes {
@@ -143,12 +151,32 @@ iframe#webpack-dev-server-client-overlay {
   position: absolute;
 }
 .eye {
-  z-index: 20;
+  z-index: 2;
   width: 22px;
   height: 16px;
   top: 48px;
   margin-left: 90px;
   position: absolute;
+}
+.eyebar {
+  z-index: 2;
+  width: 22px;
+  height: 16px;
+  top: 43px;
+  left: 40px;
+  position: absolute;
+}
+.barback {
+  background-color: #000;
+  opacity: 0.7;
+  width: 100%;
+  z-index: 0;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  display: block;
 }
 
 .eyelog {
@@ -156,7 +184,7 @@ iframe#webpack-dev-server-client-overlay {
   height: 12px;
   margin-left: 5.7rem;
   margin-top: 1.3rem;
-  z-index: 20;
+  z-index: 2;
   position: fixed;
 }
 
@@ -231,7 +259,7 @@ iframe#webpack-dev-server-client-overlay {
   position: absolute;
   background-color: #fff;
   color: #292b2c;
-  z-index: 10;
+  z-index: 2;
   border-radius: 0;
   border-top: 3px #eee solid;
   border-bottom: 4px #eee solid;
@@ -535,9 +563,6 @@ iframe#webpack-dev-server-client-overlay {
   display: flex;
   flex-direction: row;
   margin-left: 3%;
-  /* justify-content: space-between; */
-  /* width: 65rem;
-  margin-left: 18%; */
 }
 
 .categoryH1 {
@@ -545,6 +570,24 @@ iframe#webpack-dev-server-client-overlay {
   color: #a7a9ac;
   font-size: 12px;
   cursor: pointer;
+}
+
+.categoryH12 {
+  color: rgb(25, 25, 25);
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  padding-top: 18px;
+  font-weight: 800;
+  margin: 0;
+}
+.categoryH12Item {
+  color: #58595b;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  margin: 0;
+  font-weight: 800;
 }
 .categoryH1:hover {
   color: #58595b;
@@ -1528,4 +1571,9 @@ iframe#webpack-dev-server-client-overlay {
   width: 14.9rem;
   margin: 2rem 1rem auto 2rem;
   position: relative;
+  border-radius: 5px;
+  color: #58595b;
+  box-shadow: 0 1px 2px rgb(0 0 0/20%);
+  -webkit-box-shadow: 0 1.5px 2px rgb(0 0 0/20%);
+  /* margin-bottom: 10px; */
 }

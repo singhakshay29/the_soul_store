@@ -11,14 +11,16 @@ import { Link } from "react-router-dom";
 import { RxCross2 } from "react-icons/rx";
 import { FaRupeeSign } from "react-icons/fa";
 import wishlist1 from "../assets/wishlist1.png";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { GET_WISHLIST, REMOVE_FROM_WISHLIST, ADD_TO_CART } from "../action";
+import NavRes from "./NavRes";
 
 export default function Wishlist({ openPopover }) {
   const dispatch = useDispatch();
   const { wishlist } = useSelector((state) => state.app);
   const { isLoggedIn } = useSelector((state) => state.user);
+  const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 1200);
   const handleRemoveFromWishlist = (productId) => {
     openPopover("Product removed from your Wishlist");
     dispatch(REMOVE_FROM_WISHLIST(productId));
@@ -39,17 +41,29 @@ export default function Wishlist({ openPopover }) {
   };
 
   useEffect(() => {
+    const handleResize = () => {
+      setIsSmallScreen(window.innerWidth < 1200);
+    };
+
+    window.addEventListener("resize", handleResize);
     dispatch(GET_WISHLIST());
     // eslint-disable-next-line
   }, []);
 
   return (
     <>
+      {isSmallScreen && <NavRes value={true} />}
+
       {wishlist?.length > 0 ? (
         <>
-          <Text className="wT">
-            My Wishlist - <span>({wishlist.length} items)</span>
-          </Text>
+          {!isSmallScreen && (
+            <>
+              <Text className="wT">
+                My Wishlist - <span>({wishlist.length} items)</span>
+              </Text>
+            </>
+          )}
+
           <Flex
             style={{
               marginLeft: "1rem",

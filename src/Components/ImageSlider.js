@@ -4,15 +4,17 @@ import "react-slideshow-image/dist/styles.css";
 
 const divStyle = {
   display: "flex",
-  maxHeight: "27rem",
   alignItems: "center",
   backgroundSize: "cover",
   justifyContent: "center",
   backgroundRepeat: "no-repeat",
+  zIndex: 0,
+  position: "none",
 };
 
 const properties = {
   indicators: true,
+  zIndex: 0,
 };
 
 export default function ImageSlider({ w1, w2, w3, w4 }) {
@@ -50,6 +52,7 @@ export default function ImageSlider({ w1, w2, w3, w4 }) {
               margin: 0,
               padding: 0,
               marginTop: "-0.1rem",
+              zIndex: 0,
             }}>
             <Fade {...properties}>
               {slideImages.map((image, index) => (
@@ -58,7 +61,12 @@ export default function ImageSlider({ w1, w2, w3, w4 }) {
                     style={{
                       ...divStyle,
                     }}>
-                    <img src={image.url} width="100%" alt="" />
+                    <img
+                      src={image.url}
+                      style={{ zIndex: 0 }}
+                      width="100%"
+                      alt=""
+                    />
                   </div>
                 </div>
               ))}

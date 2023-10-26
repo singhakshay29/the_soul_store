@@ -5,12 +5,16 @@ import { BsSortUp } from "react-icons/bs";
 import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Text, Divider, Container, Flex, Button } from "@chakra-ui/react";
+import NavRes from "./NavRes";
 export default function WTShirt({ openPopover }) {
   const [sortingOption, setSortingOption] = useState("");
   const [selectedBrands, setSelectedBrands] = useState("");
   const [selectedColors, setSelectedColors] = useState("");
   const [selectedPrices, setSelectedPrices] = useState("");
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 1100);
+  const [isSmallScreenMini, setIsSmallScreenMini] = useState(
+    window.innerWidth < 750
+  );
   const object = useLocation();
   const itemList = object.state?.data;
   const { Banner, Heading, brandName, colorName, BannerRes } = object.state;
@@ -103,6 +107,11 @@ export default function WTShirt({ openPopover }) {
   //     .join(" ");
   // });
   useEffect(() => {
+    const handleResizeMini = () => {
+      setIsSmallScreenMini(window.innerWidth < 750);
+    };
+
+    window.addEventListener("resize", handleResizeMini);
     const handleResize = () => {
       setIsSmallScreen(window.innerWidth < 1100);
     };
@@ -111,36 +120,46 @@ export default function WTShirt({ openPopover }) {
 
   return (
     <>
-      {isSmallScreen ? (
-        <Container style={{ overflow: "hidden" }}>
+      {isSmallScreen && <NavRes value={true} Heading={Heading} />}
+      {isSmallScreenMini ? (
+        <>
           <img
             src={BannerRes ? BannerRes : c1}
             alt=""
             style={{ width: "100%" }}
           />
-          <Flex flexWrap="wrap" justifyContent="center">
-            {filteredItems.map((item, index) => (
-              <Card2 openPopover={openPopover} item={item} index={index} />
-            ))}
-          </Flex>
-          <Flex className="bottomNav">
-            <Button
-              // onClick={() => dispatch(ADD_TO_WISHLIST(product._id))}
-              className="filterbuttonNav">
-              <RiFilter2Line style={{ fontSize: "1rem", margin: "0 1rem" }} />
-              FILTER
-            </Button>
-            <Button
-              // onClick={() => addCart(product._id, quantity)}
-              className="filterbuttonNav">
-              <BsSortUp style={{ fontSize: "1rem", margin: "0 1rem" }} />
-              SORT
-            </Button>
-          </Flex>
-        </Container>
+        </>
       ) : (
         <>
           <img src={Banner ? Banner : null} alt="" style={{ width: "100%" }} />
+        </>
+      )}
+      {isSmallScreen ? (
+        <>
+          <Container style={{ overflow: "hidden" }}>
+            <Flex flexWrap="wrap" justifyContent="center">
+              {filteredItems.map((item, index) => (
+                <Card2 openPopover={openPopover} item={item} index={index} />
+              ))}
+            </Flex>
+            <Flex className="bottomNav">
+              <Button
+                // onClick={() => dispatch(ADD_TO_WISHLIST(product._id))}
+                className="filterbuttonNav">
+                <RiFilter2Line style={{ fontSize: "1rem", margin: "0 1rem" }} />
+                FILTER
+              </Button>
+              <Button
+                // onClick={() => addCart(product._id, quantity)}
+                className="filterbuttonNav">
+                <BsSortUp style={{ fontSize: "1rem", margin: "0 1rem" }} />
+                SORT
+              </Button>
+            </Flex>
+          </Container>
+        </>
+      ) : (
+        <>
           <Container>
             <Text className="categoryH1">
               <Link to="/" style={{ textDecoration: "none", color: "#a7a9ac" }}>
