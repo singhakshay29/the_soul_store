@@ -63,8 +63,6 @@ export default function Topbar({ active, setActive }) {
                 onClick={handleClick}>
                 Women
               </Button>
-            </NavLink>
-            <NavLink to="/men">
               <Button
                 className={
                   active === "2" ? "active1 topbarbutton" : "topbarbutton"

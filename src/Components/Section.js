@@ -1,62 +1,53 @@
-import {
-  brandName,
-  colorName,
-  colorNameJ,
-  brandNameJ,
-  colorNameS,
-  brandNameS,
-  brandNameK,
-  colorNameJP,
-  brandNameJP,
-  colorNameK,
-  productWomenJump,
-  productWomenKurti,
-  productWomenshirts,
-  productWomenTshirt,
-  productWomenJoggers,
-  service,
-  // service2,
-} from "../service";
-import React, { useEffect, useState } from "react";
+import { service2 } from "../service";
+import NavRes from "./NavRes";
 import w1 from "../assets/w1.png";
 import w2 from "../assets/w2.png";
 import w3 from "../assets/w3.png";
 import w4 from "../assets/w4.png";
 import WGallery from "./WGallery";
 import DW from "../assets/DW.jpg";
-import Pretty from "../assets/Pretty.jpg";
-//import JW from "../assets/JW.jpg";
 import btS from "../assets/btS.jpg";
 import jog from "../assets/jog.jpg";
-import cargo from "../assets/cargo.jpg";
-import Collection from "../assets/Collection.jpg";
-import { Link, NavLink } from "react-router-dom";
-// import ImageSlider from "./ImageSlider";
+import ImageSlider from "./ImageSlider";
 import basis from "../assets/basis.jpg";
+import cargo from "../assets/cargo.jpg";
 import member from "../assets/member.png";
 import shirt1 from "../assets/shirt1.jpg";
+import Pretty from "../assets/Pretty.jpg";
 import basicB from "../assets/basicB.jpg";
 import bannerT from "../assets/bannerT.jpg";
 import bannerJ from "../assets/bannerJ.jpg";
-import bannerBS from "../assets/bannerBS.jpg";
-import { useDispatch, useSelector } from "react-redux";
+import JeansSmall from "../assets/JeansSmall.jpg";
 import { FETCH_PRODUCTS } from "../action";
+import bannerBS from "../assets/bannerBS.jpg";
+import { Link, NavLink } from "react-router-dom";
+import Collection from "../assets/Collection.jpg";
+import React, { useEffect, useState } from "react";
+import JumpBannerSmall from "../assets/JumpBannerSmall.jpg";
+import { useDispatch, useSelector } from "react-redux";
 import { Card, Image, Container, Flex, Box, Button } from "@chakra-ui/react";
-import ImageSlider from "./ImageSlider";
-import NavRes from "./NavRes";
 
-export default function WomenSection() {
+export default function Section() {
   const [active, setActive] = useState("1");
   const { productsList } = useSelector((state) => state.app);
+  const [barOpen, setBarOpen] = useState();
   const [isSmallScreenMini, setIsSmallScreenMini] = useState(
     window.innerWidth < 750
   );
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 1200);
+  let data = [];
   if (productsList.length > 0) {
-    service(productsList);
-    // service2(productsList);
+    data = service2(productsList);
   }
 
+  const {
+    productWomenTshirtData,
+    productWomenJeansData,
+    productWomenJumpsuitData,
+    productWomenshirtsData,
+    productWomenJoggersData,
+    productWomenkurtiData,
+  } = data;
   const dispatch = useDispatch();
   const handleClick = (event) => {
     setActive(event.target.id);
@@ -77,7 +68,7 @@ export default function WomenSection() {
   }, []);
   return (
     <>
-      {isSmallScreen && <NavRes />}
+      {isSmallScreen && <NavRes barOpen={barOpen} setBarOpen={setBarOpen} />}
       {isSmallScreenMini && (
         <Box>
           <NavLink to="/">
@@ -103,11 +94,19 @@ export default function WomenSection() {
       <Container style={{ overflow: "hidden" }}>
         {isSmallScreenMini ? (
           <>
-            <ImageSlider w1={Collection} w2={Pretty} w3={btS} w4={cargo} />
+            {!barOpen && (
+              <>
+                <ImageSlider w1={Collection} w2={Pretty} w3={btS} w4={cargo} />
+              </>
+            )}
           </>
         ) : (
           <>
-            <ImageSlider w1={w1} w2={w2} w3={w3} w4={w4} />
+            {!barOpen && (
+              <>
+                <ImageSlider w1={w1} w2={w2} w3={w3} w4={w4} />
+              </>
+            )}
           </>
         )}
         <Flex alignContent="center" flexDirection="column" width="100%">
@@ -123,13 +122,12 @@ export default function WomenSection() {
                         <Link
                           to="/category"
                           state={{
-                            data: productWomenTshirt,
+                            data: productWomenTshirtData,
                             Banner: basicB,
-                            colorName: colorName,
-                            brandName: brandName,
+
                             Heading: "Women's Basics",
                           }}>
-                          <Image
+                          <img
                             src={basis}
                             className="categoryImageMini"
                             alt="SHIRTS"
@@ -140,32 +138,24 @@ export default function WomenSection() {
                         <Link
                           to="/category"
                           state={{
-                            data: productWomenKurti,
-                            colorName: colorNameK,
-                            brandName: brandNameK,
+                            data: productWomenkurtiData,
                             Heading: "Women Dresses",
                           }}>
-                          <Image
-                            src={DW}
-                            className="categoryImage"
-                            alt="T-SHIRTS"
-                          />
+                          <img src={DW} className="categoryImage" alt="" />
                         </Link>
                       </Container>
                       <Container className="iBoxMini">
                         <Link
                           to="/category"
                           state={{
-                            data: productWomenJump,
+                            data: productWomenJumpsuitData,
                             Banner: bannerJ,
-                            colorName: colorNameJP,
-                            brandName: brandNameJP,
                             Heading: "Women Jumpsuit",
                           }}>
-                          <Image
-                            src={basis}
+                          <img
+                            src={JumpBannerSmall}
                             className="categoryImage "
-                            alt="OVERSIZED T-SHIRTS"
+                            alt=""
                           />
                         </Link>
                       </Container>
@@ -177,26 +167,20 @@ export default function WomenSection() {
                       <Link
                         to="/category"
                         state={{
-                          data: productWomenTshirt,
+                          data: productWomenTshirtData,
                           Banner: basicB,
-                          colorName: colorName,
-                          brandName: brandName,
+
                           Heading: "Women's Basics",
                         }}>
-                        <Image
-                          src={basis}
-                          className="categoryImage"
-                          alt="SHIRTS"
-                        />
+                        <img src={basis} className="categoryImage" alt="" />
                       </Link>
                     </Flex>
                     <Container className="iBox">
                       <Link
                         to="/category"
                         state={{
-                          data: productWomenKurti,
-                          colorName: colorNameK,
-                          brandName: brandNameK,
+                          data: productWomenkurtiData,
+
                           Heading: "Women Dresses",
                         }}>
                         <Image
@@ -211,45 +195,40 @@ export default function WomenSection() {
               </>
             ) : (
               <>
+                <Container className="iBox">
+                  <Link
+                    to="/category"
+                    state={{
+                      data: productWomenJeansData,
+                      Heading: "Women Jeans",
+                    }}>
+                    <img src={JeansSmall} className="categoryImage" alt="" />
+                  </Link>
+                </Container>
                 <Flex className="iBox">
                   <Link
                     to="/category"
                     state={{
-                      data: productWomenTshirt,
+                      data: productWomenTshirtData,
                       Banner: basicB,
-                      colorName: colorName,
-                      brandName: brandName,
                       Heading: "Women's Basics",
                     }}>
-                    <Image src={basis} className="categoryImage" alt="SHIRTS" />
+                    <img src={basis} className="categoryImage" alt="" />
                   </Link>
                 </Flex>
+
                 <Container className="iBox">
                   <Link
                     to="/category"
                     state={{
-                      data: productWomenKurti,
-                      colorName: colorNameK,
-                      brandName: brandNameK,
-                      Heading: "Women Dresses",
-                    }}>
-                    <Image src={DW} className="categoryImage" alt="T-SHIRTS" />
-                  </Link>
-                </Container>
-                <Container className="iBox">
-                  <Link
-                    to="/category"
-                    state={{
-                      data: productWomenJump,
+                      data: productWomenJumpsuitData,
                       Banner: bannerJ,
-                      colorName: colorNameJP,
-                      brandName: brandNameJP,
                       Heading: "Women Jumpsuit",
                     }}>
-                    <Image
-                      src={basis}
-                      className="categoryImage "
-                      alt="OVERSIZED T-SHIRTS"
+                    <img
+                      src={JumpBannerSmall}
+                      className="categoryImage"
+                      alt=""
                     />
                   </Link>
                 </Container>
@@ -262,7 +241,7 @@ export default function WomenSection() {
             <Flex alignContent="center" flexDirection="column" width="100%">
               <Flex className="heading1">SHOP BY COLOR</Flex>
             </Flex>
-            <WGallery />
+            <WGallery data={data} />
           </>
         )}
         {isSmallScreen ? (
@@ -277,16 +256,11 @@ export default function WomenSection() {
                         to="/category"
                         state={{
                           Banner: bannerT,
-                          colorName: colorName,
-                          brandName: brandName,
-                          data: productWomenTshirt,
+
+                          data: productWomenTshirtData,
                           Heading: "Women T-Shirt",
                         }}>
-                        <Image
-                          src={btS}
-                          className="categoryImage"
-                          alt="SHIRTS"
-                        />
+                        <img src={btS} className="categoryImage" alt="" />
                       </Link>
                     </Container>
                     <Container className="iBoxMini">
@@ -294,16 +268,11 @@ export default function WomenSection() {
                         to="/category"
                         state={{
                           Banner: bannerBS,
-                          colorName: colorNameS,
-                          brandName: brandNameS,
-                          data: productWomenshirts,
+
+                          data: productWomenshirtsData,
                           Heading: "Women's Shirts",
                         }}>
-                        <Image
-                          src={shirt1}
-                          className="categoryImage "
-                          alt="OVERSIZED T-SHIRTS"
-                        />
+                        <img src={shirt1} className="categoryImage " alt="" />
                       </Link>
                     </Container>
                     <Container className="iBoxMini">
@@ -311,16 +280,11 @@ export default function WomenSection() {
                         to="/category"
                         state={{
                           Banner: jog,
-                          colorName: colorNameJ,
-                          brandName: brandNameJ,
+
                           Heading: "Women Joggers",
-                          data: productWomenJoggers,
+                          data: productWomenJoggersData,
                         }}>
-                        <Image
-                          src={cargo}
-                          className="categoryImage"
-                          alt="T-SHIRTS"
-                        />
+                        <img src={cargo} className="categoryImage" alt="" />
                       </Link>
                     </Container>
                   </Flex>
@@ -336,16 +300,11 @@ export default function WomenSection() {
                         to="/category"
                         state={{
                           Banner: bannerT,
-                          colorName: colorName,
-                          brandName: brandName,
-                          data: productWomenTshirt,
+
+                          data: productWomenTshirtData,
                           Heading: "Women T-Shirt",
                         }}>
-                        <Image
-                          src={btS}
-                          className="categoryImage"
-                          alt="SHIRTS"
-                        />
+                        <img src={btS} className="categoryImage" alt="SHIRTS" />
                       </Link>
                     </Container>
                     <Container className="iBox">
@@ -353,16 +312,11 @@ export default function WomenSection() {
                         to="/category"
                         state={{
                           Banner: jog,
-                          colorName: colorNameJ,
-                          brandName: brandNameJ,
+
                           Heading: "Women Joggers",
-                          data: productWomenJoggers,
+                          data: productWomenJoggersData,
                         }}>
-                        <Image
-                          src={cargo}
-                          className="categoryImage"
-                          alt="T-SHIRTS"
-                        />
+                        <img src={cargo} className="categoryImage" alt="" />
                       </Link>
                     </Container>
                   </Flex>
@@ -380,12 +334,11 @@ export default function WomenSection() {
                     to="/category"
                     state={{
                       Banner: bannerT,
-                      colorName: colorName,
-                      brandName: brandName,
-                      data: productWomenTshirt,
+
+                      data: productWomenTshirtData,
                       Heading: "Women T-Shirt",
                     }}>
-                    <Image src={btS} className="categoryImage" alt="SHIRTS" />
+                    <img src={btS} className="categoryImage" alt="" />
                   </Link>
                 </Container>
                 <Container className="iBox">
@@ -393,16 +346,11 @@ export default function WomenSection() {
                     to="/category"
                     state={{
                       Banner: jog,
-                      colorName: colorNameJ,
-                      brandName: brandNameJ,
+
                       Heading: "Women Joggers",
-                      data: productWomenJoggers,
+                      data: productWomenJoggersData,
                     }}>
-                    <Image
-                      src={cargo}
-                      className="categoryImage"
-                      alt="T-SHIRTS"
-                    />
+                    <img src={cargo} className="categoryImage" alt="" />
                   </Link>
                 </Container>
                 <Container className="iBox">
@@ -410,16 +358,11 @@ export default function WomenSection() {
                     to="/category"
                     state={{
                       Banner: bannerBS,
-                      colorName: colorNameS,
-                      brandName: brandNameS,
-                      data: productWomenshirts,
+
+                      data: productWomenshirtsData,
                       Heading: "Women's Shirts",
                     }}>
-                    <Image
-                      src={shirt1}
-                      className="categoryImage "
-                      alt="OVERSIZED T-SHIRTS"
-                    />
+                    <img src={shirt1} className="categoryImage " alt="" />
                   </Link>
                 </Container>
               </Flex>

@@ -1,15 +1,3 @@
-import {
-  productL,
-  productWhite,
-  productPink,
-  productBlack,
-  productBlue,
-  blackbrandName,
-  whitebrandName,
-  bluebrandName,
-  LbrandName,
-  pinkbrandName,
-} from "../service";
 import React from "react";
 import bB from "../assets/bB.jpg";
 import bL from "../assets/bL.jpg";
@@ -24,17 +12,23 @@ import Pretty from "../assets/Pretty.jpg";
 import blueBanner from "../assets/bluebanner.jpg";
 import Carousel from "better-react-carousel";
 
-export default function WGallery() {
+export default function WGallery({ data }) {
+  const {
+    productWomenWhiteData,
+    productWomenLavenderData,
+    productWomenPinkData,
+    productWomenBlackData,
+    productWomenBlueData,
+  } = data;
   return (
     <Carousel cols={3} rows={1}>
       <Carousel.Item>
         <Link
           to="/category"
           state={{
-            data: productWhite,
+            data: productWomenWhiteData,
             Banner: wB,
             Heading: "Women White Collection",
-            brandName: whitebrandName,
           }}>
           <img src={white} className="gallery" alt="" />
         </Link>
@@ -43,9 +37,8 @@ export default function WGallery() {
         <Link
           to="/category"
           state={{
-            data: productPink,
+            data: productWomenPinkData,
             Banner: bP,
-            brandName: pinkbrandName,
             Heading: "Women Pink Collection",
           }}>
           <img className="gallery" src={pink} alt="" />
@@ -55,9 +48,9 @@ export default function WGallery() {
         <Link
           to="/category"
           state={{
-            data: productBlack,
+            data: productWomenBlackData,
             Banner: bB,
-            brandName: blackbrandName,
+
             Heading: "Women Black Collection",
           }}>
           <img src={blk} className="gallery" alt="" />
@@ -67,9 +60,9 @@ export default function WGallery() {
         <Link
           to="/category"
           state={{
-            data: productBlue,
+            data: productWomenBlueData,
             Banner: blueBanner,
-            brandName: bluebrandName,
+
             Heading: "Women Blue Collection",
           }}>
           <img src={Blue} className="gallery" alt="" />
@@ -79,9 +72,9 @@ export default function WGallery() {
         <Link
           to="/category"
           state={{
-            data: productWhite,
+            data: productWomenWhiteData,
             Banner: wB,
-            brandName: whitebrandName,
+
             Heading: "Women White Collection",
           }}>
           <img src={white} className="gallery" alt="" />
@@ -91,9 +84,8 @@ export default function WGallery() {
         <Link
           to="/category"
           state={{
-            data: productL,
+            data: productWomenLavenderData,
             Banner: bL,
-            brandName: LbrandName,
             Heading: "Women Lavender Collection",
           }}>
           <img src={Pretty} className="gallery" alt="" />

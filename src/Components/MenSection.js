@@ -16,13 +16,12 @@ import MBJ from "../assets/MBJ.jpg";
 import MBS from "../assets/MBS.jpg";
 import MBJS from "../assets/MBJS.jpg";
 import { Card, Image, Container, Box, Button } from "@chakra-ui/react";
-import {
-  productMenJeans,
-  productMenJoggers,
-  productMenShirt,
-  productMenShorts,
-  productMenTshirt,
-} from "../service";
+import // productMenJeans,
+// productMenJoggers,
+// productMenShirt,
+// productMenShorts,
+// productMenTshirt,
+"../service";
 import { useDispatch } from "react-redux";
 import { FETCH_PRODUCTS } from "../action";
 
@@ -72,7 +71,7 @@ export default function MenSection() {
             <Link
               to="/category"
               state={{
-                data: productMenTshirt,
+                // data: productMenTshirt,
                 Heading: "Men's Oversized T-Shirts",
               }}>
               <Image src={c1} className="categoryImage" alt="SHIRTS" />
@@ -83,7 +82,7 @@ export default function MenSection() {
             <Link
               to="/category"
               state={{
-                data: productMenShirt,
+                // data: productMenShirt,
                 Heading: "Men's Shirt",
               }}>
               <Image src={c2} className="categoryImage" alt="T-SHIRTS" />
@@ -93,7 +92,7 @@ export default function MenSection() {
             <Link
               to="/category"
               state={{
-                data: productMenTshirt,
+                // data: productMenTshirt,
                 Heading: "Men's T-Shirts",
               }}>
               <Image
@@ -110,7 +109,7 @@ export default function MenSection() {
               to="/category"
               state={{
                 Banner: MBJ,
-                data: productMenJoggers,
+                // data: productMenJoggers,
                 Heading: "Men's Joggers",
               }}>
               <Image src={menJog} className="categoryImage" alt="SHIRTS" />
@@ -122,7 +121,7 @@ export default function MenSection() {
               to="/category"
               state={{
                 Banner: MBS,
-                data: productMenShorts,
+                // data: productMenShorts,
                 Heading: "Men's Shorts",
               }}>
               <Image src={menShorts} className="categoryImage" alt="T-SHIRTS" />
@@ -133,7 +132,7 @@ export default function MenSection() {
               to="/category"
               state={{
                 Banner: MBJS,
-                data: productMenJeans,
+                // data: productMenJeans,
                 Heading: "Men's Jeans",
               }}>
               <Image

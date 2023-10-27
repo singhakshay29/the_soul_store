@@ -8,8 +8,8 @@ const divStyle = {
   backgroundSize: "cover",
   justifyContent: "center",
   backgroundRepeat: "no-repeat",
+  position: "relative",
   zIndex: 0,
-  position: "none",
 };
 
 const properties = {
@@ -52,7 +52,8 @@ export default function ImageSlider({ w1, w2, w3, w4 }) {
               margin: 0,
               padding: 0,
               marginTop: "-0.1rem",
-              zIndex: 0,
+              zIndex: 1,
+              position: "relative",
             }}>
             <Fade {...properties}>
               {slideImages.map((image, index) => (

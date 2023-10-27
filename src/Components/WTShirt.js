@@ -16,8 +16,10 @@ export default function WTShirt({ openPopover }) {
     window.innerWidth < 750
   );
   const object = useLocation();
-  const itemList = object.state?.data;
-  const { Banner, Heading, brandName, colorName, BannerRes } = object.state;
+  const { data } = object.state;
+  const { itemList, brandName, colorName } = data;
+  console.log(data);
+  const { Banner, Heading, BannerRes } = object.state;
   const handleSortingAndFiltering = (
     sortingCriteria,
     filterCriteriaBrand,

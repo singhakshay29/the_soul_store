@@ -29,6 +29,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { ADD_TO_WISHLIST, REMOVE_FROM_WISHLIST } from "../action";
 import { addCart } from "../fetch";
 import ImageSliderRes from "./ImageSliderRes";
+import NavRes from "./NavRes";
 
 export default function Product() {
   const dispatch = useDispatch();
@@ -116,6 +117,7 @@ export default function Product() {
     <>
       {isSmallScreen ? (
         <>
+          <NavRes />
           <ImageSliderRes productImages={productImages} />
           <Flex
             style={{

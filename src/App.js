@@ -13,10 +13,10 @@ import Product from "./Components/Product";
 import Wishlist from "./Components/Wishlist";
 import WomenNav from "./Components/WomenNav";
 import MenSection from "./Components/MenSection";
-import WomenSection from "./Components/WomenSection";
 import ShoppingCart from "./Components/ShoppingCart";
 import { useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Section from "./Components/Section";
 
 function App() {
   const [active, setActive] = useState("1");
@@ -38,7 +38,7 @@ function App() {
         {active === "1" ? <WomenNav /> : <MenNav />}
         {isPopoverOpen && <Popup message={message} />}
         <Routes>
-          <Route path="/" element={<WomenSection />}></Route>
+          <Route path="/" element={<Section />}></Route>
           <Route path="/men" element={<MenSection />}></Route>
           <Route path="login" element={<Login />}></Route>
           <Route path="signup" element={<SignUp />}></Route>

@@ -127,17 +127,17 @@ iframe#webpack-dev-server-client-overlay {
 }
 
 .logoImgbar {
-  width: 125px;
+  width: 75px;
   z-index: 1;
   position: absolute;
-  top: 20px;
+  top: 35px;
   left: 20px;
 }
 
 .logoImgRes {
   width: 100px;
   position: absolute;
-  top: 50px;
+  top: 40px;
   z-index: 1;
   margin-left: -14px;
 }
@@ -146,7 +146,7 @@ iframe#webpack-dev-server-client-overlay {
   z-index: 2;
   width: 18px;
   height: 14px;
-  top: 66px;
+  top: 58px;
   margin-left: 1.2px;
   position: absolute;
 }
@@ -160,10 +160,10 @@ iframe#webpack-dev-server-client-overlay {
 }
 .eyebar {
   z-index: 2;
-  width: 22px;
-  height: 16px;
+  width: 16px;
+  height: 10px;
   top: 43px;
-  left: 40px;
+  left: 38px;
   position: absolute;
 }
 .barback {
@@ -233,6 +233,7 @@ iframe#webpack-dev-server-client-overlay {
   background-color: #f7f8fa;
   color: #ed2d2f;
 }
+
 .icon {
   font-size: 20px;
 }
@@ -364,6 +365,10 @@ iframe#webpack-dev-server-client-overlay {
 .sBT2 {
   margin-top: 34rem;
   width: 35rem;
+}
+.sBT21 {
+  margin-top: 28rem;
+  width: 50rem;
 }
 .themeFlex {
   flex-direction: column;
@@ -517,6 +522,7 @@ iframe#webpack-dev-server-client-overlay {
   overflow: hidden;
   width: 100%;
 }
+
 .categoryImageMini {
   transition: transform 0.2s;
   cursor: pointer;
@@ -577,7 +583,6 @@ iframe#webpack-dev-server-client-overlay {
   font-size: 18px;
   cursor: pointer;
   display: flex;
-  padding-top: 18px;
   font-weight: 800;
   margin: 0;
 }
@@ -1390,6 +1395,7 @@ iframe#webpack-dev-server-client-overlay {
   max-height: 24rem;
   margin-left: 1rem;
   margin-right: 1rem;
+  max-width: 24rem;
 }
 .iBoxMini {
   overflow: hidden;
@@ -1576,4 +1582,62 @@ iframe#webpack-dev-server-client-overlay {
   box-shadow: 0 1px 2px rgb(0 0 0/20%);
   -webkit-box-shadow: 0 1.5px 2px rgb(0 0 0/20%);
   /* margin-bottom: 10px; */
+}
+.barbox1 {
+  background-color: #f8f8f8;
+  margin: 0 !important;
+  height: 80px;
+}
+.barboxStyle {
+  list-style: none;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  padding-inline-start: 40px;
+}
+.barboxStyle1 {
+  background: #ebebeb;
+  border-radius: 0.3rem;
+  margin-bottom: 10px;
+  box-shadow: 0 3px 10px 0 rgb(0 0 0/19%) !important;
+  height: 2rem !important;
+}
+.barboxStyle1button {
+  background: transparent;
+  border: unset;
+  font-size: 1rem;
+  height: 100%;
+  width: 100%;
+  border-radius: 0.5rem;
+  color: #828282;
+  font-weight: 600;
+  -webkit-text-stroke: 0.35px #fff;
+  -webkit-font-smoothing: antialiased;
+  appearance: none;
+}
+.barboxStyle1button2 {
+  border: unset;
+  font-size: 1rem;
+  height: 100%;
+  width: 100%;
+  border-radius: 0.5rem;
+  color: #828282;
+  -webkit-text-stroke: 0.35px #fff;
+  -webkit-font-smoothing: antialiased;
+  appearance: none;
+  background-color: #fff !important;
+  font-weight: 600;
+  color: #0a0a0a !important;
+}
+
+.barboxStyle1buttonSec {
+  background: transparent;
+  border: unset;
+  font-size: 1rem;
+  border-radius: 0.5rem;
+  color: #828282;
+  font-weight: 600;
+  -webkit-text-stroke: 0.35px #fff;
+  -webkit-font-smoothing: antialiased;
 }

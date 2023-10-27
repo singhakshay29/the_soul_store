@@ -1,110 +1,5 @@
-import {
-  productL,
-  productRed,
-  productPink,
-  productGrey,
-  productBlue,
-  productWhite,
-  productBrown,
-  productBlack,
-  productKotty,
-  productGreen,
-  productYellow,
-  productPurple,
-  productKhahki,
-  productMaroon,
-  productOrange,
-  productMARVEL,
-  productPEANUTS,
-  productBewakoof,
-  productTOMJERRY,
-  productDRYSTATE,
-  productCOCACOLA,
-  productBelliskey,
-  productWomenJump,
-  productWomenJeans,
-  productWomenKurti,
-  productLOONEYTUNES,
-  productWomenTshirt,
-  productHubberholme,
-  productWomenshirts,
-  productCampusSutra,
-  productBewakoofAir,
-  productHARRYPOTTER,
-  productWomenJoggers,
-  productCHIMPAAANZEE,
-  productLoungeDreams,
-  productInstafabPlus,
-  productRICKANDMORTY,
-  productStyleQuotient,
-  productTALESSTORIES,
-  productDCMERCHANDISE,
-  productCARTOONNETWORK,
-  productDISNEYMERCHANDISE,
-  productGARFIELDMERCHANDISE,
-  productMINIONSMERCHANDISE,
-  productNARUTOMERCHANDISE,
-  colorNameJS,
-  brandNameJS,
-  colorName,
-  brandName,
-  colorNameS,
-  brandNameS,
-  colorNameJP,
-  brandNameJP,
-  colorNameJ,
-  brandNameJ,
-  colorNameK,
-  brandNameK,
-  whitebrandName,
-  blackbrandName,
-  pinkbrandName,
-  brownbrandName,
-  greybrandName,
-  orangebrandName,
-  bluebrandName,
-  GreenbrandName,
-  RedbrandName,
-  YellowbrandName,
-  PurplebrandName,
-  LbrandName,
-  KhahkibrandName,
-  MaroonbrandName,
-  BewakoofColorName,
-  TOMJERRYColorName,
-  CARTOONNETWORKColorName,
-  DISNEYMERCHANDISEColorName,
-  CHIMPAAANZEEColorName,
-  CampusSutraColorName,
-  LoungeDreamsColorName,
-  InstafabColorName,
-  StyleQuotientColorName,
-  BewakoofAirColorName,
-  RICKANDMORTYColorName,
-  HARRYPOTTERColorName,
-  MARVELColorName,
-  BelliskeyColorName,
-  COCACOLAColorName,
-  HubberholmeColorName,
-  KottyColorName,
-  DCMERCHANDISEColorName,
-  TALESSTORIESColorName,
-  NARUTOMERCHANDISEColorName,
-  MINIONSMERCHANDISEColorName,
-  GARFIELDMERCHANDISEColorName,
-  LOONEYTUNESColorName,
-  PEANUTSColorName,
-  DRYSTATEColorName,
-} from "../service";
-import {
-  Box,
-  List,
-  Flex,
-  Text,
-  Image,
-  ListItem,
-  IconButton,
-} from "@chakra-ui/react";
+import { service2 } from "../service";
+import { Box, List, Flex, Text, ListItem, IconButton } from "@chakra-ui/react";
 import React from "react";
 import eye from "../assets/eye.jpg";
 import { Link } from "react-router-dom";
@@ -132,9 +27,59 @@ export default function WomenNav() {
   const [isDropdownOpen, setIsDropDownOpen] = useState(null);
   const { isLoggedIn } = useSelector((state) => state.user);
   const { results } = useSelector((state) => state.app.cart);
-  const { wishlist } = useSelector((state) => state.app);
+  const { wishlist, productsList } = useSelector((state) => state.app);
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 1200);
-
+  let data = [];
+  if (productsList.length > 0) {
+    data = service2(productsList);
+  }
+  const {
+    productWomenTshirtData,
+    productWomenJoggersData,
+    productWomenshirtsData,
+    productWomenkurtiData,
+    productWomenJeansData,
+    productWomenJumpsuitData,
+    productWomenBlackData,
+    productWomenBrownData,
+    productWomenWhiteData,
+    productWomenGreyData,
+    productWomenOrangeData,
+    productWomenBlueData,
+    productWomenGreenData,
+    productWomenRedData,
+    productWomenPinkData,
+    productWomenYellowData,
+    productWomenPurpleData,
+    productWomenLavenderData,
+    productWomenKhakiData,
+    productWomenMaroonData,
+    productBewakoof,
+    productCHIMPAAANZEE,
+    productCampusSutra,
+    productLoungeDreams,
+    productInstafabPlus,
+    productBewakoofAir,
+    productStyleQuotient,
+    productRICKANDMORTY,
+    productHARRYPOTTER,
+    productTOMJERRY,
+    productKotty,
+    productMARVEL,
+    productPEANUTS,
+    productDRYSTATE,
+    productCOCACOLA,
+    productBelliskey,
+    productLOONEYTUNES,
+    productHubberholme,
+    productTALESSTORIES,
+    productDCMERCHANDISE,
+    productCARTOONNETWORK,
+    productDISNEYMERCHANDISE,
+    productGARFIELDMERCHANDISE,
+    productMINIONSMERCHANDISE,
+    productNARUTOMERCHANDISE,
+  } = data;
   const handleMouseEnter = (dropdown) => {
     setIsDropDownOpen(dropdown);
   };
@@ -174,9 +119,9 @@ export default function WomenNav() {
                 alt=""
                 className={scrollY > 43 ? "eyelog" : "eye"}
               />
-              <Image
+              <img
                 src={newlogo}
-                alt="logo"
+                alt=""
                 className={scrollY > 43 ? "log" : "logoImg"}
               />
               <List className={scrollY > 43 ? "list2" : "list"}>
@@ -204,9 +149,7 @@ export default function WomenNav() {
                         style={{ textDecoration: "none" }}
                         state={{
                           Banner: bannerT,
-                          colorName: colorName,
-                          brandName: brandName,
-                          data: productWomenTshirt,
+                          data: productWomenTshirtData,
                           Heading: "Oversized Women T-Shirt",
                         }}>
                         <Text className="navdropboxh1 mT10">
@@ -218,9 +161,7 @@ export default function WomenNav() {
                         style={{ textDecoration: "none" }}
                         state={{
                           Banner: bannerBS,
-                          colorName: colorNameS,
-                          brandName: brandNameS,
-                          data: productWomenshirts,
+                          data: productWomenshirtsData,
                           Heading: "Women's Shirts",
                         }}>
                         <Text className="navdropboxh1">Shirts</Text>
@@ -230,9 +171,7 @@ export default function WomenNav() {
                         style={{ textDecoration: "none" }}
                         state={{
                           Banner: bannerT,
-                          colorName: colorName,
-                          brandName: brandName,
-                          data: productWomenTshirt,
+                          data: productWomenTshirtData,
                           Heading: "Women T-Shirt",
                         }}>
                         <Text className="navdropboxh1">T-Shirts</Text>
@@ -241,9 +180,7 @@ export default function WomenNav() {
                         to="/category"
                         style={{ textDecoration: "none" }}
                         state={{
-                          data: productWomenKurti,
-                          colorName: colorNameK,
-                          brandName: brandNameK,
+                          data: productWomenkurtiData,
                           Heading: "Women Kurti",
                         }}>
                         <Text className="navdropboxh1">Kurti</Text>
@@ -275,10 +212,8 @@ export default function WomenNav() {
                         style={{ textDecoration: "none" }}
                         state={{
                           Banner: jog,
-                          colorName: colorNameJ,
-                          brandName: brandNameJ,
                           Heading: "Women Joggers",
-                          data: productWomenJoggers,
+                          data: productWomenJoggersData,
                         }}>
                         <Text className="navdropboxh1 mT10">Joggers</Text>
                       </Link>
@@ -286,9 +221,7 @@ export default function WomenNav() {
                         to="/category"
                         style={{ textDecoration: "none" }}
                         state={{
-                          data: productWomenJeans,
-                          colorName: colorNameJS,
-                          brandName: brandNameJS,
+                          data: productWomenJeansData,
                           Heading: "Women Jeans",
                         }}>
                         <Text className="navdropboxh1">Jeans</Text>
@@ -298,9 +231,7 @@ export default function WomenNav() {
                         style={{ textDecoration: "none" }}
                         state={{
                           Banner: bannerJ,
-                          data: productWomenJump,
-                          colorName: colorNameJP,
-                          brandName: brandNameJP,
+                          data: productWomenJumpsuitData,
                           Heading: "Women Jumpsuit",
                         }}>
                         <Text className="navdropboxh1">Jumpsuit</Text>
@@ -331,9 +262,8 @@ export default function WomenNav() {
                         to="/category"
                         style={{ textDecoration: "none" }}
                         state={{
-                          data: productBlack,
+                          data: productWomenBlackData,
                           Banner: bB,
-                          brandName: blackbrandName,
                           Heading: "Women Black Collection",
                         }}>
                         <Text className="navdropboxh1 mT10"> Black</Text>
@@ -342,8 +272,7 @@ export default function WomenNav() {
                         to="/category"
                         style={{ textDecoration: "none" }}
                         state={{
-                          data: productBrown,
-                          brandName: brownbrandName,
+                          data: productWomenBrownData,
                           Heading: "Women Brown Collection",
                         }}>
                         <Text className="navdropboxh1">Brown</Text>
@@ -353,8 +282,7 @@ export default function WomenNav() {
                         style={{ textDecoration: "none" }}
                         state={{
                           Banner: wB,
-                          data: productWhite,
-                          brandName: whitebrandName,
+                          data: productWomenWhiteData,
                           Heading: "Women White Collection",
                         }}>
                         <Text className="navdropboxh1">White</Text>
@@ -363,8 +291,7 @@ export default function WomenNav() {
                         to="/category"
                         style={{ textDecoration: "none" }}
                         state={{
-                          data: productGrey,
-                          brandName: greybrandName,
+                          data: productWomenGreyData,
                           Heading: "Women Grey Collection",
                         }}>
                         <Text className="navdropboxh1">Grey</Text>
@@ -373,8 +300,7 @@ export default function WomenNav() {
                         to="/category"
                         style={{ textDecoration: "none" }}
                         state={{
-                          data: productOrange,
-                          brandName: orangebrandName,
+                          data: productWomenOrangeData,
                           Heading: "Women Orange Collection",
                         }}>
                         <Text className="navdropboxh1 mT10"> Orange</Text>
@@ -383,8 +309,7 @@ export default function WomenNav() {
                         to="/category"
                         style={{ textDecoration: "none" }}
                         state={{
-                          data: productBlue,
-                          brandName: bluebrandName,
+                          data: productWomenBlueData,
                           Heading: "Women Blue Collection",
                           Banner: blueBanner,
                         }}>
@@ -394,8 +319,7 @@ export default function WomenNav() {
                         to="/category"
                         style={{ textDecoration: "none" }}
                         state={{
-                          data: productGreen,
-                          brandName: GreenbrandName,
+                          data: productWomenGreenData,
                           Heading: "Women Green Collection",
                         }}>
                         <Text className="navdropboxh1">Green</Text>
@@ -404,8 +328,7 @@ export default function WomenNav() {
                         to="/category"
                         style={{ textDecoration: "none" }}
                         state={{
-                          data: productRed,
-                          brandName: RedbrandName,
+                          data: productWomenRedData,
                           Heading: "Women Red Collection",
                         }}>
                         <Text className="navdropboxh1">Red</Text>
@@ -414,9 +337,8 @@ export default function WomenNav() {
                         to="/category"
                         style={{ textDecoration: "none" }}
                         state={{
-                          data: productPink,
+                          data: productWomenPinkData,
                           Banner: bP,
-                          brandName: pinkbrandName,
                           Heading: "Women Pink Collection",
                         }}>
                         <Text className="navdropboxh1 mT10">Pink</Text>
@@ -425,8 +347,8 @@ export default function WomenNav() {
                         to="/category"
                         style={{ textDecoration: "none" }}
                         state={{
-                          data: productYellow,
-                          brandName: YellowbrandName,
+                          data: productWomenYellowData,
+
                           Heading: "Women Yellow Collection",
                         }}>
                         <Text className="navdropboxh1">Yellow</Text>
@@ -435,8 +357,8 @@ export default function WomenNav() {
                         to="/category"
                         style={{ textDecoration: "none" }}
                         state={{
-                          data: productPurple,
-                          brandName: PurplebrandName,
+                          data: productWomenPurpleData,
+
                           Heading: "Women Purple Collection",
                         }}>
                         <Text className="navdropboxh1">Purple</Text>
@@ -445,9 +367,9 @@ export default function WomenNav() {
                         to="/category"
                         style={{ textDecoration: "none" }}
                         state={{
-                          data: productL,
+                          data: productWomenLavenderData,
                           Banner: bL,
-                          brandName: LbrandName,
+
                           Heading: "Women Lavender Collection",
                         }}>
                         <Text className="navdropboxh1">Lavender</Text>
@@ -456,8 +378,8 @@ export default function WomenNav() {
                         to="/category"
                         style={{ textDecoration: "none" }}
                         state={{
-                          data: productKhahki,
-                          brandName: KhahkibrandName,
+                          data: productWomenKhakiData,
+
                           Heading: "Women Khaki Collection",
                         }}>
                         <Text className="navdropboxh1">Khaki</Text>
@@ -466,8 +388,7 @@ export default function WomenNav() {
                         to="/category"
                         style={{ textDecoration: "none" }}
                         state={{
-                          data: productMaroon,
-                          brandName: MaroonbrandName,
+                          data: productWomenMaroonData,
                           Heading: "Women Maroon Collection",
                         }}>
                         <Text className="navdropboxh1">Maroon</Text>
@@ -501,7 +422,7 @@ export default function WomenNav() {
                             style={{ textDecoration: "none" }}
                             state={{
                               data: productBewakoof,
-                              colorName: BewakoofColorName,
+
                               Heading: "Bewakoof® Collection",
                             }}>
                             <Text className="navdropboxh1 mT10">Bewakoof®</Text>
@@ -512,7 +433,7 @@ export default function WomenNav() {
                             style={{ textDecoration: "none" }}
                             state={{
                               data: productCHIMPAAANZEE,
-                              colorName: CHIMPAAANZEEColorName,
+
                               Heading: "CHIMPAAANZEE Collection",
                             }}>
                             <Text className="navdropboxh1">CHIMPAAANZEE</Text>
@@ -522,7 +443,7 @@ export default function WomenNav() {
                             style={{ textDecoration: "none" }}
                             state={{
                               data: productCampusSutra,
-                              colorName: CampusSutraColorName,
+
                               Heading: "Campus Sutra Collection",
                             }}>
                             <Text className="navdropboxh1">Campus Sutra</Text>
@@ -532,7 +453,7 @@ export default function WomenNav() {
                             style={{ textDecoration: "none" }}
                             state={{
                               data: productLoungeDreams,
-                              colorName: LoungeDreamsColorName,
+
                               Heading: "Lounge Dreams Collection",
                             }}>
                             <Text className="navdropboxh1">Lounge Dreams</Text>
@@ -542,7 +463,7 @@ export default function WomenNav() {
                             style={{ textDecoration: "none" }}
                             state={{
                               data: productInstafabPlus,
-                              colorName: InstafabColorName,
+
                               Heading: "Instafab Plus Collection",
                             }}>
                             <Text className="navdropboxh1">Instafab Plus</Text>
@@ -552,7 +473,6 @@ export default function WomenNav() {
                             style={{ textDecoration: "none" }}
                             state={{
                               data: productBewakoofAir,
-                              colorName: BewakoofAirColorName,
                               Heading: "Bewakoof Air® 1.0 Collection",
                             }}>
                             <Text className="navdropboxh1">
@@ -564,7 +484,7 @@ export default function WomenNav() {
                             style={{ textDecoration: "none" }}
                             state={{
                               data: productStyleQuotient,
-                              colorName: StyleQuotientColorName,
+
                               Heading: "Style Quotient Collection",
                             }}>
                             <Text className="navdropboxh1">Style Quotient</Text>
@@ -574,7 +494,7 @@ export default function WomenNav() {
                             style={{ textDecoration: "none" }}
                             state={{
                               data: productRICKANDMORTY,
-                              colorName: RICKANDMORTYColorName,
+
                               Heading: "RICK AND MORTY MERCHANDISE Collection",
                             }}>
                             <Text className="navdropboxh1">
@@ -586,7 +506,7 @@ export default function WomenNav() {
                             style={{ textDecoration: "none" }}
                             state={{
                               data: productHARRYPOTTER,
-                              colorName: HARRYPOTTERColorName,
+
                               Heading: "HARRY POTTER MERCHANDISE Collection",
                             }}>
                             <Text className="navdropboxh1 mR10p">
@@ -599,7 +519,7 @@ export default function WomenNav() {
                             style={{ textDecoration: "none" }}
                             state={{
                               data: productTOMJERRY,
-                              colorName: TOMJERRYColorName,
+
                               Heading: "TOM & JERRY MERCHANDISE Collection",
                             }}>
                             <Text className="navdropboxh1 mR10p">
@@ -611,7 +531,7 @@ export default function WomenNav() {
                             style={{ textDecoration: "none" }}
                             state={{
                               data: productCARTOONNETWORK,
-                              colorName: CARTOONNETWORKColorName,
+
                               Heading: "CARTOON NETWORK MERCHANDISE Collection",
                             }}>
                             <Text className="navdropboxh1 mR10p">
@@ -623,7 +543,7 @@ export default function WomenNav() {
                             style={{ textDecoration: "none" }}
                             state={{
                               data: productDISNEYMERCHANDISE,
-                              colorName: DISNEYMERCHANDISEColorName,
+
                               Heading: "DISNEY MERCHANDISE Collection",
                             }}>
                             <Text className="navdropboxh1 mR10p">
@@ -635,7 +555,7 @@ export default function WomenNav() {
                             style={{ textDecoration: "none" }}
                             state={{
                               data: productMARVEL,
-                              colorName: MARVELColorName,
+
                               Heading: "MARVEL MERCHANDISE Collection",
                             }}>
                             <Text className="navdropboxh1 mR10p">
@@ -650,7 +570,7 @@ export default function WomenNav() {
                             style={{ textDecoration: "none" }}
                             state={{
                               data: productBelliskey,
-                              colorName: BelliskeyColorName,
+
                               Heading: "Belliskey Collection",
                             }}>
                             <Text className="navdropboxh1">Belliskey</Text>
@@ -660,7 +580,7 @@ export default function WomenNav() {
                             style={{ textDecoration: "none" }}
                             state={{
                               data: productKotty,
-                              colorName: KottyColorName,
+
                               Heading: "Kotty Collection",
                             }}>
                             <Text className="navdropboxh1">Kotty</Text>
@@ -670,7 +590,6 @@ export default function WomenNav() {
                             style={{ textDecoration: "none" }}
                             state={{
                               data: productHubberholme,
-                              colorName: HubberholmeColorName,
                               Heading: "Hubberholme Collection",
                             }}>
                             <Text className="navdropboxh1">Hubberholme</Text>
@@ -681,7 +600,7 @@ export default function WomenNav() {
                             style={{ textDecoration: "none" }}
                             state={{
                               data: productDRYSTATE,
-                              colorName: DRYSTATEColorName,
+
                               Heading: "THE DRY STATE Collection",
                             }}>
                             <Text className="navdropboxh1 mT10">
@@ -693,7 +612,7 @@ export default function WomenNav() {
                             style={{ textDecoration: "none" }}
                             state={{
                               data: productPEANUTS,
-                              colorName: PEANUTSColorName,
+
                               Heading: "PEANUTS MERCHANDISE Collection",
                             }}>
                             <Text className="navdropboxh1 mR10p">
@@ -705,7 +624,7 @@ export default function WomenNav() {
                             style={{ textDecoration: "none" }}
                             state={{
                               data: productLOONEYTUNES,
-                              colorName: LOONEYTUNESColorName,
+
                               Heading: "LOONEY TUNES MERCHANDISE Collection",
                             }}>
                             <Text className="navdropboxh1 mR10p">
@@ -717,7 +636,7 @@ export default function WomenNav() {
                             style={{ textDecoration: "none" }}
                             state={{
                               data: productGARFIELDMERCHANDISE,
-                              colorName: GARFIELDMERCHANDISEColorName,
+
                               Heading: "GARFIELD MERCHANDISE Collection",
                             }}>
                             <Text className="navdropboxh1 mR10p">
@@ -729,7 +648,7 @@ export default function WomenNav() {
                             style={{ textDecoration: "none" }}
                             state={{
                               data: productMINIONSMERCHANDISE,
-                              colorName: MINIONSMERCHANDISEColorName,
+
                               Heading: "MINIONS MERCHANDISE Collection",
                             }}>
                             <Text className="navdropboxh1 mR10p">
@@ -741,7 +660,7 @@ export default function WomenNav() {
                             style={{ textDecoration: "none" }}
                             state={{
                               data: productNARUTOMERCHANDISE,
-                              colorName: NARUTOMERCHANDISEColorName,
+
                               Heading: "NARUTO MERCHANDISE Collection",
                             }}>
                             <Text className="navdropboxh1 mR10p">
@@ -753,7 +672,7 @@ export default function WomenNav() {
                             style={{ textDecoration: "none" }}
                             state={{
                               data: productTALESSTORIES,
-                              colorName: TALESSTORIESColorName,
+
                               Heading: "TALES and STORIES Collection",
                             }}>
                             <Text className="navdropboxh1">
@@ -765,7 +684,7 @@ export default function WomenNav() {
                             style={{ textDecoration: "none" }}
                             state={{
                               data: productDCMERCHANDISE,
-                              colorName: DCMERCHANDISEColorName,
+
                               Heading: "DC MERCHANDISE Collection",
                             }}>
                             <Text className="navdropboxh1 mR10p">
@@ -778,7 +697,7 @@ export default function WomenNav() {
                             style={{ textDecoration: "none" }}
                             state={{
                               data: productCOCACOLA,
-                              colorName: COCACOLAColorName,
+
                               Heading: "COCA COLA MERCHANDISE Collection",
                             }}>
                             <Text className="navdropboxh1">
