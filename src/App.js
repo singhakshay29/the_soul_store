@@ -3,20 +3,18 @@ import Order from "./Components/Order";
 import Login from "./Components/Login";
 import Popup from "./Components/Popup";
 import SignUp from "./Components/SignUp";
-import TShirt from "./Components/TShirt";
 import Topbar from "./Components/Topbar";
 import MenNav from "./Components/MenNav";
 import Footer from "./Components/Footer";
 import Address from "./Components/Address";
-import WTShirt from "./Components/WTShirt";
 import Product from "./Components/Product";
 import Wishlist from "./Components/Wishlist";
 import WomenNav from "./Components/WomenNav";
-import MenSection from "./Components/MenSection";
 import ShoppingCart from "./Components/ShoppingCart";
 import { useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Section from "./Components/Section";
+import Shop from "./Components/Shop";
 
 function App() {
   const [active, setActive] = useState("1");
@@ -38,14 +36,14 @@ function App() {
         {active === "1" ? <WomenNav /> : <MenNav />}
         {isPopoverOpen && <Popup message={message} />}
         <Routes>
-          <Route path="/" element={<Section />}></Route>
-          <Route path="/men" element={<MenSection />}></Route>
+          <Route
+            path="/"
+            element={<Section active={active} setActive={setActive} />}></Route>
           <Route path="login" element={<Login />}></Route>
           <Route path="signup" element={<SignUp />}></Route>
-          <Route path="tshirt" element={<TShirt />}></Route>
           <Route
             path="category"
-            element={<WTShirt openPopover={openPopover} />}></Route>
+            element={<Shop openPopover={openPopover} />}></Route>
           <Route path="product" element={<Product />}></Route>
           <Route
             path="wishlist"

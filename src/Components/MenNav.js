@@ -323,7 +323,7 @@ export default function MenNav() {
                   className={scrollY > 43 ? "navlist2" : "navList"}
                   onMouseEnter={() => handleMouseEnter("SHOP BY THEMES")}
                   onMouseLeave={() => handleMouseLeave()}>
-                  SHOP BY THEMES
+                  SHOP BY BRANDS
                   <IconButton
                     variant="outline"
                     colorScheme="teal"

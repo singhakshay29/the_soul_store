@@ -627,7 +627,7 @@ iframe#webpack-dev-server-client-overlay {
   border: 1px solid #eee;
   margin-left: 1rem;
   flex-direction: column;
-  min-width: 12rem;
+  min-width: 15%;
 }
 .cardContainerbox {
   margin: 0 0.7rem;
@@ -1640,4 +1640,18 @@ iframe#webpack-dev-server-client-overlay {
   font-weight: 600;
   -webkit-text-stroke: 0.35px #fff;
   -webkit-font-smoothing: antialiased;
+}
+.boxSize {
+  background: transparent;
+  border-radius: 5px;
+  color: #58595b;
+  border-color: #58595b;
+  font-size: 15px;
+  line-height: 1.5;
+  font-weight: 400;
+  box-sizing: inherit;
+  flex-wrap: wrap !important;
+  margin-left: 1rem;
+  width: 1.7rem;
+  cursor: pointer;
 }

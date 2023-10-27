@@ -1,13 +1,25 @@
 import { service2 } from "../service";
 import NavRes from "./NavRes";
+import m1 from "../assets/m1.png";
+import m2 from "../assets/m2.png";
+import m3 from "../assets/m3.png";
+import m4 from "../assets/m4.png";
 import w1 from "../assets/w1.png";
 import w2 from "../assets/w2.png";
 import w3 from "../assets/w3.png";
 import w4 from "../assets/w4.png";
+import c1 from "../assets/c1.png";
+import c2 from "../assets/c2.png";
+import c3 from "../assets/c3.png";
+import MBJ from "../assets/MBJ.jpg";
+import MBS from "../assets/MBS.jpg";
+import MBJS from "../assets/MBJS.jpg";
 import WGallery from "./WGallery";
 import DW from "../assets/DW.jpg";
 import btS from "../assets/btS.jpg";
 import jog from "../assets/jog.jpg";
+import menShorts from "../assets/menShorts.jpg";
+import menJog from "../assets/menJog.jpg";
 import ImageSlider from "./ImageSlider";
 import basis from "../assets/basis.jpg";
 import cargo from "../assets/cargo.jpg";
@@ -17,7 +29,10 @@ import Pretty from "../assets/Pretty.jpg";
 import basicB from "../assets/basicB.jpg";
 import bannerT from "../assets/bannerT.jpg";
 import bannerJ from "../assets/bannerJ.jpg";
+import menJeans from "../assets/menJeans.jpg";
 import JeansSmall from "../assets/JeansSmall.jpg";
+import tshirtsmall from "../assets/tshirtsmall.jpg";
+import sweatshirt from "../assets/sweatshirt.jpg";
 import { FETCH_PRODUCTS } from "../action";
 import bannerBS from "../assets/bannerBS.jpg";
 import { Link, NavLink } from "react-router-dom";
@@ -27,8 +42,7 @@ import JumpBannerSmall from "../assets/JumpBannerSmall.jpg";
 import { useDispatch, useSelector } from "react-redux";
 import { Card, Image, Container, Flex, Box, Button } from "@chakra-ui/react";
 
-export default function Section() {
-  const [active, setActive] = useState("1");
+export default function Section({ active, setActive }) {
   const { productsList } = useSelector((state) => state.app);
   const [barOpen, setBarOpen] = useState();
   const [isSmallScreenMini, setIsSmallScreenMini] = useState(
@@ -39,7 +53,7 @@ export default function Section() {
   if (productsList.length > 0) {
     data = service2(productsList);
   }
-
+  console.log(productsList);
   const {
     productWomenTshirtData,
     productWomenJeansData,
@@ -47,6 +61,11 @@ export default function Section() {
     productWomenshirtsData,
     productWomenJoggersData,
     productWomenkurtiData,
+    productMenTshirtData,
+    productMenShirtData,
+    productMenJoggersData,
+    productMenShortsData,
+    productMenJeansData,
   } = data;
   const dispatch = useDispatch();
   const handleClick = (event) => {
@@ -78,9 +97,7 @@ export default function Section() {
               onClick={handleClick}>
               Women
             </Button>
-          </NavLink>
-          |
-          <NavLink to="/men">
+            |
             <Button
               className={active === "2" ? "thirdactive thirdnav" : "thirdnav"}
               id={"2"}
@@ -92,101 +109,181 @@ export default function Section() {
       )}
 
       <Container style={{ overflow: "hidden" }}>
-        {isSmallScreenMini ? (
+        {active === "1" ? (
           <>
-            {!barOpen && (
+            {isSmallScreenMini ? (
               <>
-                <ImageSlider w1={Collection} w2={Pretty} w3={btS} w4={cargo} />
+                {!barOpen && (
+                  <>
+                    <ImageSlider
+                      w1={Collection}
+                      w2={Pretty}
+                      w3={btS}
+                      w4={cargo}
+                    />
+                  </>
+                )}
+              </>
+            ) : (
+              <>
+                {!barOpen && (
+                  <>
+                    <ImageSlider w1={w1} w2={w2} w3={w3} w4={w4} />
+                  </>
+                )}
               </>
             )}
           </>
         ) : (
           <>
-            {!barOpen && (
+            {isSmallScreenMini ? (
               <>
-                <ImageSlider w1={w1} w2={w2} w3={w3} w4={w4} />
+                {!barOpen && (
+                  <>
+                    <ImageSlider
+                      w1={menJog}
+                      w2={menJeans}
+                      w3={tshirtsmall}
+                      w4={sweatshirt}
+                    />
+                  </>
+                )}
+              </>
+            ) : (
+              <>
+                {!barOpen && (
+                  <>
+                    <ImageSlider w1={m1} w2={m2} w3={m3} w4={m4} />
+                  </>
+                )}
               </>
             )}
           </>
         )}
+
         <Flex alignContent="center" flexDirection="column" width="100%">
           <Flex className="heading1">COLLECTIONS</Flex>
 
           <Flex justifyContent="center">
-            {isSmallScreen ? (
+            {active === "1" ? (
               <>
-                {isSmallScreenMini ? (
+                {isSmallScreen ? (
                   <>
-                    <Flex flexDirection="column">
-                      <Flex className="iBoxMini">
-                        <Link
-                          to="/category"
-                          state={{
-                            data: productWomenTshirtData,
-                            Banner: basicB,
-
-                            Heading: "Women's Basics",
-                          }}>
-                          <img
-                            src={basis}
-                            className="categoryImageMini"
-                            alt="SHIRTS"
-                          />
-                        </Link>
-                      </Flex>
-                      <Container className="iBoxMini">
-                        <Link
-                          to="/category"
-                          state={{
-                            data: productWomenkurtiData,
-                            Heading: "Women Dresses",
-                          }}>
-                          <img src={DW} className="categoryImage" alt="" />
-                        </Link>
-                      </Container>
-                      <Container className="iBoxMini">
-                        <Link
-                          to="/category"
-                          state={{
-                            data: productWomenJumpsuitData,
-                            Banner: bannerJ,
-                            Heading: "Women Jumpsuit",
-                          }}>
-                          <img
-                            src={JumpBannerSmall}
-                            className="categoryImage "
-                            alt=""
-                          />
-                        </Link>
-                      </Container>
-                    </Flex>
+                    {isSmallScreenMini ? (
+                      <>
+                        <Flex flexDirection="column">
+                          <Flex className="iBoxMini">
+                            <Link
+                              to="/category"
+                              state={{
+                                data: productWomenTshirtData,
+                                Banner: basicB,
+                                Heading: "Women's Basics",
+                              }}>
+                              <img
+                                src={basis}
+                                className="categoryImageMini"
+                                alt="SHIRTS"
+                              />
+                            </Link>
+                          </Flex>
+                          <Container className="iBoxMini">
+                            <Link
+                              to="/category"
+                              state={{
+                                data: productWomenkurtiData,
+                                Heading: "Women Dresses",
+                              }}>
+                              <img src={DW} className="categoryImage" alt="" />
+                            </Link>
+                          </Container>
+                          <Container className="iBoxMini">
+                            <Link
+                              to="/category"
+                              state={{
+                                data: productWomenJumpsuitData,
+                                Banner: bannerJ,
+                                Heading: "Women Jumpsuit",
+                              }}>
+                              <img
+                                src={JumpBannerSmall}
+                                className="categoryImage "
+                                alt=""
+                              />
+                            </Link>
+                          </Container>
+                        </Flex>
+                      </>
+                    ) : (
+                      <>
+                        <Flex className="iBox">
+                          <Link
+                            to="/category"
+                            state={{
+                              data: productWomenTshirtData,
+                              Banner: basicB,
+                              Heading: "Women's Basics",
+                            }}>
+                            <img src={basis} className="categoryImage" alt="" />
+                          </Link>
+                        </Flex>
+                        <Container className="iBox">
+                          <Link
+                            to="/category"
+                            state={{
+                              data: productWomenkurtiData,
+                              Heading: "Women Dresses",
+                            }}>
+                            <img
+                              src={DW}
+                              className="categoryImage"
+                              alt="T-SHIRTS"
+                            />
+                          </Link>
+                        </Container>
+                      </>
+                    )}
                   </>
                 ) : (
                   <>
+                    <Container className="iBox">
+                      <Link
+                        to="/category"
+                        state={{
+                          data: productWomenJeansData,
+                          Heading: "Women Jeans",
+                        }}>
+                        <img
+                          src={JeansSmall}
+                          className="categoryImage"
+                          alt=""
+                        />
+                      </Link>
+                    </Container>
                     <Flex className="iBox">
                       <Link
                         to="/category"
                         state={{
                           data: productWomenTshirtData,
                           Banner: basicB,
-
                           Heading: "Women's Basics",
                         }}>
                         <img src={basis} className="categoryImage" alt="" />
                       </Link>
                     </Flex>
+
                     <Container className="iBox">
                       <Link
                         to="/category"
                         state={{
-                          data: productWomenkurtiData,
-
-                          Heading: "Women Dresses",
+                          data: productWomenJumpsuitData,
+                          Banner: bannerJ,
+                          Heading: "Women Jumpsuit",
                         }}>
-                        <Image
-                          src={DW}
+                        <img
+                          src={JumpBannerSmall}
                           className="categoryImage"
-                          alt="T-SHIRTS"
+                          alt=""
                         />
                       </Link>
                     </Container>
@@ -195,100 +292,243 @@ export default function Section() {
               </>
             ) : (
               <>
-                <Container className="iBox">
-                  <Link
-                    to="/category"
-                    state={{
-                      data: productWomenJeansData,
-                      Heading: "Women Jeans",
-                    }}>
-                    <img src={JeansSmall} className="categoryImage" alt="" />
-                  </Link>
-                </Container>
-                <Flex className="iBox">
-                  <Link
-                    to="/category"
-                    state={{
-                      data: productWomenTshirtData,
-                      Banner: basicB,
-                      Heading: "Women's Basics",
-                    }}>
-                    <img src={basis} className="categoryImage" alt="" />
-                  </Link>
-                </Flex>
+                {isSmallScreen ? (
+                  <>
+                    {isSmallScreenMini ? (
+                      <>
+                        <Flex flexDirection="column">
+                          <Flex className="iBoxMini">
+                            <Link
+                              to="/category"
+                              state={{
+                                data: productMenTshirtData,
+                                Heading: "Men's Oversized T-Shirts",
+                              }}>
+                              <img
+                                src={c1}
+                                className="categoryImage"
+                                alt="SHIRTS"
+                              />
+                            </Link>
+                          </Flex>
+                          <Container className="iBoxMini">
+                            <Link
+                              to="/category"
+                              state={{
+                                data: productMenShirtData,
+                                Heading: "Men's Shirt",
+                              }}>
+                              <Image
+                                src={c2}
+                                className="categoryImage"
+                                alt="T-SHIRTS"
+                              />
+                            </Link>
+                          </Container>
 
-                <Container className="iBox">
-                  <Link
-                    to="/category"
-                    state={{
-                      data: productWomenJumpsuitData,
-                      Banner: bannerJ,
-                      Heading: "Women Jumpsuit",
-                    }}>
-                    <img
-                      src={JumpBannerSmall}
-                      className="categoryImage"
-                      alt=""
-                    />
-                  </Link>
-                </Container>
+                          <Container className="iBoxMini">
+                            <Link
+                              to="/category"
+                              state={{
+                                data: productMenTshirtData,
+                                Heading: "Men's T-Shirts",
+                              }}>
+                              <img
+                                src={c3}
+                                className="categoryImage "
+                                alt="OVERSIZED T-SHIRTS"
+                              />
+                            </Link>
+                          </Container>
+                        </Flex>
+                      </>
+                    ) : (
+                      <>
+                        <Flex className="iBox">
+                          <Link
+                            to="/category"
+                            state={{
+                              data: productMenTshirtData,
+                              Heading: "Men's Oversized T-Shirts",
+                            }}>
+                            <img
+                              src={c1}
+                              className="categoryImage"
+                              alt="SHIRTS"
+                            />
+                          </Link>
+                        </Flex>
+                        <Container className="iBox">
+                          <Link
+                            to="/category"
+                            state={{
+                              data: productMenShirtData,
+                              Heading: "Men's Shirt",
+                            }}>
+                            <img
+                              src={c2}
+                              className="categoryImage"
+                              alt="T-SHIRTS"
+                            />
+                          </Link>
+                        </Container>
+                      </>
+                    )}
+                  </>
+                ) : (
+                  <>
+                    <Container className="iBox">
+                      <Link
+                        to="/category"
+                        state={{
+                          data: productMenTshirtData,
+                          Heading: "Men's Oversized T-Shirts",
+                        }}>
+                        <img src={c1} className="categoryImage" alt="SHIRTS" />
+                      </Link>
+                    </Container>
+                    <Flex className="iBox">
+                      <Link
+                        to="/category"
+                        state={{
+                          data: productMenShirtData,
+                          Heading: "Men's Shirt",
+                        }}>
+                        <img
+                          src={c2}
+                          className="categoryImage"
+                          alt="T-SHIRTS"
+                        />
+                      </Link>
+                    </Flex>
+
+                    <Container className="iBox">
+                      <Link
+                        to="/category"
+                        state={{
+                          data: productMenTshirtData,
+                          Heading: "Men's T-Shirts",
+                        }}>
+                        <img
+                          src={c3}
+                          className="categoryImage "
+                          alt="OVERSIZED T-SHIRTS"
+                        />
+                      </Link>
+                    </Container>
+                  </>
+                )}
               </>
             )}
           </Flex>
         </Flex>
-        {!isSmallScreen && (
+        {active === "1" && (
           <>
-            <Flex alignContent="center" flexDirection="column" width="100%">
-              <Flex className="heading1">SHOP BY COLOR</Flex>
-            </Flex>
-            <WGallery data={data} />
-          </>
-        )}
-        {isSmallScreen ? (
-          <>
-            {isSmallScreenMini ? (
+            {!isSmallScreen && (
               <>
                 <Flex alignContent="center" flexDirection="column" width="100%">
-                  <Flex className="heading1">CATEGORIES</Flex>
-                  <Flex justifyContent="center" flexDirection="column">
-                    <Container className="iBoxMini">
-                      <Link
-                        to="/category"
-                        state={{
-                          Banner: bannerT,
-
-                          data: productWomenTshirtData,
-                          Heading: "Women T-Shirt",
-                        }}>
-                        <img src={btS} className="categoryImage" alt="" />
-                      </Link>
-                    </Container>
-                    <Container className="iBoxMini">
-                      <Link
-                        to="/category"
-                        state={{
-                          Banner: bannerBS,
-
-                          data: productWomenshirtsData,
-                          Heading: "Women's Shirts",
-                        }}>
-                        <img src={shirt1} className="categoryImage " alt="" />
-                      </Link>
-                    </Container>
-                    <Container className="iBoxMini">
-                      <Link
-                        to="/category"
-                        state={{
-                          Banner: jog,
-
-                          Heading: "Women Joggers",
-                          data: productWomenJoggersData,
-                        }}>
-                        <img src={cargo} className="categoryImage" alt="" />
-                      </Link>
-                    </Container>
-                  </Flex>
+                  <Flex className="heading1">SHOP BY COLOR</Flex>
                 </Flex>
+                <WGallery data={data} />
+              </>
+            )}
+          </>
+        )}
+        {active === "1" ? (
+          <>
+            {isSmallScreen ? (
+              <>
+                {isSmallScreenMini ? (
+                  <>
+                    <Flex
+                      alignContent="center"
+                      flexDirection="column"
+                      width="100%">
+                      <Flex className="heading1">CATEGORIES</Flex>
+                      <Flex justifyContent="center" flexDirection="column">
+                        <Container className="iBoxMini">
+                          <Link
+                            to="/category"
+                            state={{
+                              Banner: bannerT,
+
+                              data: productWomenTshirtData,
+                              Heading: "Women T-Shirt",
+                            }}>
+                            <img src={btS} className="categoryImage" alt="" />
+                          </Link>
+                        </Container>
+                        <Container className="iBoxMini">
+                          <Link
+                            to="/category"
+                            state={{
+                              Banner: bannerBS,
+
+                              data: productWomenshirtsData,
+                              Heading: "Women's Shirts",
+                            }}>
+                            <img
+                              src={shirt1}
+                              className="categoryImage "
+                              alt=""
+                            />
+                          </Link>
+                        </Container>
+                        <Container className="iBoxMini">
+                          <Link
+                            to="/category"
+                            state={{
+                              Banner: jog,
+
+                              Heading: "Women Joggers",
+                              data: productWomenJoggersData,
+                            }}>
+                            <img src={cargo} className="categoryImage" alt="" />
+                          </Link>
+                        </Container>
+                      </Flex>
+                    </Flex>
+                  </>
+                ) : (
+                  <>
+                    <Flex
+                      alignContent="center"
+                      flexDirection="column"
+                      width="100%">
+                      <Flex className="heading1">CATEGORIES</Flex>
+                      <Flex justifyContent="center" height="28rem">
+                        <Container className="iBox">
+                          <Link
+                            to="/category"
+                            state={{
+                              Banner: bannerT,
+
+                              data: productWomenTshirtData,
+                              Heading: "Women T-Shirt",
+                            }}>
+                            <img
+                              src={btS}
+                              className="categoryImage"
+                              alt="SHIRTS"
+                            />
+                          </Link>
+                        </Container>
+                        <Container className="iBox">
+                          <Link
+                            to="/category"
+                            state={{
+                              Banner: jog,
+
+                              Heading: "Women Joggers",
+                              data: productWomenJoggersData,
+                            }}>
+                            <img src={cargo} className="categoryImage" alt="" />
+                          </Link>
+                        </Container>
+                      </Flex>
+                    </Flex>
+                  </>
+                )}
               </>
             ) : (
               <>
@@ -304,7 +544,7 @@ export default function Section() {
                           data: productWomenTshirtData,
                           Heading: "Women T-Shirt",
                         }}>
-                        <img src={btS} className="categoryImage" alt="SHIRTS" />
+                        <img src={btS} className="categoryImage" alt="" />
                       </Link>
                     </Container>
                     <Container className="iBox">
@@ -319,6 +559,18 @@ export default function Section() {
                         <img src={cargo} className="categoryImage" alt="" />
                       </Link>
                     </Container>
+                    <Container className="iBox">
+                      <Link
+                        to="/category"
+                        state={{
+                          Banner: bannerBS,
+
+                          data: productWomenshirtsData,
+                          Heading: "Women's Shirts",
+                        }}>
+                        <img src={shirt1} className="categoryImage " alt="" />
+                      </Link>
+                    </Container>
                   </Flex>
                 </Flex>
               </>
@@ -326,47 +578,157 @@ export default function Section() {
           </>
         ) : (
           <>
-            <Flex alignContent="center" flexDirection="column" width="100%">
-              <Flex className="heading1">CATEGORIES</Flex>
-              <Flex justifyContent="center" height="28rem">
-                <Container className="iBox">
-                  <Link
-                    to="/category"
-                    state={{
-                      Banner: bannerT,
-
-                      data: productWomenTshirtData,
-                      Heading: "Women T-Shirt",
-                    }}>
-                    <img src={btS} className="categoryImage" alt="" />
-                  </Link>
-                </Container>
-                <Container className="iBox">
-                  <Link
-                    to="/category"
-                    state={{
-                      Banner: jog,
-
-                      Heading: "Women Joggers",
-                      data: productWomenJoggersData,
-                    }}>
-                    <img src={cargo} className="categoryImage" alt="" />
-                  </Link>
-                </Container>
-                <Container className="iBox">
-                  <Link
-                    to="/category"
-                    state={{
-                      Banner: bannerBS,
-
-                      data: productWomenshirtsData,
-                      Heading: "Women's Shirts",
-                    }}>
-                    <img src={shirt1} className="categoryImage " alt="" />
-                  </Link>
-                </Container>
-              </Flex>
-            </Flex>
+            {isSmallScreen ? (
+              <>
+                {isSmallScreenMini ? (
+                  <>
+                    <Flex
+                      alignContent="center"
+                      flexDirection="column"
+                      width="100%">
+                      <Flex className="heading1">CATEGORIES</Flex>
+                      <Flex justifyContent="center" flexDirection="column">
+                        <Container className="iBoxMini">
+                          <Link
+                            to="/category"
+                            state={{
+                              Banner: MBJ,
+                              data: productMenJoggersData,
+                              Heading: "Men's Joggers",
+                            }}>
+                            <img
+                              src={menJog}
+                              className="categoryImage"
+                              alt="SHIRTS"
+                            />
+                          </Link>
+                        </Container>
+                        <Container className="iBoxMini">
+                          <Link
+                            to="/category"
+                            state={{
+                              Banner: MBS,
+                              data: productMenShortsData,
+                              Heading: "Men's Shorts",
+                            }}>
+                            <img
+                              src={menShorts}
+                              className="categoryImage"
+                              alt="T-SHIRTS"
+                            />
+                          </Link>
+                        </Container>
+                        <Container className="iBoxMini">
+                          <Link
+                            to="/category"
+                            state={{
+                              Banner: MBJS,
+                              data: productMenJeansData,
+                              Heading: "Men's Jeans",
+                            }}>
+                            <img
+                              src={menJeans}
+                              className="categoryImage "
+                              alt=""
+                            />
+                          </Link>
+                        </Container>
+                      </Flex>
+                    </Flex>
+                  </>
+                ) : (
+                  <>
+                    <Flex
+                      alignContent="center"
+                      flexDirection="column"
+                      width="100%">
+                      <Flex className="heading1">CATEGORIES</Flex>
+                      <Flex justifyContent="center" height="28rem">
+                        <Container className="iBox">
+                          <Link
+                            to="/category"
+                            state={{
+                              Banner: MBJ,
+                              data: productMenJoggersData,
+                              Heading: "Men's Joggers",
+                            }}>
+                            <img
+                              src={menJog}
+                              className="categoryImage"
+                              alt="SHIRTS"
+                            />
+                          </Link>
+                        </Container>
+                        <Container className="iBox">
+                          <Link
+                            to="/category"
+                            state={{
+                              Banner: MBJS,
+                              data: productMenJeansData,
+                              Heading: "Men's Jeans",
+                            }}>
+                            <img
+                              src={menJeans}
+                              className="categoryImage "
+                              alt=""
+                            />
+                          </Link>
+                        </Container>
+                      </Flex>
+                    </Flex>
+                  </>
+                )}
+              </>
+            ) : (
+              <>
+                <Flex alignContent="center" flexDirection="column" width="100%">
+                  <Flex className="heading1">CATEGORIES</Flex>
+                  <Flex justifyContent="center" height="28rem">
+                    <Container className="iBox">
+                      <Link
+                        to="/category"
+                        state={{
+                          Banner: MBS,
+                          data: productMenShortsData,
+                          Heading: "Men's Shorts",
+                        }}>
+                        <img
+                          src={menShorts}
+                          className="categoryImage"
+                          alt="T-SHIRTS"
+                        />
+                      </Link>
+                    </Container>
+                    <Container className="iBox">
+                      <Link
+                        to="/category"
+                        state={{
+                          Banner: MBJ,
+                          data: productMenJoggersData,
+                          Heading: "Men's Joggers",
+                        }}>
+                        <img
+                          src={menJog}
+                          className="categoryImage"
+                          alt="SHIRTS"
+                        />
+                      </Link>
+                    </Container>
+                    <Container className="iBox">
+                      <Link
+                        to="/category"
+                        state={{
+                          Banner: MBJS,
+                          data: productMenJeansData,
+                          Heading: "Men's Jeans",
+                        }}>
+                        <img src={menJeans} className="categoryImage " alt="" />
+                      </Link>
+                    </Container>
+                  </Flex>
+                </Flex>
+              </>
+            )}
           </>
         )}
 

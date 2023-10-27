@@ -6,11 +6,12 @@ import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Text, Divider, Container, Flex, Button } from "@chakra-ui/react";
 import NavRes from "./NavRes";
-export default function WTShirt({ openPopover }) {
-  const [sortingOption, setSortingOption] = useState("");
-  const [selectedBrands, setSelectedBrands] = useState("");
-  const [selectedColors, setSelectedColors] = useState("");
-  const [selectedPrices, setSelectedPrices] = useState("");
+export default function Shop({ openPopover }) {
+  const [sortingOption, setSortingOption] = useState([]);
+  const [selectedBrands, setSelectedBrands] = useState([]);
+  const [selectedColors, setSelectedColors] = useState([]);
+  const [selectedPrices, setSelectedPrices] = useState([]);
+  const [selectSize, setSelectedSize] = useState([]);
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 1100);
   const [isSmallScreenMini, setIsSmallScreenMini] = useState(
     window.innerWidth < 750
@@ -24,7 +25,8 @@ export default function WTShirt({ openPopover }) {
     sortingCriteria,
     filterCriteriaBrand,
     filterCriteriaColor,
-    filterCriteriaPrice
+    filterCriteriaPrice,
+    filterCriteriaSize
   ) => {
     const sortedAndFilteredItems = [...itemList];
 
@@ -35,14 +37,19 @@ export default function WTShirt({ openPopover }) {
     } else if (sortingCriteria === "Price-High to Low") {
       sortedAndFilteredItems.sort((a, b) => b.price - a.price);
     }
+
     const filteredItems = sortedAndFilteredItems.filter(
       (item) =>
         (filterCriteriaBrand.length === 0 ||
           filterCriteriaBrand.includes(item.brand)) &&
         (filterCriteriaColor.length === 0 ||
           filterCriteriaColor.includes(item.color)) &&
+        (filterCriteriaSize.length === 0 ||
+          filterCriteriaSize.some((size) => item.size.includes(size))) &&
         (filterCriteriaPrice.length === 0 ||
-          filterCriteriaPrice.includes(item.price))
+          filterCriteriaPrice.some(
+            (range) => item.price >= range.min && item.price <= range.max
+          ))
     );
 
     return filteredItems;
@@ -51,7 +58,8 @@ export default function WTShirt({ openPopover }) {
     sortingOption,
     selectedBrands,
     selectedColors,
-    selectedPrices
+    selectedPrices,
+    selectSize
   );
   const handleBrandSelect = (brand) => {
     if (selectedBrands.includes(brand)) {
@@ -74,40 +82,42 @@ export default function WTShirt({ openPopover }) {
   };
 
   const handlePriceSelect = (min, max) => {
-    let minmax = [...new Set(selectedPrices)];
-    Array.sort(minmax);
-    setSelectedPrices(
-      selectedPrices.filter(
-        (selectedPrice) =>
-          selectedPrice >= minmax[0] &&
-          selectedPrice <= minmax[minmax.length - 1]
-      )
+    console.log("Selected price range:", min, max);
+    const isAlreadySelected = selectedPrices.some(
+      (range) => range.min === min && range.max === max
     );
+
+    if (isAlreadySelected) {
+      console.log("Deselecting range:", min, max);
+      setSelectedPrices(
+        selectedPrices.filter((range) => range.min !== min || range.max !== max)
+      );
+    } else {
+      console.log("Selecting range:", min, max);
+      setSelectedPrices([{ min, max }]);
+    }
+  };
+  const handleSizeSelect = (size) => {
+    if (selectSize.includes(size)) {
+      setSelectedSize(
+        selectSize.filter((selectedSize) => selectedSize !== size)
+      );
+    } else {
+      setSelectedSize([...selectSize, size]);
+    }
   };
 
-  //const names = [...brandName];
-
-  // const formattedNames = names.map((name) => {
-  //   return name
-  //     .toLowerCase()
-  //     .split(" ")
-  //     .map((word) => {
-  //       return word.charAt(0).toUpperCase() + word.slice(1);
-  //     })
-  //     .join(" ");
-  // });
-
-  // const formattedNames = names.map((name) => {
-  //   const words = name.toLowerCase().split(" ");
-  //   if (words.includes("official")) {
-  //     words.splice(words.indexOf("official"), 1);
-  //   }
-  //   return words
-  //     .map((word) => {
-  //       return word.charAt(0).toUpperCase() + word.slice(1);
-  //     })
-  //     .join(" ");
-  // });
+  const formattedNames = brandName?.map((name) => {
+    const words = name.toLowerCase().split(" ");
+    if (words.includes("official")) {
+      words.splice(words.indexOf("official"), 1);
+    }
+    return words
+      .map((word) => {
+        return word.charAt(0).toUpperCase() + word.slice(1);
+      })
+      .join(" ");
+  });
   useEffect(() => {
     const handleResizeMini = () => {
       setIsSmallScreenMini(window.innerWidth < 750);
@@ -199,7 +209,7 @@ export default function WTShirt({ openPopover }) {
                 <>
                   <Text className="catHeading">BRANDS</Text>
                   <Flex className="catFlex">
-                    {brandName?.map((item) => (
+                    {brandName?.map((item, index) => (
                       <Flex>
                         <input
                           type="checkbox"
@@ -210,7 +220,7 @@ export default function WTShirt({ openPopover }) {
                           htmlFor="categorySearchBoxInput"
                           className="categorySearchBoxText"
                           style={{ textTransform: "captilized" }}>
-                          {item}
+                          {formattedNames[index]}
                         </label>
                       </Flex>
                     ))}
@@ -238,6 +248,44 @@ export default function WTShirt({ openPopover }) {
                   </Flex>
                 </>
               )}
+              <Text className="catHeading">SIZE</Text>
+              <Flex
+                style={{
+                  flexDirection: "column",
+                  margin: 0,
+                  marginBottom: "0.5rem",
+                }}>
+                <Flex>
+                  <button
+                    onClick={() => handleSizeSelect("S")}
+                    className="boxSize">
+                    S
+                  </button>
+                  <button
+                    onClick={() => handleSizeSelect("M")}
+                    className="boxSize">
+                    M
+                  </button>
+                  <button
+                    onClick={() => handleSizeSelect("L")}
+                    className="boxSize">
+                    L
+                  </button>
+                </Flex>
+                <Flex style={{ marginTop: "0.5rem", justifyContent: "center" }}>
+                  <button
+                    onClick={() => handleSizeSelect("XL")}
+                    className="boxSize">
+                    XL
+                  </button>
+                  <button
+                    onClick={() => handleSizeSelect("XXL")}
+                    className="boxSize">
+                    XXL
+                  </button>
+                </Flex>
+              </Flex>
+              <hr style={{ height: "2px" }}></hr>
               <Text className="catHeading">PRICE</Text>
               <Flex>
                 <input
