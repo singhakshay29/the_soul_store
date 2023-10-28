@@ -18,12 +18,14 @@ import bP from "../assets/bP.jpg";
 import wB from "../assets/wB.jpg";
 import blueBanner from "../assets/bluebanner.jpg";
 import bL from "../assets/bL.jpg";
-import { useSelector } from "react-redux";
+import { LOGOUT_USER } from "../action";
+import { useDispatch, useSelector } from "react-redux";
 import { RiArrowDropDownLine } from "react-icons/ri";
 
 export default function WomenNav() {
   const [active, setActive] = useState();
   const [scrollY, setScrollY] = useState(0);
+  const dispatch = useDispatch();
   const [isDropdownOpen, setIsDropDownOpen] = useState(null);
   const { isLoggedIn } = useSelector((state) => state.user);
   const { results } = useSelector((state) => state.app.cart);
@@ -752,9 +754,20 @@ export default function WomenNav() {
                   onMouseEnter={() => handleMouseEnter("User")}
                   onMouseLeave={() => handleMouseLeave()}
                   className="navdropbox uPT">
-                  <Text className="navdropboxh1 mT10"> Orders</Text>
-                  <Text className="navdropboxh1"> Profile</Text>
-                  <Text className="navdropboxh1">Log Out</Text>
+                  <Link to="/order" style={{ textDecoration: "none" }}>
+                    <Text className="navdropboxh1 mT10"> Orders</Text>
+                  </Link>
+                  <Link to="/profile" style={{ textDecoration: "none" }}>
+                    <Text className="navdropboxh1"> Profile</Text>
+                  </Link>
+
+                  <Text
+                    onClick={() => {
+                      dispatch(LOGOUT_USER());
+                    }}
+                    className="navdropboxh1">
+                    Log Out
+                  </Text>
                 </Box>
               )}
               <Link to="/wishlist">

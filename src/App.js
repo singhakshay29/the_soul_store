@@ -15,6 +15,7 @@ import { useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Section from "./Components/Section";
 import Shop from "./Components/Shop";
+import Profile from "./Components/Profile";
 
 function App() {
   const [active, setActive] = useState("1");
@@ -50,6 +51,7 @@ function App() {
             element={<Wishlist openPopover={openPopover} />}></Route>
           <Route path="order" element={<Order />}></Route>
           <Route path="address" element={<Address />} />
+          <Route path="profile" element={<Profile />} />
           <Route
             path="shoppingcart"
             element={<ShoppingCart openPopover={openPopover} />}></Route>

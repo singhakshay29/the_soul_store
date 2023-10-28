@@ -688,7 +688,7 @@ iframe#webpack-dev-server-client-overlay {
 .bottomTexth3 {
   font-weight: 900;
   font-size: 14px;
-  color: #58595b;
+  color: #292b2c;
   margin-left: 18px;
   margin-bottom: 0;
   padding-bottom: 0;
@@ -1013,13 +1013,14 @@ iframe#webpack-dev-server-client-overlay {
 .orderContainer {
   display: flex;
   flex-direction: column;
+  min-height: 25rem;
 }
 .orderContainerb1 {
   width: 200px;
   margin-left: 10rem;
   display: flex;
   flex-direction: column;
-  background-color: #e2e0e0;
+  background-color: #eceaea;
   height: 120px;
   margin-top: 2rem;
 }
@@ -1037,6 +1038,14 @@ iframe#webpack-dev-server-client-overlay {
   font-weight: 900;
   font-size: 16px;
   color: #58595b;
+  margin-left: 18px;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+.text44 {
+  font-weight: 700;
+  font-size: 16px;
+  color: #292b2c;
   margin-left: 18px;
   margin-bottom: 0;
   padding-bottom: 0;
@@ -1663,4 +1672,39 @@ iframe#webpack-dev-server-client-overlay {
   color: #58595b;
   border: 3px solid #117a7a;
   background-color: #00800014;
+}
+.profileHeading {
+  color: #a7a9ac;
+  text-transform: uppercase !important;
+  font-size: 15px;
+}
+.prfile1box {
+  border: 1px #eceeef solid;
+  padding: 30px;
+  background: #fff;
+}
+.profile1input {
+  border-radius: 10px;
+  line-height: 30px;
+  color: #58595b;
+  padding: 5px 10px;
+  background-color: #eceeef;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  width: 100%;
+}
+.profile2box {
+  border: 1px #eceeef solid;
+  flex-direction: column;
+  padding: 30px;
+}
+.profile2data {
+  color: #58595b;
+  text-transform: uppercase !important;
+  font-size: 15px;
+  flex-direction: column;
+}
+.categoryDividerprofile {
+  orientation: horizontal;
+  height: 2px;
+  background-color: #eee;
 }

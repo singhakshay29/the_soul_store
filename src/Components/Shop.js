@@ -2,9 +2,21 @@ import Card, { Card2 } from "./Card";
 import c1 from "../assets/c1.png";
 import { RiFilter2Line } from "react-icons/ri";
 import { BsSortUp } from "react-icons/bs";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Text, Divider, Container, Flex, Button } from "@chakra-ui/react";
+import {
+  Text,
+  Divider,
+  Container,
+  Flex,
+  Button,
+  useDisclosure,
+  Drawer,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerBody,
+  UnorderedList,
+} from "@chakra-ui/react";
 import NavRes from "./NavRes";
 export default function Shop({ openPopover }) {
   const [sortingOption, setSortingOption] = useState([]);
@@ -12,10 +24,12 @@ export default function Shop({ openPopover }) {
   const [selectedColors, setSelectedColors] = useState([]);
   const [selectedPrices, setSelectedPrices] = useState([]);
   const [selectSize, setSelectedSize] = useState([]);
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 1100);
   const [isSmallScreenMini, setIsSmallScreenMini] = useState(
     window.innerWidth < 750
   );
+  const btnRef = useRef();
   const object = useLocation();
   const { data } = object.state;
   const { itemList, brandName, colorName } = data;
@@ -54,6 +68,7 @@ export default function Shop({ openPopover }) {
 
     return filteredItems;
   };
+  const isSizeSelected = (size) => selectSize.includes(size);
   const filteredItems = handleSortingAndFiltering(
     sortingOption,
     selectedBrands,
@@ -148,16 +163,14 @@ export default function Shop({ openPopover }) {
       )}
       {isSmallScreen ? (
         <>
-          <Container style={{ overflow: "hidden" }}>
+          <Container>
             <Flex flexWrap="wrap" justifyContent="center">
               {filteredItems.map((item, index) => (
                 <Card2 openPopover={openPopover} item={item} index={index} />
               ))}
             </Flex>
             <Flex className="bottomNav">
-              <Button
-                // onClick={() => dispatch(ADD_TO_WISHLIST(product._id))}
-                className="filterbuttonNav">
+              <Button onClick={onOpen} className="filterbuttonNav">
                 <RiFilter2Line style={{ fontSize: "1rem", margin: "0 1rem" }} />
                 FILTER
               </Button>
@@ -207,7 +220,10 @@ export default function Shop({ openPopover }) {
             <Flex className="categorySearchBox">
               {brandName && (
                 <>
-                  <Text className="catHeading">BRANDS</Text>
+                  <Text style={{ marginTop: "15px" }} className="catHeading">
+                    BRANDS
+                  </Text>
+                  <Divider className="categoryDivider" />
                   <Flex className="catFlex">
                     {brandName?.map((item, index) => (
                       <Flex>
@@ -227,9 +243,11 @@ export default function Shop({ openPopover }) {
                   </Flex>
                 </>
               )}
+              <Divider className="categoryDivider" />
               {colorName && (
                 <>
                   <Text className="catHeading">COLOR</Text>
+                  <Divider className="categoryDivider" />
                   <Flex className="catFlex">
                     {colorName?.map((item) => (
                       <Flex>
@@ -248,45 +266,63 @@ export default function Shop({ openPopover }) {
                   </Flex>
                 </>
               )}
+              <Divider className="categoryDivider" />
               <Text className="catHeading">SIZE</Text>
+              <Divider className="categoryDivider" />
               <Flex
                 style={{
                   flexDirection: "column",
                   margin: 0,
                   marginBottom: "0.5rem",
+                  marginLeft: 0,
                 }}>
-                <Flex>
+                <Flex style={{ justifyContent: "space-evenly" }}>
                   <button
                     onClick={() => handleSizeSelect("S")}
-                    className="boxSize">
+                    className={`boxSize ${
+                      isSizeSelected("S") ? "selectedbox" : ""
+                    }`}>
                     S
                   </button>
                   <button
                     onClick={() => handleSizeSelect("M")}
-                    className="boxSize">
+                    className={`boxSize ${
+                      isSizeSelected("M") ? "selectedbox" : ""
+                    }`}>
                     M
                   </button>
                   <button
                     onClick={() => handleSizeSelect("L")}
-                    className="boxSize">
+                    className={`boxSize ${
+                      isSizeSelected("L") ? "selectedbox" : ""
+                    }`}>
                     L
                   </button>
                 </Flex>
-                <Flex style={{ marginTop: "0.5rem", justifyContent: "center" }}>
+                <Flex
+                  style={{
+                    marginTop: "0.5rem",
+                    justifyContent: "space-evenly",
+                  }}>
                   <button
                     onClick={() => handleSizeSelect("XL")}
-                    className="boxSize">
+                    className={`boxSize ${
+                      isSizeSelected("XL") ? "selectedbox" : ""
+                    }`}>
                     XL
                   </button>
                   <button
                     onClick={() => handleSizeSelect("XXL")}
-                    className="boxSize">
+                    className={`boxSize ${
+                      isSizeSelected("XXL") ? "selectedbox" : ""
+                    }`}>
                     XXL
                   </button>
                 </Flex>
               </Flex>
-              <hr style={{ height: "2px" }}></hr>
+              <Divider className="categoryDivider" />
               <Text className="catHeading">PRICE</Text>
+              <Divider className="categoryDivider" />
               <Flex>
                 <input
                   type="checkbox"
@@ -335,6 +371,7 @@ export default function Shop({ openPopover }) {
                   Rs. 839 To 1049
                 </label>
               </Flex>
+              <Divider className="categoryDivider" />
             </Flex>
 
             <Flex flexWrap="wrap">
@@ -345,6 +382,124 @@ export default function Shop({ openPopover }) {
           </Flex>
         </>
       )}
+      <Drawer
+        isOpen={isOpen}
+        placement="bottom"
+        onClose={onClose}
+        finalFocusRef={btnRef}>
+        <DrawerOverlay />
+        <div className="barback"></div>
+        <DrawerContent
+          style={{
+            position: "relative",
+            top: 0,
+            left: 0,
+            zIndex: 10,
+            width: "80%",
+            backgroundColor: "white",
+            height: "100vh",
+          }}>
+          <DrawerBody>
+            <Flex className="barbox1">
+              {/* <Image src={barlogo} alt="logo" className="logoImgbar" /> */}
+              <Text
+                style={{
+                  padding: "10px",
+                  marginLeft: "6rem",
+                }}>
+                Akshay Singh
+              </Text>
+            </Flex>
+            <UnorderedList className="barboxStyle"></UnorderedList>
+            <Flex className="barboxStyle1">
+              <Button className="barboxStyle1button">Men</Button>
+              <Button className="barboxStyle1button2">Women</Button>
+            </Flex>
+            <Flex>
+              {/* <Accordion
+                defaultIndex={[0]}
+                allowMultiple
+                marginTop="0.1rem"
+                width="100%">
+                <AccordionItem className="accodianItem">
+                  <h2 style={{ margin: 0 }}>
+                    <AccordionButton className="accodianbutton">
+                      <Box
+                        className="HTexth3A"
+                        as="span"
+                        flex="1"
+                        textAlign="left">
+                        Topwear
+                      </Box>
+                      <AccordionIcon />
+                    </AccordionButton>
+                  </h2>
+                  <AccordionPanel pb={4}>
+                    <Text className="bottomTexth3">Material & Care:</Text>
+                    <Text className="text" marginLeft="30px" marginTop="20px">
+                      100% Cotton
+                    </Text>
+                    <Text className="text" marginLeft="30px" marginTop="0">
+                      Machine Wash
+                    </Text>
+                    <Text className="bottomTexth3">BRAND:</Text>
+
+                    <Text className="bottomTexth3">Country of Origin:</Text>
+                    <Text className="text" marginLeft="30px" marginTop="0">
+                      India (and proud)
+                    </Text>
+                    <Text className="text" marginLeft="30px">
+                      Hey Souledsters! You must have noticed that we've said
+                      goodbye to the little Mr. Souls sleeve label that we've
+                      had through the years. But always remember, when you shop
+                      from our app, website, stores, or online marketplaces,
+                      you're always getting the genuine real deal!
+                    </Text>
+                  </AccordionPanel>
+                </AccordionItem>
+
+                <AccordionItem className="accodianItem">
+                  <h2 style={{ margin: 0 }}>
+                    <AccordionButton className="accodianbutton">
+                      <Box
+                        as="span"
+                        flex="1"
+                        textAlign="left"
+                        className="HTexth3A">
+                        BottomWear
+                      </Box>
+                      <AccordionIcon />
+                    </AccordionButton>
+                  </h2>
+                  <AccordionPanel pb={4}>
+                    <Text className="bottomTexth3">
+                      Official Licensed {data?.brand}
+                    </Text>
+                    <Flex>
+                      <Text className="bottomTexth3">Color:</Text>
+                      <Text className="text mL10">{data?.color}</Text>
+                    </Flex>
+                    <Flex>
+                      <Text className="bottomTexth3">Type:</Text>
+                      <Text className="text mL10">{data?.gender}</Text>
+                      <Text className="text mL10">{data?.subCategory}</Text>
+                    </Flex>
+                  </AccordionPanel>
+                </AccordionItem>
+              </Accordion> */}
+            </Flex>
+            <Flex
+              style={{
+                flexDirection: "column",
+                justifyContent: "flex-start",
+                margin: "2rem",
+              }}>
+              <Button className="barboxStyle1buttonSec">My Account</Button>
+              <Button className="barboxStyle1buttonSec">My Order</Button>
+            </Flex>
+          </DrawerBody>
+        </DrawerContent>
+      </Drawer>
     </>
   );
 }
