@@ -1,4 +1,3 @@
-import { service2 } from "../service";
 import { Box, List, Flex, Text, ListItem, IconButton } from "@chakra-ui/react";
 import React from "react";
 import eye from "../assets/eye.jpg";
@@ -22,19 +21,16 @@ import { LOGOUT_USER } from "../action";
 import { useDispatch, useSelector } from "react-redux";
 import { RiArrowDropDownLine } from "react-icons/ri";
 
-export default function WomenNav() {
+export default function WomenNav({ openPopover }) {
   const [active, setActive] = useState();
   const [scrollY, setScrollY] = useState(0);
   const dispatch = useDispatch();
   const [isDropdownOpen, setIsDropDownOpen] = useState(null);
   const { isLoggedIn } = useSelector((state) => state.user);
   const { results } = useSelector((state) => state.app.cart);
-  const { wishlist, productsList } = useSelector((state) => state.app);
+  const { wishlist, productsListFilter } = useSelector((state) => state.app);
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 1200);
-  let data = [];
-  if (productsList.length > 0) {
-    data = service2(productsList);
-  }
+
   const {
     productWomenTshirtData,
     productWomenJoggersData,
@@ -81,7 +77,7 @@ export default function WomenNav() {
     productGARFIELDMERCHANDISE,
     productMINIONSMERCHANDISE,
     productNARUTOMERCHANDISE,
-  } = data;
+  } = productsListFilter;
   const handleMouseEnter = (dropdown) => {
     setIsDropDownOpen(dropdown);
   };
@@ -729,47 +725,76 @@ export default function WomenNav() {
                   }}
                 />
               </Box>
-              <Link
-                to="/order"
-                style={{
-                  textDecoration: "none",
-                  marginLeft: "10px",
-                }}
-                onMouseEnter={() => handleMouseEnter("User")}
-                onMouseLeave={() => handleMouseLeave()}>
-                <FaRegUser
-                  className={
-                    active === "1"
-                      ? "activeIcon navbuttonicon"
-                      : "navbuttonicon"
-                  }
-                  id={"1"}
-                  onClick={handleClick}
-                  onMouseEnter={() => handleMouseEnter("User")}
-                />
-              </Link>
-
-              {isDropdownOpen === "User" && (
-                <Box
-                  onMouseEnter={() => handleMouseEnter("User")}
-                  onMouseLeave={() => handleMouseLeave()}
-                  className="navdropbox uPT">
-                  <Link to="/order" style={{ textDecoration: "none" }}>
-                    <Text className="navdropboxh1 mT10"> Orders</Text>
-                  </Link>
-                  <Link to="/profile" style={{ textDecoration: "none" }}>
-                    <Text className="navdropboxh1"> Profile</Text>
-                  </Link>
-
-                  <Text
-                    onClick={() => {
-                      dispatch(LOGOUT_USER());
+              {isLoggedIn ? (
+                <>
+                  <Link
+                    to="/order"
+                    style={{
+                      textDecoration: "none",
+                      marginLeft: "10px",
                     }}
-                    className="navdropboxh1">
-                    Log Out
-                  </Text>
-                </Box>
+                    onMouseEnter={() => handleMouseEnter("User")}
+                    onMouseLeave={() => handleMouseLeave()}>
+                    <FaRegUser
+                      className={
+                        active === "1"
+                          ? "activeIcon navbuttonicon"
+                          : "navbuttonicon"
+                      }
+                      id={"1"}
+                      onClick={handleClick}
+                      onMouseEnter={() => handleMouseEnter("User")}
+                    />
+                  </Link>
+
+                  {isDropdownOpen === "User" && (
+                    <Box
+                      onMouseEnter={() => handleMouseEnter("User")}
+                      onMouseLeave={() => handleMouseLeave()}
+                      className="navdropbox uPT">
+                      <Link to="/order" style={{ textDecoration: "none" }}>
+                        <Text className="navdropboxh1 mT10"> Orders</Text>
+                      </Link>
+                      <Link to="/profile" style={{ textDecoration: "none" }}>
+                        <Text className="navdropboxh1"> Profile</Text>
+                      </Link>
+
+                      <Text
+                        onClick={() => {
+                          dispatch(LOGOUT_USER());
+                          openPopover("Succesfully Logout");
+                          console.log("akshay");
+                        }}
+                        className="navdropboxh1">
+                        Log Out
+                      </Text>
+                    </Box>
+                  )}
+                </>
+              ) : (
+                <>
+                  <Link
+                    to="/login"
+                    style={{
+                      textDecoration: "none",
+                      marginLeft: "10px",
+                    }}
+                    onMouseEnter={() => handleMouseEnter("User")}
+                    onMouseLeave={() => handleMouseLeave()}>
+                    <FaRegUser
+                      className={
+                        active === "1"
+                          ? "activeIcon navbuttonicon"
+                          : "navbuttonicon"
+                      }
+                      id={"1"}
+                      onClick={handleClick}
+                      onMouseEnter={() => handleMouseEnter("User")}
+                    />
+                  </Link>
+                </>
               )}
+
               <Link to="/wishlist">
                 {isLoggedIn && (
                   <>

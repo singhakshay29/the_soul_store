@@ -33,7 +33,6 @@ export default function Shop({ openPopover }) {
   const object = useLocation();
   const { data } = object.state;
   const { itemList, brandName, colorName } = data;
-  console.log(data);
   const { Banner, Heading, BannerRes } = object.state;
   const handleSortingAndFiltering = (
     sortingCriteria,

@@ -1,6 +1,8 @@
 const actiontype = {
   SET_CART: "SET_CART",
 
+  SET_CART_FILTER: "SET_CART_FILTER",
+
   GET_CART: "GET_CART",
 
   LOGIN_USER: "LOGIN_USER",

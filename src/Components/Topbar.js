@@ -84,9 +84,7 @@ export default function Topbar({ active, setActive }) {
             ) : (
               <>
                 <NavLink to="/login">
-                  <Button marginLeft="35%" className="topbarbutton2">
-                    Track Order
-                  </Button>
+                  <Button className="topbarbutton2">Track Order</Button>
                   <Button className="topbarbutton2">Contact US</Button>
                 </NavLink>
               </>

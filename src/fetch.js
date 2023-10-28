@@ -1,4 +1,5 @@
 import Api from "./Api";
+import { service2 } from "./service";
 
 export async function productList() {
   try {
@@ -13,7 +14,14 @@ export async function productList() {
     }
     const data = await response.json();
     const products = data.data;
-    return products;
+    let productItemData = [];
+    if (products.length > 0) {
+      productItemData = service2(products);
+    }
+    return {
+      products,
+      productItemData,
+    };
   } catch (error) {
     console.error("Something went wrong");
   }
@@ -34,7 +42,8 @@ export async function loginUser(email, password) {
       appType: "ecommerce",
     }),
   });
-  return response;
+  const data = await response.json();
+  return data;
 }
 
 export async function signup(username, email, password) {
@@ -52,7 +61,8 @@ export async function signup(username, email, password) {
       appType: "ecommerce",
     }),
   });
-  return response;
+  const data = await response.json();
+  return data;
 }
 
 export async function addWishlist(productId) {
@@ -71,7 +81,8 @@ export async function addWishlist(productId) {
         },
         body: JSON.stringify({ productId: productId }),
       });
-      return response;
+      const data = await response.json();
+      return data.status;
     } catch (error) {
       console.error("Somethings went wrong");
     }
@@ -93,7 +104,8 @@ export async function removeWishlist(productId) {
           projectId: "dm3s7h4e43m1",
         },
       });
-      return response;
+      const data = await response.json();
+      return data.status;
     } catch (error) {
       console.error("Something went wrong");
     }
@@ -166,7 +178,7 @@ export async function addCart(productId, qty) {
     const parsedData = JSON.parse(user);
     try {
       const baseUrl = Api.cart + productId;
-      await fetch(baseUrl, {
+      const response = await fetch(baseUrl, {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -176,6 +188,8 @@ export async function addCart(productId, qty) {
         },
         body: JSON.stringify({ quantity: qty }),
       });
+      const data = await response.json();
+      return data.status;
     } catch (error) {
       console.log("Somethings went wrong");
     }
@@ -188,7 +202,7 @@ export async function removeCart(productId, qty) {
     const parsedData = JSON.parse(user);
     try {
       const baseUrl = Api.cart + productId;
-      await fetch(baseUrl, {
+      const response = await fetch(baseUrl, {
         method: "DELETE",
         headers: {
           Accept: "application/json",
@@ -198,6 +212,8 @@ export async function removeCart(productId, qty) {
         },
         body: JSON.stringify({ quantity: qty }),
       });
+      const data = await response.json();
+      return data.status;
     } catch (error) {
       console.log("Somethings went wrong");
     }
@@ -210,7 +226,7 @@ export async function placeOrder(productId, address, quantity) {
     const parsedData = JSON.parse(user);
     try {
       const baseUrl = Api.order;
-      await fetch(baseUrl, {
+      const response = await fetch(baseUrl, {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -231,6 +247,8 @@ export async function placeOrder(productId, address, quantity) {
           },
         }),
       });
+      const data = await response.json();
+      return data.status;
     } catch (error) {
       console.log("Somethings went wrong");
     }

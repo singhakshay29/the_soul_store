@@ -11,15 +11,17 @@ import { Link } from "react-router-dom";
 import Pretty from "../assets/Pretty.jpg";
 import blueBanner from "../assets/bluebanner.jpg";
 import Carousel from "better-react-carousel";
+import { useSelector } from "react-redux";
 
-export default function WGallery({ data }) {
+export default function WGallery() {
+  const { productsListFilter } = useSelector((state) => state.app);
   const {
     productWomenWhiteData,
     productWomenLavenderData,
     productWomenPinkData,
     productWomenBlackData,
     productWomenBlueData,
-  } = data;
+  } = productsListFilter;
   return (
     <Carousel cols={3} rows={1}>
       <Carousel.Item>

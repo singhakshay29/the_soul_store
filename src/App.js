@@ -1,4 +1,6 @@
 import "./App.css";
+import { useState } from "react";
+import Shop from "./Components/Shop";
 import Order from "./Components/Order";
 import Login from "./Components/Login";
 import Popup from "./Components/Popup";
@@ -8,19 +10,17 @@ import MenNav from "./Components/MenNav";
 import Footer from "./Components/Footer";
 import Address from "./Components/Address";
 import Product from "./Components/Product";
-import Wishlist from "./Components/Wishlist";
-import WomenNav from "./Components/WomenNav";
-import ShoppingCart from "./Components/ShoppingCart";
-import { useState } from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Section from "./Components/Section";
-import Shop from "./Components/Shop";
 import Profile from "./Components/Profile";
+import WomenNav from "./Components/WomenNav";
+import Wishlist from "./Components/Wishlist";
+import ShoppingCart from "./Components/ShoppingCart";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 function App() {
   const [active, setActive] = useState("1");
-  const [isPopoverOpen, setIsPopoverOpen] = useState(false);
   const [message, setMessage] = useState("");
+  const [isPopoverOpen, setIsPopoverOpen] = useState(false);
 
   const openPopover = (check) => {
     setIsPopoverOpen(true);
@@ -34,7 +34,11 @@ function App() {
     <>
       <Router>
         <Topbar active={active} setActive={setActive} />
-        {active === "1" ? <WomenNav /> : <MenNav />}
+        {active === "1" ? (
+          <WomenNav openPopover={openPopover} />
+        ) : (
+          <MenNav openPopover={openPopover} />
+        )}
         {isPopoverOpen && <Popup message={message} />}
         <Routes>
           <Route
@@ -49,7 +53,9 @@ function App() {
           <Route
             path="wishlist"
             element={<Wishlist openPopover={openPopover} />}></Route>
-          <Route path="order" element={<Order />}></Route>
+          <Route
+            path="order"
+            element={<Order openPopover={openPopover} />}></Route>
           <Route path="address" element={<Address />} />
           <Route path="profile" element={<Profile />} />
           <Route

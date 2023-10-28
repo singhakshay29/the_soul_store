@@ -1,4 +1,3 @@
-import { service2 } from "../service";
 import NavRes from "./NavRes";
 import m1 from "../assets/m1.png";
 import m2 from "../assets/m2.png";
@@ -43,30 +42,25 @@ import { useDispatch, useSelector } from "react-redux";
 import { Card, Image, Container, Flex, Box, Button } from "@chakra-ui/react";
 
 export default function Section({ active, setActive }) {
-  const { productsList } = useSelector((state) => state.app);
   const [barOpen, setBarOpen] = useState();
+  const { productsListFilter } = useSelector((state) => state.app);
   const [isSmallScreenMini, setIsSmallScreenMini] = useState(
     window.innerWidth < 750
   );
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 1200);
-  let data = [];
-  if (productsList.length > 0) {
-    data = service2(productsList);
-  }
-  console.log(productsList);
   const {
-    productWomenTshirtData,
-    productWomenJeansData,
-    productWomenJumpsuitData,
-    productWomenshirtsData,
-    productWomenJoggersData,
     productWomenkurtiData,
     productMenTshirtData,
     productMenShirtData,
-    productMenJoggersData,
-    productMenShortsData,
     productMenJeansData,
-  } = data;
+    productMenShortsData,
+    productMenJoggersData,
+    productWomenTshirtData,
+    productWomenJeansData,
+    productWomenshirtsData,
+    productWomenJoggersData,
+    productWomenJumpsuitData,
+  } = productsListFilter;
   const dispatch = useDispatch();
   const handleClick = (event) => {
     setActive(event.target.id);
@@ -429,7 +423,7 @@ export default function Section({ active, setActive }) {
                 <Flex alignContent="center" flexDirection="column" width="100%">
                   <Flex className="heading1">SHOP BY COLOR</Flex>
                 </Flex>
-                <WGallery data={data} />
+                <WGallery />
               </>
             )}
           </>
@@ -451,7 +445,6 @@ export default function Section({ active, setActive }) {
                             to="/category"
                             state={{
                               Banner: bannerT,
-
                               data: productWomenTshirtData,
                               Heading: "Women T-Shirt",
                             }}>

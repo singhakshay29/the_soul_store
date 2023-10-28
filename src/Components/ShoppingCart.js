@@ -34,7 +34,8 @@ export default function ShoppingCart({ openPopover }) {
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 1000);
   const { cart } = useSelector((state) => state.app);
   let items, totalPrice, results;
-  if (cart.results > 0) {
+  if (cart?.results > 0) {
+    console.log(cart);
     const { data } = cart;
     ({ results } = cart);
     ({ items, totalPrice } = data);

@@ -4,8 +4,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { LOGOUT_USER } from "../action";
 import { GoDotFill } from "react-icons/go";
 import { getOrderList } from "../fetch";
+import { Link } from "react-router-dom";
 
-export default function Order() {
+export default function Order({ openPopover }) {
   const dispatch = useDispatch();
   const { userData } = useSelector((state) => state.user);
   const [orderList, setOrderList] = useState(null);
@@ -41,13 +42,16 @@ export default function Order() {
             <Text className="text3 mL10p mT10p">{userData.email}</Text>
           </Box>
           <Box className="orderContainerb2">
-            <Button
-              className="logout"
-              onClick={() => {
-                dispatch(LOGOUT_USER());
-              }}>
-              LOGOUT
-            </Button>
+            <Link to="/login" style={{ textDecoration: "none" }}>
+              <Button
+                className="logout"
+                onClick={() => {
+                  dispatch(LOGOUT_USER());
+                  openPopover("Succesfully Logout");
+                }}>
+                LOGOUT
+              </Button>
+            </Link>
           </Box>
         </Container>
         <Flex

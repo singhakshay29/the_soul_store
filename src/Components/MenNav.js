@@ -13,21 +13,16 @@ import MBJ from "../assets/MBJ.jpg";
 import MBS from "../assets/MBS.jpg";
 import MBJS from "../assets/MBJS.jpg";
 import { RiArrowDropDownLine } from "react-icons/ri";
-import { service2 } from "../service";
 
 export default function MenNav() {
   const [scrollY, setScrollY] = useState(0);
   const [active, setActive] = useState("");
   const { isLoggedIn } = useSelector((state) => state.user);
   const { results } = useSelector((state) => state.app.cart);
-  const { wishlist, productsList } = useSelector((state) => state.app);
+  const { wishlist, productsListFilter } = useSelector((state) => state.app);
   const [isDropdownOpen, setIsDropDownOpen] = useState(null);
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 1200);
 
-  let data = [];
-  if (productsList.length > 0) {
-    data = service2(productsList);
-  }
   const {
     productMenTshirtData,
     productMenShirtData,
@@ -105,7 +100,7 @@ export default function MenNav() {
     productMenKhakiData,
     productMenPurpleData,
     productMenBeigeData,
-  } = data;
+  } = productsListFilter;
 
   const handleMouseEnter = (dropdown) => {
     setIsDropDownOpen(dropdown);

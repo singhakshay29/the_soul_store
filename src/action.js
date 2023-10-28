@@ -28,12 +28,24 @@ export const LOADING_ACTION = (payload) => {
   };
 };
 
-export const LOGOUT_USER = () => ({
-  type: actiontype.LOGOUT_USER,
-});
+export const LOGOUT_USER = (payload) => {
+  localStorage.removeItem("userDetails");
+  localStorage.removeItem("cartItem");
+  localStorage.removeItem("wishlist");
+
+  return {
+    type: actiontype.LOGOUT_USER,
+    payload: payload,
+  };
+};
 
 export const SET_PRODUCTS = (payload) => ({
   type: actiontype.SET_PRODUCTS,
+  payload: payload,
+});
+
+export const SET_CART_FILTER = (payload) => ({
+  type: actiontype.SET_CART_FILTER,
   payload: payload,
 });
 
@@ -44,32 +56,34 @@ export const SET_CART = (payload) => ({
 
 export const ADD_TO_CART = (productId, qty) => {
   return async (dispatch) => {
-    await addCart(productId, qty);
-    setTimeout(() => {
-      dispatch(GET_CART());
-    }, 200);
+    const response = await addCart(productId, qty);
+    console.log(response, "addCart");
+    dispatch(GET_CART());
   };
 };
 
 export const REMOVE_FROM_CART = (productId, qty) => {
   return async (dispatch) => {
-    await removeCart(productId, qty);
-    setTimeout(() => {
-      dispatch(GET_CART());
-    }, 200);
+    const response = await removeCart(productId, qty);
+    console.log(response, "removed Cart");
+    dispatch(GET_CART());
   };
 };
 
 export const GET_CART = () => {
   return async (dispatch) => {
     const data = await getCart();
-    dispatch(SET_CART(data));
+    if (data) {
+      dispatch(SET_CART(data));
+    }
   };
 };
 export const FETCH_PRODUCTS = () => {
   return async (dispatch) => {
     const parsedData = await productList();
-    dispatch(SET_PRODUCTS(parsedData));
+    const { products, productItemData } = parsedData;
+    dispatch(SET_PRODUCTS(products));
+    dispatch(SET_CART_FILTER(productItemData));
   };
 };
 
@@ -132,17 +146,15 @@ export const GET_WISHLIST = () => {
 
 export const ADD_TO_WISHLIST = (productId) => {
   return async (dispatch) => {
-    await addWishlist(productId);
-    setTimeout(() => {
-      dispatch(GET_WISHLIST());
-    }, 300);
+    const response = await addWishlist(productId);
+    console.log("added to cart", response);
+    dispatch(GET_WISHLIST());
   };
 };
 export const REMOVE_FROM_WISHLIST = (productId) => {
   return async (dispatch) => {
-    await removeWishlist(productId);
-    setTimeout(() => {
-      dispatch(GET_WISHLIST());
-    }, 300);
+    const response = await removeWishlist(productId);
+    console.log(response);
+    dispatch(GET_WISHLIST());
   };
 };

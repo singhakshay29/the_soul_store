@@ -4,6 +4,7 @@ const baseInitialState = {
   cart: [],
   wishlist: [],
   productsList: [],
+  productsListFilter: {},
 };
 const initialCartData = localStorage.getItem("cartItem");
 const initialWishlistData = localStorage.getItem("wishlist");
@@ -27,6 +28,11 @@ const appReducer = (state = initialState, action) => {
       return {
         ...state,
         productsList: action.payload,
+      };
+    case actiontype.SET_CART_FILTER:
+      return {
+        ...state,
+        productsListFilter: action.payload,
       };
     case actiontype.SET_WISHLIST:
       return {
