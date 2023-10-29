@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Box, Button, Container, Flex, Text, Image } from "@chakra-ui/react";
+import { Box, Container, Flex, Text, Image } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
 import { LOGOUT_USER } from "../action";
 import { GoDotFill } from "react-icons/go";
@@ -8,9 +8,9 @@ import { Link } from "react-router-dom";
 
 export default function Order({ openPopover }) {
   const dispatch = useDispatch();
-  const { userData } = useSelector((state) => state.user);
   const [orderList, setOrderList] = useState(null);
   const [orderData, setOrderData] = useState("");
+  const { user } = useSelector((state) => state.user.userData.data);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -37,22 +37,21 @@ export default function Order({ openPopover }) {
         <Container className="orderContainer">
           <Box className="orderContainerb1">
             <Text className="bottomTexth3 mT10p ">
-              {userData?.name?.toUpperCase()}
+              {user?.name?.toUpperCase()}
             </Text>
-            <Text className="text3 mL10p mT10p">{userData.email}</Text>
+            <Text className="text3 mL10p mT10p">{user.email}</Text>
           </Box>
-          <Box className="orderContainerb2">
-            <Link to="/login" style={{ textDecoration: "none" }}>
-              <Button
-                className="logout"
-                onClick={() => {
-                  dispatch(LOGOUT_USER());
-                  openPopover("Succesfully Logout");
-                }}>
-                LOGOUT
-              </Button>
-            </Link>
-          </Box>
+          <Box className="orderContainerb2"></Box>
+          <Link to="/login" style={{ textDecoration: "none" }}>
+            <button
+              className="logout"
+              onClick={() => {
+                dispatch(LOGOUT_USER());
+                openPopover("Succesfully Logout");
+              }}>
+              LOGOUT
+            </button>
+          </Link>
         </Container>
         <Flex
           style={{

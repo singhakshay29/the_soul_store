@@ -7,7 +7,7 @@ const baseInitialState = {
   token: "",
 };
 
-const initialUserDetails = localStorage.getItem("userDetails");
+const initialUserDetails = localStorage.getItem("authorization");
 
 const initialState = initialUserDetails
   ? {

@@ -1,14 +1,14 @@
 import actiontype from "./actiontype";
 import {
-  addCart,
-  loginUser,
-  productList,
-  removeCart,
   signup,
+  addCart,
+  getCart,
+  loginUser,
+  removeCart,
+  productList,
+  getWishlist,
   addWishlist,
   removeWishlist,
-  getWishlist,
-  getCart,
 } from "./fetch";
 
 export const LOGIN_SUCCESS = (payload) => ({
@@ -29,7 +29,7 @@ export const LOADING_ACTION = (payload) => {
 };
 
 export const LOGOUT_USER = (payload) => {
-  localStorage.removeItem("userDetails");
+  localStorage.removeItem("authorization");
   localStorage.removeItem("cartItem");
   localStorage.removeItem("wishlist");
 
@@ -90,44 +90,20 @@ export const FETCH_PRODUCTS = () => {
 export const LOGIN_USER = (email, password) => {
   return async (dispatch) => {
     const response = await loginUser(email, password);
-    try {
-      if (response.ok) {
-        const responseData = await response.json();
-        localStorage.setItem(
-          "userDetails",
-          JSON.stringify({
-            signup: responseData,
-          })
-        );
-        dispatch(LOGIN_SUCCESS(responseData));
-      } else {
-        const errorData = await response.json();
-        dispatch(LOGIN_FAILURE(errorData.errorMessage));
-      }
-    } catch (error) {
+    if (response) {
+      dispatch(LOGIN_SUCCESS(response));
+    } else {
       dispatch(LOGIN_FAILURE("Incorrect EmailId or Password"));
     }
   };
 };
 export const SIGNUP_USER = (username, email, password) => {
   return async (dispatch) => {
-    try {
-      const response = await signup(username, email, password);
-      if (response.ok) {
-        const responseData = await response.json();
-        localStorage.setItem(
-          "userDetails",
-          JSON.stringify({
-            signup: responseData,
-          })
-        );
-        dispatch(LOGIN_SUCCESS(responseData));
-      } else {
-        const errorData = await response.json();
-        dispatch(LOGIN_FAILURE(errorData.errorMessage));
-      }
-    } catch (error) {
-      dispatch(LOGIN_FAILURE("Incorrect EmailId or Password"));
+    const response = await signup(username, email, password);
+    if (response) {
+      dispatch(LOGIN_SUCCESS(response));
+    } else {
+      dispatch(LOGIN_FAILURE("Login Failed"));
     }
   };
 };

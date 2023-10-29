@@ -28,45 +28,71 @@ export async function productList() {
 }
 
 export async function loginUser(email, password) {
-  const url = Api.login;
-
-  const response = await fetch(url, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      projectId: "dm3s7h4e43m1",
-    },
-    body: JSON.stringify({
-      email: `${email}`,
-      password: `${password}`,
-      appType: "ecommerce",
-    }),
-  });
-  const data = await response.json();
-  return data;
+  try {
+    const url = Api.login;
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        projectId: "dm3s7h4e43m1",
+      },
+      body: JSON.stringify({
+        email: `${email}`,
+        password: `${password}`,
+        appType: "ecommerce",
+      }),
+    });
+    console.log(response);
+    if (response.ok) {
+      const data = await response.json();
+      localStorage.setItem(
+        "authorization",
+        JSON.stringify({
+          signup: data,
+        })
+      );
+      return data;
+    } else {
+      console.log("Something went Wrong");
+    }
+  } catch (error) {
+    console.log("Something went Wrong");
+  }
 }
 
 export async function signup(username, email, password) {
-  const url = Api.signup;
-  const response = await fetch(url, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      projectId: "dm3s7h4e43m1",
-    },
-    body: JSON.stringify({
-      name: `${username}`,
-      email: `${email}`,
-      password: `${password}`,
-      appType: "ecommerce",
-    }),
-  });
-  const data = await response.json();
-  return data;
+  try {
+    const url = Api.signup;
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        projectId: "dm3s7h4e43m1",
+      },
+      body: JSON.stringify({
+        name: `${username}`,
+        email: `${email}`,
+        password: `${password}`,
+        appType: "ecommerce",
+      }),
+    });
+    if (response.ok) {
+      const responseData = await response.json();
+      localStorage.setItem(
+        "authorization",
+        JSON.stringify({
+          signup: responseData,
+        })
+      );
+      return responseData;
+    }
+  } catch (error) {
+    console.log("Something went Wrong");
+  }
 }
 
 export async function addWishlist(productId) {
-  const user = localStorage.getItem("userDetails");
+  const user = localStorage.getItem("authorization");
   if (user) {
     const parsedData = JSON.parse(user);
     try {
@@ -90,7 +116,7 @@ export async function addWishlist(productId) {
 }
 
 export async function removeWishlist(productId) {
-  const user = localStorage.getItem("userDetails");
+  const user = localStorage.getItem("authorization");
   if (user) {
     const parsedData = JSON.parse(user);
     try {
@@ -113,7 +139,7 @@ export async function removeWishlist(productId) {
 }
 
 export async function getWishlist() {
-  const user = localStorage.getItem("userDetails");
+  const user = localStorage.getItem("authorization");
   if (user) {
     const parsedData = JSON.parse(user);
     try {
@@ -145,7 +171,7 @@ export async function getWishlist() {
 }
 
 export async function getCart() {
-  const user = localStorage.getItem("userDetails");
+  const user = localStorage.getItem("authorization");
   if (user) {
     const parsedData = JSON.parse(user);
     try {
@@ -173,7 +199,7 @@ export async function getCart() {
 }
 
 export async function addCart(productId, qty) {
-  const user = localStorage.getItem("userDetails");
+  const user = localStorage.getItem("authorization");
   if (user) {
     const parsedData = JSON.parse(user);
     try {
@@ -197,7 +223,7 @@ export async function addCart(productId, qty) {
 }
 
 export async function removeCart(productId, qty) {
-  const user = localStorage.getItem("userDetails");
+  const user = localStorage.getItem("authorization");
   if (user) {
     const parsedData = JSON.parse(user);
     try {
@@ -221,7 +247,7 @@ export async function removeCart(productId, qty) {
 }
 export async function placeOrder(productId, address, quantity) {
   const { addressType, streetName, state, country, city, pinNo } = address;
-  const user = localStorage.getItem("userDetails");
+  const user = localStorage.getItem("authorization");
   if (user) {
     const parsedData = JSON.parse(user);
     try {
@@ -256,7 +282,7 @@ export async function placeOrder(productId, address, quantity) {
 }
 
 export async function getOrderList() {
-  const user = localStorage.getItem("userDetails");
+  const user = localStorage.getItem("authorization");
   if (user) {
     const parsedData = JSON.parse(user);
     try {

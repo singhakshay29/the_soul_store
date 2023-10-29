@@ -63,20 +63,20 @@ export default function SignUp() {
                 flexDirection: "row",
                 justifyContent: "center",
               }}>
-              <Button
-                width="40%"
-                height="45px"
-                bg="#117a7a"
-                color="white"
-                fontWeight="800"
-                cursor="pointer">
-                LOGIN
-              </Button>
-              <Button
-                width="40%"
-                height="45px"
-                color="#58595b"
-                cursor="pointer">
+              <Link to="/login">
+                <button
+                  style={{
+                    height: "45px",
+                    backgroundColor: "#117a7a",
+                    color: "white",
+                    cursor: "pointer",
+                    fontWeight: "800",
+                    width: "12rem",
+                  }}>
+                  LOGIN
+                </button>
+              </Link>
+              <Button width="40%" height="45px" color="#58595b">
                 REGISTER
               </Button>
             </Card>
@@ -105,7 +105,6 @@ export default function SignUp() {
                   />
                 </GoogleOAuthProvider>
               </Container>
-
               <Card className="heading2" marginTop="15px">
                 -OR-
               </Card>
@@ -135,6 +134,7 @@ export default function SignUp() {
                   color: errorColor,
                   justifyContent: "center",
                   display: "flex",
+                  height: "1.5rem",
                 }}>
                 {errorMessage}
               </Text>

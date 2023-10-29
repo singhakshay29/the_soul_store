@@ -32,7 +32,7 @@ import menJeans from "../assets/menJeans.jpg";
 import JeansSmall from "../assets/JeansSmall.jpg";
 import tshirtsmall from "../assets/tshirtsmall.jpg";
 import sweatshirt from "../assets/sweatshirt.jpg";
-import { FETCH_PRODUCTS } from "../action";
+import { FETCH_PRODUCTS, GET_CART, GET_WISHLIST } from "../action";
 import bannerBS from "../assets/bannerBS.jpg";
 import { Link, NavLink } from "react-router-dom";
 import Collection from "../assets/Collection.jpg";
@@ -68,6 +68,8 @@ export default function Section({ active, setActive }) {
 
   useEffect(() => {
     dispatch(FETCH_PRODUCTS());
+    dispatch(GET_WISHLIST());
+    dispatch(GET_CART());
 
     const handleResize = () => {
       setIsSmallScreen(window.innerWidth < 1200);
@@ -77,6 +79,10 @@ export default function Section({ active, setActive }) {
     };
     window.addEventListener("resize", handleResize);
     window.addEventListener("resize", handleResizeMini);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      window.removeEventListener("resize", handleResizeMini);
+    };
     // eslint-disable-next-line
   }, []);
   return (

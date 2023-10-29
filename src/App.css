@@ -1017,7 +1017,6 @@ iframe#webpack-dev-server-client-overlay {
 }
 .orderContainerb1 {
   width: 200px;
-  margin-left: 10rem;
   display: flex;
   flex-direction: column;
   background-color: #eceaea;
@@ -1026,12 +1025,10 @@ iframe#webpack-dev-server-client-overlay {
 }
 .orderContainerb2 {
   width: 200px;
-  margin-left: 0.3rem;
   display: flex;
   flex-direction: column;
   height: 200px;
   margin-top: 2%;
-  margin-left: 10rem;
   border: 1px solid #eee;
 }
 .text3 {
@@ -1054,7 +1051,6 @@ iframe#webpack-dev-server-client-overlay {
   margin-left: 30%;
 }
 .logout {
-  margin-top: 98%;
   border-color: #ed2d2f;
   background-color: transparent;
   padding: 5%;
@@ -1062,6 +1058,7 @@ iframe#webpack-dev-server-client-overlay {
   font-size: medium;
   font-weight: 700;
   cursor: pointer;
+  width: 200px;
 }
 .logout:hover {
   background-color: #ed2d2f;

@@ -1,5 +1,5 @@
 import jwt_decode from "jwt-decode";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { LOGIN_FAILURE, LOGIN_USER } from "../action";
 import { useDispatch, useSelector } from "react-redux";
@@ -20,12 +20,8 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorColor, setErrorColor] = useState("");
-  const errorMessage = useSelector((state) => {
-    return state.user.errorMessage;
-  });
-  const isLoggedIn = useSelector((state) => {
-    return state.user.isLoggedIn;
-  });
+  const { errorMessage } = useSelector((state) => state.user);
+  const { isLoggedIn } = useSelector((state) => state.user);
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -42,6 +38,10 @@ export default function Login() {
   if (isLoggedIn) {
     navigate("/");
   }
+  useEffect(() => {
+    dispatch(LOGIN_FAILURE(""));
+    // eslint-disable-next-line
+  }, []);
   return (
     <>
       <Flex className="loginBox">
@@ -60,17 +60,22 @@ export default function Login() {
                 height="45px"
                 bg="#117a7a"
                 color="white"
-                fontWeight="800"
-                cursor="pointer">
+                fontWeight="800">
                 LOGIN
               </Button>
-              <Button
-                width="40%"
-                height="45px"
-                color="#58595b"
-                cursor="pointer">
-                REGISTER
-              </Button>
+              <Link to="/signup">
+                <button
+                  style={{
+                    cursor: "pointer",
+                    color: "#58595b",
+                    height: "45px",
+                    outline: "2px solid transparent",
+                    outlineOffset: "2px",
+                    width: "12rem",
+                  }}>
+                  REGISTER
+                </button>
+              </Link>
             </Card>
             <Container
               backgroundColor="#e6e7e8"
@@ -116,33 +121,27 @@ export default function Login() {
                   color: errorColor,
                   display: "flex",
                   justifyContent: "center",
+                  height: "1.5rem",
+                  marginBottom: 0,
                 }}>
                 {errorMessage}
               </Text>
-              {isLoggedIn ? (
-                <>
-                  <Button style={{ marginLeft: "110px" }} className="wishlist">
-                    CONTINUE SHOPPING
-                  </Button>
-                </>
-              ) : (
-                <>
-                  <Button onClick={handleLogin} className="loginbutton">
-                    PROCEED
-                  </Button>
-                  <Box display="flex" justifyContent="center">
-                    <Text>New User ? </Text>
-                    <Link to="/signup">
-                      <Text
-                        color="#ed2e30"
-                        textDecoration="underline"
-                        cursor="pointer">
-                        Create Account
-                      </Text>
-                    </Link>
-                  </Box>
-                </>
-              )}
+              <>
+                <Button onClick={handleLogin} className="loginbutton">
+                  PROCEED
+                </Button>
+                <Box display="flex" justifyContent="center">
+                  <Text>New User ? </Text>
+                  <Link to="/signup">
+                    <Text
+                      color="#ed2e30"
+                      textDecoration="underline"
+                      cursor="pointer">
+                      Create Account
+                    </Text>
+                  </Link>
+                </Box>
+              </>
             </Container>
           </Container>
         </Flex>

@@ -2,26 +2,27 @@ import { Box, Button, Container, Divider, Flex, Text } from "@chakra-ui/react";
 import React from "react";
 import { LOGOUT_USER } from "../action";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 export default function Profile() {
   const dispatch = useDispatch();
-  const { userData } = useSelector((state) => state.user);
-  console.log(userData);
+  const { user } = useSelector((state) => state.user.userData.data);
+
   return (
     <>
       <Flex
         style={{
-          justifyContent: "space-around",
-          width: "60rem",
+          justifyContent: "center",
         }}>
         <Container className="orderContainer">
           <Box className="orderContainerb1">
             <Text className="bottomTexth3 mT10p ">
-              {userData?.name?.toUpperCase()}
+              {user?.name?.toUpperCase()}
             </Text>
-            <Text className="text44 mL10p mT10p">{userData.email}</Text>
+            <Text className="text44 mL10p mT10p">{user.email}</Text>
           </Box>
-          <Box className="orderContainerb2">
+          <Box className="orderContainerb2"></Box>
+          <Link to="/login" style={{ textDecoration: "none" }}>
             <Button
               className="logout"
               onClick={() => {
@@ -29,11 +30,11 @@ export default function Profile() {
               }}>
               LOGOUT
             </Button>
-          </Box>
+          </Link>
         </Container>
         <Flex
           style={{
-            width: "60rem",
+            width: "40rem",
             flexDirection: "column",
             margin: "20px",
           }}>
@@ -52,7 +53,7 @@ export default function Profile() {
               </label>
               <input
                 className="profile1input"
-                defaultValue={userData.email}
+                defaultValue={user.email}
                 type="text"
                 style={{ cursor: "not-allowed" }}></input>
             </Flex>
@@ -76,7 +77,7 @@ export default function Profile() {
                 className="profile1input"
                 style={{ width: "10rem" }}
                 type="text"
-                defaultValue={userData.name}></input>
+                defaultValue={user.name}></input>
             </Flex>
             {/* <Flex
               style={{

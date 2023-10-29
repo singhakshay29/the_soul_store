@@ -763,7 +763,6 @@ export default function WomenNav({ openPopover }) {
                         onClick={() => {
                           dispatch(LOGOUT_USER());
                           openPopover("Succesfully Logout");
-                          console.log("akshay");
                         }}
                         className="navdropboxh1">
                         Log Out
