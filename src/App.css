@@ -178,6 +178,17 @@ iframe#webpack-dev-server-client-overlay {
   left: 0;
   display: block;
 }
+.barback2 {
+  background-color: #000;
+  opacity: 0.7;
+  width: 100%;
+  z-index: 0;
+  height: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  display: block;
+}
 
 .eyelog {
   width: 16px;
@@ -432,6 +443,16 @@ iframe#webpack-dev-server-client-overlay {
   font-size: 14px;
   font-stretch: normal;
 }
+.cardDetails {
+  height: 6px;
+  padding: 10px;
+  width: 13rem;
+  margin: 0;
+  text-transform: capitalize;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
 .buttonCartP {
   border-radius: 2px;
@@ -492,8 +513,10 @@ iframe#webpack-dev-server-client-overlay {
 }
 .bottom {
   flex-direction: row;
-  justify-content: space-evenly;
-  margin-bottom: 10rem;
+  justify-content: space-between;
+  background-color: #e6e7e8;
+  padding: 20px;
+  flex-wrap: wrap;
 }
 .bottomText {
   display: flex;
@@ -625,13 +648,16 @@ iframe#webpack-dev-server-client-overlay {
 }
 .categorySearchBox {
   border: 1px solid #eee;
-  margin-left: 1rem;
   flex-direction: column;
+  max-width: 17%;
   min-width: 15%;
+  margin: 0 10px;
 }
 .cardContainerbox {
-  margin: 0 0.7rem;
+  margin: 0 0.6rem;
   width: 15rem;
+  height: 27rem;
+  overflow: hidden;
   position: relative;
   border-radius: 5px;
   color: #58595b;
@@ -1521,17 +1547,20 @@ iframe#webpack-dev-server-client-overlay {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 .bottomNav {
-  position: fixed;
-  bottom: 0;
-  opacity: 1;
-  z-index: 5;
+  /* 
+  position: absolute;
+  opacity: 1; */
+
   width: 100%;
-  left: 0;
   padding: 10px;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+  min-height: 2rem;
   background: #fff;
-  justify-content: space-evenly;
-  min-height: 40px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+  bottom: 0;
+
+  position: fixed;
+  z-index: 9;
+  flex-grow: 1;
 }
 .wishlistbuttonNav {
   display: block;
@@ -1595,7 +1624,9 @@ iframe#webpack-dev-server-client-overlay {
 .barbox1 {
   background-color: #f8f8f8;
   margin: 0 !important;
-  height: 80px;
+  height: 40px;
+  padding: 20px;
+  justify-content: space-between;
 }
 .barboxStyle {
   list-style: none;
@@ -1604,6 +1635,10 @@ iframe#webpack-dev-server-client-overlay {
   margin-inline-start: 0px;
   margin-inline-end: 0px;
   padding-inline-start: 40px;
+  width: 15rem;
+  height: 100vh;
+  margin-top: 5px;
+  border: 1px #eceeef solid;
 }
 .barboxStyle1 {
   background: #ebebeb;
@@ -1704,4 +1739,8 @@ iframe#webpack-dev-server-client-overlay {
   orientation: horizontal;
   height: 2px;
   background-color: #eee;
+}
+.sortingBottom {
+  background-color: #fff;
+  border-radius: 10px;
 }

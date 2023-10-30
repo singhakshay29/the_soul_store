@@ -1,39 +1,58 @@
-import Card, { Card2 } from "./Card";
+import Card from "./Card";
 import c1 from "../assets/c1.png";
 import { RiFilter2Line } from "react-icons/ri";
 import { BsSortUp } from "react-icons/bs";
 import React, { useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { CloseIcon } from "@chakra-ui/icons";
 import {
   Text,
   Divider,
   Container,
   Flex,
   Button,
-  useDisclosure,
   Drawer,
+  DrawerBody,
   DrawerOverlay,
   DrawerContent,
-  DrawerBody,
+  useDisclosure,
   UnorderedList,
 } from "@chakra-ui/react";
 import NavRes from "./NavRes";
+import { useDispatch, useSelector } from "react-redux";
+import { ADD_TO_WISHLIST, REMOVE_FROM_WISHLIST } from "../action";
+
 export default function Shop({ openPopover }) {
   const [sortingOption, setSortingOption] = useState([]);
   const [selectedBrands, setSelectedBrands] = useState([]);
   const [selectedColors, setSelectedColors] = useState([]);
   const [selectedPrices, setSelectedPrices] = useState([]);
   const [selectSize, setSelectedSize] = useState([]);
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const {
+    isOpen: isFirstDrawerOpen,
+    onOpen: onFirstDrawerOpen,
+    onClose: onFirstDrawerClose,
+  } = useDisclosure();
+  const {
+    isOpen: isSecondDrawerOpen,
+    onOpen: onSecondDrawerOpen,
+    onClose: onSecondDrawerClose,
+  } = useDisclosure();
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 1100);
   const [isSmallScreenMini, setIsSmallScreenMini] = useState(
     window.innerWidth < 750
   );
+  const [handleShowCategory, setShowCategory] = useState("");
+  const [bottomBarOpen, setBottomBarOpen] = useState(false);
+  const [bottomSorting, setbottomSorting] = useState(false);
+  const { wishlist } = useSelector((state) => state.app);
+  const { isLoggedIn } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
   const btnRef = useRef();
   const object = useLocation();
-  const { data } = object.state;
-  const { itemList, brandName, colorName } = data;
+  const { data } = object?.state;
   const { Banner, Heading, BannerRes } = object.state;
+  const { itemList, brandName, colorName } = data || {};
   const handleSortingAndFiltering = (
     sortingCriteria,
     filterCriteriaBrand,
@@ -44,6 +63,7 @@ export default function Shop({ openPopover }) {
     const sortedAndFilteredItems = [...itemList];
 
     if (sortingCriteria === "A to Z") {
+      console.log("A");
       sortedAndFilteredItems.sort((a, b) => a.name.localeCompare(b.name));
     } else if (sortingCriteria === "Price-Low to High") {
       sortedAndFilteredItems.sort((a, b) => a.price - b.price);
@@ -67,6 +87,39 @@ export default function Shop({ openPopover }) {
 
     return filteredItems;
   };
+  const handleSelect = (item, setState, state) => {
+    if (state.includes(item)) {
+      setState(state.filter((selectedItem) => selectedItem !== item));
+    } else {
+      setState([...state, item]);
+    }
+  };
+
+  const handleApplyFilter = () => {
+    handleSortingAndFiltering(
+      sortingOption,
+      selectedBrands,
+      selectedColors,
+      selectedPrices,
+      selectSize
+    );
+    onFirstDrawerClose();
+    setBottomBarOpen(false);
+  };
+  const handleClear = () => {
+    setSelectedBrands([]);
+    setSelectedColors([]);
+    setSelectedPrices([]);
+    setSelectedSize([]);
+  };
+  const handleCloseFilter = () => {
+    setSelectedBrands([]);
+    setSelectedColors([]);
+    setSelectedPrices([]);
+    setSelectedSize([]);
+    onFirstDrawerClose();
+    setBottomBarOpen(false);
+  };
   const isSizeSelected = (size) => selectSize.includes(size);
   const filteredItems = handleSortingAndFiltering(
     sortingOption,
@@ -75,63 +128,78 @@ export default function Shop({ openPopover }) {
     selectedPrices,
     selectSize
   );
-  const handleBrandSelect = (brand) => {
-    if (selectedBrands.includes(brand)) {
-      setSelectedBrands(
-        selectedBrands.filter((selectedBrand) => selectedBrand !== brand)
-      );
-    } else {
-      setSelectedBrands([...selectedBrands, brand]);
-    }
-  };
-
-  const handleColorSelect = (color) => {
-    if (selectedColors.includes(color)) {
-      setSelectedColors(
-        selectedColors.filter((selectedColor) => selectedColor !== color)
-      );
-    } else {
-      setSelectedColors([...selectedColors, color]);
-    }
-  };
-
   const handlePriceSelect = (min, max) => {
-    console.log("Selected price range:", min, max);
     const isAlreadySelected = selectedPrices.some(
       (range) => range.min === min && range.max === max
     );
-
     if (isAlreadySelected) {
-      console.log("Deselecting range:", min, max);
       setSelectedPrices(
         selectedPrices.filter((range) => range.min !== min || range.max !== max)
       );
     } else {
-      console.log("Selecting range:", min, max);
       setSelectedPrices([{ min, max }]);
-    }
-  };
-  const handleSizeSelect = (size) => {
-    if (selectSize.includes(size)) {
-      setSelectedSize(
-        selectSize.filter((selectedSize) => selectedSize !== size)
-      );
-    } else {
-      setSelectedSize([...selectSize, size]);
     }
   };
 
   const formattedNames = brandName?.map((name) => {
-    const words = name.toLowerCase().split(" ");
-    if (words.includes("official")) {
+    const words = name?.toLowerCase().split(" ");
+    if (words?.includes("official")) {
       words.splice(words.indexOf("official"), 1);
     }
     return words
-      .map((word) => {
+      ?.map((word) => {
         return word.charAt(0).toUpperCase() + word.slice(1);
       })
       .join(" ");
   });
+
+  const handleFavoriteClick = (e) => {
+    const target = e.target;
+    if (
+      target.classList.contains("favIcon") ||
+      target.classList.contains("favIconadded")
+    ) {
+      const clickedProductId = target.dataset.productid;
+      if (clickedProductId) {
+        if (isLoggedIn) {
+          if (wishlist.some((wish) => wish.products._id === clickedProductId)) {
+            dispatch(REMOVE_FROM_WISHLIST(clickedProductId));
+            openPopover("Product Removed from your Wishlist");
+          } else {
+            dispatch(ADD_TO_WISHLIST(clickedProductId));
+            openPopover("Product Added to your Wishlist");
+          }
+        }
+      }
+    }
+  };
+
+  const handleOpen = () => {
+    onFirstDrawerOpen();
+    setBottomBarOpen(true);
+  };
+
+  const handleOpen2 = () => {
+    onSecondDrawerOpen();
+    setbottomSorting(true);
+  };
+
+  function handleCategoryClick(category) {
+    if (category === "BRANDS") {
+      setShowCategory("BRANDS");
+    } else if (category === "COLOR") {
+      setShowCategory("COLOR");
+    } else if (category === "SIZE") {
+      setShowCategory("SIZE");
+    } else if (category === "PRICE") {
+      setShowCategory("PRICE");
+    }
+  }
+  const handleOptionChange = (e) => {
+    const value = e.target.value;
+    setSortingOption(value === sortingOption ? "" : value);
+  };
+
   useEffect(() => {
     const handleResizeMini = () => {
       setIsSmallScreenMini(window.innerWidth < 750);
@@ -146,44 +214,331 @@ export default function Shop({ openPopover }) {
 
   return (
     <>
-      {isSmallScreen && <NavRes value={true} Heading={Heading} />}
-      {isSmallScreenMini ? (
+      {isSmallScreen ? (
         <>
-          <img
-            src={BannerRes ? BannerRes : c1}
-            alt=""
-            style={{ width: "100%" }}
-          />
+          {!bottomBarOpen && <NavRes value={true} Heading={Heading} />}
+
+          {isSmallScreenMini ? (
+            <img
+              src={BannerRes ? BannerRes : c1}
+              alt=""
+              style={{ width: "100%" }}
+            />
+          ) : (
+            <>
+              <img
+                src={Banner ? Banner : null}
+                alt=""
+                style={{ width: "100%" }}
+              />
+            </>
+          )}
+          <Container>
+            <Flex
+              flexWrap="wrap"
+              justifyContent="center"
+              onClick={handleFavoriteClick}>
+              {filteredItems.map((item, index) => (
+                <Card
+                  openPopover={openPopover}
+                  item={item}
+                  index={index}
+                  responsive={true}
+                />
+              ))}
+            </Flex>
+            {!bottomSorting && (
+              <>
+                {!bottomBarOpen ? (
+                  <Flex className="bottomNav">
+                    <Button onClick={handleOpen} className="filterbuttonNav">
+                      <RiFilter2Line
+                        style={{ fontSize: "1rem", margin: "0 1rem" }}
+                      />
+                      FILTER
+                    </Button>
+                    <Button onClick={handleOpen2} className="filterbuttonNav">
+                      <BsSortUp
+                        style={{ fontSize: "1rem", margin: "0 1rem" }}
+                      />
+                      SORT
+                    </Button>
+                  </Flex>
+                ) : (
+                  <Flex className="bottomNav">
+                    <Button
+                      onClick={handleCloseFilter}
+                      className="filterbuttonNav">
+                      Close
+                    </Button>
+                    <Button
+                      className="filterbuttonNav"
+                      onClick={handleApplyFilter}>
+                      APPLY
+                    </Button>
+                  </Flex>
+                )}
+              </>
+            )}
+          </Container>
+          <Drawer
+            placement={"bottom"}
+            onClose={onSecondDrawerClose}
+            isOpen={isSecondDrawerOpen}>
+            <div className="barback2"></div>
+            <DrawerContent>
+              <Flex
+                style={{
+                  justifyContent: "flex-end",
+                  padding: "5px 40px",
+                }}>
+                <CloseIcon
+                  onClick={() => {
+                    onSecondDrawerClose();
+                    setbottomSorting(false);
+                  }}
+                  style={{ color: "white" }}
+                />
+              </Flex>
+              <DrawerBody className="sortingBottom">
+                <form style={{ padding: "20px 40px" }}>
+                  <Flex style={{ justifyContent: "space-between" }}>
+                    <label
+                      className={
+                        sortingOption === "Price-Low to High" ? "selected" : ""
+                      }>
+                      Price-Low to High
+                    </label>
+                    <input
+                      type="radio"
+                      value="Price-Low to High"
+                      onChange={handleOptionChange}
+                      checked={sortingOption === "Price-Low to High"}
+                    />
+                  </Flex>
+                  <Divider className="categoryDivider" />
+                  <Flex style={{ justifyContent: "space-between" }}>
+                    <label
+                      className={
+                        sortingOption === "Price-High to Low" ? "selected" : ""
+                      }>
+                      Price-High to Low
+                    </label>
+                    <input
+                      type="radio"
+                      value="Price-High to Low"
+                      onChange={handleOptionChange}
+                      checked={sortingOption === "Price-High to Low"}
+                    />
+                  </Flex>
+                  <Divider className="categoryDivider" />
+                  <Flex style={{ justifyContent: "space-between" }}>
+                    <label
+                      className={sortingOption === "A to Z" ? "selected" : ""}>
+                      A to Z
+                    </label>
+                    <input
+                      type="radio"
+                      value="A to Z"
+                      onChange={handleOptionChange}
+                      checked={sortingOption === "A to Z"}
+                    />
+                  </Flex>
+                  <Divider className="categoryDivider" />
+                </form>
+              </DrawerBody>
+            </DrawerContent>
+          </Drawer>
+          <Drawer
+            isOpen={isFirstDrawerOpen}
+            placement="bottom"
+            onClose={onFirstDrawerClose}
+            finalFocusRef={btnRef}>
+            <DrawerOverlay />
+            <DrawerContent
+              style={{
+                position: "relative",
+                left: 0,
+                top: 0,
+                zIndex: 10,
+                width: "100%",
+                backgroundColor: "white",
+                height: "100vh",
+              }}>
+              <DrawerBody>
+                <Flex className="barbox1">
+                  <Flex>
+                    <RiFilter2Line
+                      style={{ fontSize: "1.5rem", margin: "0 1rem" }}
+                    />
+                    <Text
+                      style={{
+                        margin: 0,
+                        fontWeight: 600,
+                        fontSize: "1.5rem",
+                      }}>
+                      Filter
+                    </Text>
+                  </Flex>
+                  <Text
+                    style={{
+                      margin: 0,
+                      fontWeight: 400,
+                      fontSize: "1.2rem",
+                    }}
+                    onClick={handleClear}>
+                    Clear All
+                  </Text>
+                </Flex>
+                <Flex>
+                  <UnorderedList
+                    className="barboxStyle"
+                    style={{ margin: 0, paddingLeft: "15px" }}>
+                    {brandName && (
+                      <>
+                        <Text
+                          className="catHeading"
+                          onClick={() => handleCategoryClick("BRANDS")}>
+                          BRANDS
+                        </Text>
+                        <Divider className="categoryDivider" />
+                      </>
+                    )}
+                    {colorName && (
+                      <>
+                        <Text
+                          className="catHeading"
+                          onClick={() => handleCategoryClick("COLOR")}>
+                          COLOR
+                        </Text>
+                        <Divider className="categoryDivider" />
+                      </>
+                    )}
+                    <Text
+                      className="catHeading"
+                      onClick={() => handleCategoryClick("SIZE")}>
+                      SIZE
+                    </Text>
+                    <Divider className="categoryDivider" />
+                    <Text
+                      className="catHeading"
+                      onClick={() => handleCategoryClick("PRICE")}>
+                      PRICE
+                    </Text>
+                    <Divider className="categoryDivider" />
+                  </UnorderedList>
+                  <Flex>
+                    <>
+                      <Flex className="catFlex">
+                        {handleShowCategory === "BRANDS" && (
+                          <>
+                            {brandName?.map((item, index) => (
+                              <Flex>
+                                <input
+                                  type="checkbox"
+                                  className="categorySearchBoxInput"
+                                  onChange={() =>
+                                    handleSelect(
+                                      item,
+                                      setSelectedBrands,
+                                      selectedBrands
+                                    )
+                                  }
+                                />
+                                <label
+                                  htmlFor="categorySearchBoxInput"
+                                  className="categorySearchBoxText"
+                                  style={{ textTransform: "captilized" }}>
+                                  {formattedNames[index]}
+                                </label>
+                              </Flex>
+                            ))}
+                          </>
+                        )}
+                        {handleShowCategory === "COLOR" && (
+                          <>
+                            {colorName?.map((item) => (
+                              <Flex>
+                                <input
+                                  type="checkbox"
+                                  className="categorySearchBoxInput"
+                                  onChange={() =>
+                                    handleSelect(
+                                      item,
+                                      setSelectedColors,
+                                      selectedColors
+                                    )
+                                  }
+                                />
+                                <label
+                                  htmlFor="categorySearchBoxInput"
+                                  className="categorySearchBoxText">
+                                  {item}
+                                </label>
+                              </Flex>
+                            ))}
+                          </>
+                        )}
+                        {handleShowCategory === "SIZE" && (
+                          <>
+                            {["S", "M", "L", "XL", "XXL"].map((item) => (
+                              <Flex>
+                                <input
+                                  type="checkbox"
+                                  className="categorySearchBoxInput"
+                                  onChange={() =>
+                                    handleSelect(
+                                      item,
+                                      setSelectedSize,
+                                      selectSize
+                                    )
+                                  }
+                                />
+                                <label
+                                  htmlFor="categorySearchBoxInput"
+                                  className="categorySearchBoxText">
+                                  {item}
+                                </label>
+                              </Flex>
+                            ))}
+                          </>
+                        )}
+                        {handleShowCategory === "PRICE" && (
+                          <>
+                            {[
+                              { min: 219, max: 418 },
+                              { min: 419, max: 638 },
+                              { min: 639, max: 838 },
+                              { min: 839, max: 1049 },
+                            ].map((range) => (
+                              <Flex>
+                                <input
+                                  type="checkbox"
+                                  className="categorySearchBoxInput"
+                                  onChange={() =>
+                                    handlePriceSelect(range.min, range.max)
+                                  }
+                                />
+                                <label
+                                  htmlFor="categorySearchBoxInput"
+                                  className="categorySearchBoxText">
+                                  Rs. {range.min} To {range.max}
+                                </label>
+                              </Flex>
+                            ))}
+                          </>
+                        )}
+                      </Flex>
+                    </>
+                  </Flex>
+                </Flex>
+              </DrawerBody>
+            </DrawerContent>
+          </Drawer>
         </>
       ) : (
         <>
           <img src={Banner ? Banner : null} alt="" style={{ width: "100%" }} />
-        </>
-      )}
-      {isSmallScreen ? (
-        <>
-          <Container>
-            <Flex flexWrap="wrap" justifyContent="center">
-              {filteredItems.map((item, index) => (
-                <Card2 openPopover={openPopover} item={item} index={index} />
-              ))}
-            </Flex>
-            <Flex className="bottomNav">
-              <Button onClick={onOpen} className="filterbuttonNav">
-                <RiFilter2Line style={{ fontSize: "1rem", margin: "0 1rem" }} />
-                FILTER
-              </Button>
-              <Button
-                // onClick={() => addCart(product._id, quantity)}
-                className="filterbuttonNav">
-                <BsSortUp style={{ fontSize: "1rem", margin: "0 1rem" }} />
-                SORT
-              </Button>
-            </Flex>
-          </Container>
-        </>
-      ) : (
-        <>
           <Container>
             <Text className="categoryH1">
               <Link to="/" style={{ textDecoration: "none", color: "#a7a9ac" }}>
@@ -202,10 +557,10 @@ export default function Shop({ openPopover }) {
                 onChange={(e) => setSortingOption(e.target.value)}
                 className="categoryInput"
                 placeholder="Select Sorting Options">
-                <option>Select Sorting Options</option>
-                <option>Price-Low to High</option>
-                <option>Price-High to Low</option>
-                <option>A to Z</option>
+                <option value="">Select Sorting Options</option>
+                <option value="Price-Low to High">Price-Low to High</option>
+                <option value="Price-High to Low">Price-High to Low</option>
+                <option value="A to Z">A to Z</option>
               </select>
             </Container>
           </Container>
@@ -229,7 +584,13 @@ export default function Shop({ openPopover }) {
                         <input
                           type="checkbox"
                           className="categorySearchBoxInput"
-                          onChange={() => handleBrandSelect(item)}
+                          onChange={() =>
+                            handleSelect(
+                              item,
+                              setSelectedBrands,
+                              selectedBrands
+                            )
+                          }
                         />
                         <label
                           htmlFor="categorySearchBoxInput"
@@ -253,7 +614,13 @@ export default function Shop({ openPopover }) {
                         <input
                           type="checkbox"
                           className="categorySearchBoxInput"
-                          onChange={() => handleColorSelect(item)}
+                          onChange={() =>
+                            handleSelect(
+                              item,
+                              setSelectedColors,
+                              selectedColors
+                            )
+                          }
                         />
                         <label
                           htmlFor="categorySearchBoxInput"
@@ -276,229 +643,71 @@ export default function Shop({ openPopover }) {
                   marginLeft: 0,
                 }}>
                 <Flex style={{ justifyContent: "space-evenly" }}>
-                  <button
-                    onClick={() => handleSizeSelect("S")}
-                    className={`boxSize ${
-                      isSizeSelected("S") ? "selectedbox" : ""
-                    }`}>
-                    S
-                  </button>
-                  <button
-                    onClick={() => handleSizeSelect("M")}
-                    className={`boxSize ${
-                      isSizeSelected("M") ? "selectedbox" : ""
-                    }`}>
-                    M
-                  </button>
-                  <button
-                    onClick={() => handleSizeSelect("L")}
-                    className={`boxSize ${
-                      isSizeSelected("L") ? "selectedbox" : ""
-                    }`}>
-                    L
-                  </button>
+                  {["S", "M", "L"].map((size) => (
+                    <button
+                      key={size}
+                      onChange={() =>
+                        handleSelect(size, setSelectedSize, selectSize)
+                      }
+                      className={`boxSize ${
+                        isSizeSelected(size) ? "selectedbox" : ""
+                      }`}>
+                      {size}
+                    </button>
+                  ))}
                 </Flex>
                 <Flex
-                  style={{
-                    marginTop: "0.5rem",
-                    justifyContent: "space-evenly",
-                  }}>
-                  <button
-                    onClick={() => handleSizeSelect("XL")}
-                    className={`boxSize ${
-                      isSizeSelected("XL") ? "selectedbox" : ""
-                    }`}>
-                    XL
-                  </button>
-                  <button
-                    onClick={() => handleSizeSelect("XXL")}
-                    className={`boxSize ${
-                      isSizeSelected("XXL") ? "selectedbox" : ""
-                    }`}>
-                    XXL
-                  </button>
+                  style={{ justifyContent: "space-evenly", marginTop: "10px" }}>
+                  {["XL", "XXL"].map((size) => (
+                    <button
+                      key={size}
+                      onChange={() =>
+                        handleSelect(size, setSelectedSize, selectSize)
+                      }
+                      className={`boxSize ${
+                        isSizeSelected(size) ? "selectedbox" : ""
+                      }`}>
+                      {size}
+                    </button>
+                  ))}
                 </Flex>
               </Flex>
               <Divider className="categoryDivider" />
               <Text className="catHeading">PRICE</Text>
               <Divider className="categoryDivider" />
-              <Flex>
-                <input
-                  type="checkbox"
-                  className="categorySearchBoxInput"
-                  onChange={() => handlePriceSelect(219, 418)}
-                />
-                <label
-                  htmlFor="categorySearchBoxInput"
-                  className="categorySearchBoxText">
-                  Rs. 219 To 418
-                </label>
-              </Flex>
-              <Flex>
-                <input
-                  type="checkbox"
-                  className="categorySearchBoxInput"
-                  onChange={() => handlePriceSelect(419, 638)}
-                />
-                <label
-                  htmlFor="categorySearchBoxInput"
-                  className="categorySearchBoxText">
-                  Rs. 419 To 638
-                </label>
-              </Flex>
-              <Flex>
-                <input
-                  type="checkbox"
-                  className="categorySearchBoxInput"
-                  onChange={() => handlePriceSelect(639, 838)}
-                />
-                <label
-                  htmlFor="categorySearchBoxInput"
-                  className="categorySearchBoxText">
-                  Rs. 639 To 838
-                </label>
-              </Flex>
-              <Flex>
-                <input
-                  type="checkbox"
-                  className="categorySearchBoxInput"
-                  onChange={() => handlePriceSelect(839, 1049)}
-                />
-                <label
-                  htmlFor="categorySearchBoxInput"
-                  className="categorySearchBoxText">
-                  Rs. 839 To 1049
-                </label>
-              </Flex>
+              <>
+                {[
+                  { min: 219, max: 418 },
+                  { min: 419, max: 638 },
+                  { min: 639, max: 838 },
+                  { min: 839, max: 1049 },
+                ].map((range) => (
+                  <Flex>
+                    <input
+                      type="checkbox"
+                      className="categorySearchBoxInput"
+                      onChange={() => handlePriceSelect(range.min, range.max)}
+                    />
+                    <label
+                      htmlFor="categorySearchBoxInput"
+                      className="categorySearchBoxText">
+                      Rs. {range.min} To {range.max}
+                    </label>
+                  </Flex>
+                ))}
+              </>
               <Divider className="categoryDivider" />
             </Flex>
-
-            <Flex flexWrap="wrap">
+            <Flex
+              style={{ flex: 1, flexWrap: "wrap" }}
+              onClick={handleFavoriteClick}>
               {filteredItems.map((item, index) => (
-                <Card openPopover={openPopover} item={item} index={index} />
+                <Card item={item} index={index} responsive={false} />
               ))}
             </Flex>
           </Flex>
         </>
       )}
-      <Drawer
-        isOpen={isOpen}
-        placement="bottom"
-        onClose={onClose}
-        finalFocusRef={btnRef}>
-        <DrawerOverlay />
-        <div className="barback"></div>
-        <DrawerContent
-          style={{
-            position: "relative",
-            top: 0,
-            left: 0,
-            zIndex: 10,
-            width: "80%",
-            backgroundColor: "white",
-            height: "100vh",
-          }}>
-          <DrawerBody>
-            <Flex className="barbox1">
-              {/* <Image src={barlogo} alt="logo" className="logoImgbar" /> */}
-              <Text
-                style={{
-                  padding: "10px",
-                  marginLeft: "6rem",
-                }}>
-                Akshay Singh
-              </Text>
-            </Flex>
-            <UnorderedList className="barboxStyle"></UnorderedList>
-            <Flex className="barboxStyle1">
-              <Button className="barboxStyle1button">Men</Button>
-              <Button className="barboxStyle1button2">Women</Button>
-            </Flex>
-            <Flex>
-              {/* <Accordion
-                defaultIndex={[0]}
-                allowMultiple
-                marginTop="0.1rem"
-                width="100%">
-                <AccordionItem className="accodianItem">
-                  <h2 style={{ margin: 0 }}>
-                    <AccordionButton className="accodianbutton">
-                      <Box
-                        className="HTexth3A"
-                        as="span"
-                        flex="1"
-                        textAlign="left">
-                        Topwear
-                      </Box>
-                      <AccordionIcon />
-                    </AccordionButton>
-                  </h2>
-                  <AccordionPanel pb={4}>
-                    <Text className="bottomTexth3">Material & Care:</Text>
-                    <Text className="text" marginLeft="30px" marginTop="20px">
-                      100% Cotton
-                    </Text>
-                    <Text className="text" marginLeft="30px" marginTop="0">
-                      Machine Wash
-                    </Text>
-                    <Text className="bottomTexth3">BRAND:</Text>
-
-                    <Text className="bottomTexth3">Country of Origin:</Text>
-                    <Text className="text" marginLeft="30px" marginTop="0">
-                      India (and proud)
-                    </Text>
-                    <Text className="text" marginLeft="30px">
-                      Hey Souledsters! You must have noticed that we've said
-                      goodbye to the little Mr. Souls sleeve label that we've
-                      had through the years. But always remember, when you shop
-                      from our app, website, stores, or online marketplaces,
-                      you're always getting the genuine real deal!
-                    </Text>
-                  </AccordionPanel>
-                </AccordionItem>
-
-                <AccordionItem className="accodianItem">
-                  <h2 style={{ margin: 0 }}>
-                    <AccordionButton className="accodianbutton">
-                      <Box
-                        as="span"
-                        flex="1"
-                        textAlign="left"
-                        className="HTexth3A">
-                        BottomWear
-                      </Box>
-                      <AccordionIcon />
-                    </AccordionButton>
-                  </h2>
-                  <AccordionPanel pb={4}>
-                    <Text className="bottomTexth3">
-                      Official Licensed {data?.brand}
-                    </Text>
-                    <Flex>
-                      <Text className="bottomTexth3">Color:</Text>
-                      <Text className="text mL10">{data?.color}</Text>
-                    </Flex>
-                    <Flex>
-                      <Text className="bottomTexth3">Type:</Text>
-                      <Text className="text mL10">{data?.gender}</Text>
-                      <Text className="text mL10">{data?.subCategory}</Text>
-                    </Flex>
-                  </AccordionPanel>
-                </AccordionItem>
-              </Accordion> */}
-            </Flex>
-            <Flex
-              style={{
-                flexDirection: "column",
-                justifyContent: "flex-start",
-                margin: "2rem",
-              }}>
-              <Button className="barboxStyle1buttonSec">My Account</Button>
-              <Button className="barboxStyle1buttonSec">My Order</Button>
-            </Flex>
-          </DrawerBody>
-        </DrawerContent>
-      </Drawer>
     </>
   );
 }

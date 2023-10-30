@@ -6,8 +6,7 @@ import { Link } from "react-router-dom";
 
 export default function Profile() {
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.user.userData.data);
-
+  const data = useSelector((state) => state.user.userData);
   return (
     <>
       <Flex
@@ -17,9 +16,9 @@ export default function Profile() {
         <Container className="orderContainer">
           <Box className="orderContainerb1">
             <Text className="bottomTexth3 mT10p ">
-              {user?.name?.toUpperCase()}
+              {data?.name?.toUpperCase()}
             </Text>
-            <Text className="text44 mL10p mT10p">{user.email}</Text>
+            <Text className="text44 mL10p mT10p">{data?.email}</Text>
           </Box>
           <Box className="orderContainerb2"></Box>
           <Link to="/login" style={{ textDecoration: "none" }}>
@@ -53,7 +52,7 @@ export default function Profile() {
               </label>
               <input
                 className="profile1input"
-                defaultValue={user.email}
+                defaultValue={data?.email}
                 type="text"
                 style={{ cursor: "not-allowed" }}></input>
             </Flex>
@@ -77,28 +76,8 @@ export default function Profile() {
                 className="profile1input"
                 style={{ width: "10rem" }}
                 type="text"
-                defaultValue={user.name}></input>
+                defaultValue={data?.name}></input>
             </Flex>
-            {/* <Flex
-              style={{
-                flexDirection: "column",
-                marginLeft: " 20px",
-                marginTop: "20px",
-                marginBottom: "20px",
-              }}>
-              <label
-                style={{
-                  marginBottom: "0.5rem",
-                  fontSize: "14px",
-                  color: "#58595b",
-                }}>
-                Second Name
-              </label>
-              <input
-                className="profile1input"
-                style={{ width: "10rem" }}
-                type="text"></input>
-            </Flex> */}
           </Flex>
         </Flex>
       </Flex>

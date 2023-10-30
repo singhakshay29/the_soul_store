@@ -3,13 +3,13 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
 import {
-  Box,
-  Container,
-  Card,
-  Button,
-  Input,
   Text,
   Flex,
+  Box,
+  Card,
+  Input,
+  Button,
+  Container,
 } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
 import { LOGIN_FAILURE, SIGNUP_USER } from "../action";
@@ -23,16 +23,22 @@ export default function SignUp() {
   const [errorColor, setErrorColor] = useState("");
   const [finalpassword, setfinalPassword] = useState("");
 
-  const errorMessage = useSelector((state) => {
-    return state.user.errorMessage;
-  });
+  const { errorMessage } = useSelector((state) => state.user);
 
-  const isLoggedIn = useSelector((state) => {
-    return state.user.isLoggedIn;
-  });
+  const { isLoggedIn } = useSelector((state) => state.user);
+  async function handleLoginWithGoogle(decode) {
+    const { given_name, family_name, email } = await decode;
+    setEmail(email);
+    setusername(given_name + " " + family_name);
+    setPassword(given_name + " " + family_name);
+    setfinalPassword(given_name + " " + family_name);
+    handleSignUp();
+  }
 
   const handleSignUp = (e) => {
-    e.preventDefault();
+    if (e) {
+      e.preventDefault();
+    }
     if (!username || !password || !email) {
       dispatch(LOGIN_FAILURE("All Fields must be filled"));
       setErrorColor("red");
@@ -97,7 +103,7 @@ export default function SignUp() {
                     onSuccess={(credentialResponse) => {
                       console.log(credentialResponse);
                       var decoded = jwt_decode(credentialResponse.credential);
-                      console.log(decoded);
+                      handleLoginWithGoogle(decoded);
                     }}
                     onError={() => {
                       console.log("Login Failed");

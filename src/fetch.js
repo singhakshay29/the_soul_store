@@ -305,3 +305,13 @@ export async function getOrderList() {
     }
   }
 }
+
+export function handleLoginGoogle(decoded) {
+  const { given_name, family_name, email, jti } = decoded;
+  return {
+    given_name,
+    family_name,
+    email,
+    jti,
+  };
+}

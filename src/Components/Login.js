@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { LOGIN_FAILURE, LOGIN_USER } from "../action";
 import { useDispatch, useSelector } from "react-redux";
 import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
+
 import {
   Box,
   Container,
@@ -23,8 +24,16 @@ export default function Login() {
   const { errorMessage } = useSelector((state) => state.user);
   const { isLoggedIn } = useSelector((state) => state.user);
 
+  async function handleLoginWithGoogle(decode) {
+    const { given_name, family_name, email } = await decode;
+    setEmail(email);
+    setPassword(given_name + " " + family_name);
+    handleLogin();
+  }
   const handleLogin = (e) => {
-    e.preventDefault();
+    if (e) {
+      e.preventDefault();
+    }
     if (!password || !email) {
       dispatch(LOGIN_FAILURE("All Fields must be filled"));
       setErrorColor("red");
@@ -91,9 +100,11 @@ export default function Login() {
                 }}>
                 <GoogleOAuthProvider clientId="558764896658-onefrip4mvmp2o8e3eh5psn0vi9ln5ck.apps.googleusercontent.com">
                   <GoogleLogin
-                    onSuccess={(credentialResponse) => {
-                      var decoded = jwt_decode(credentialResponse.credential);
-                      console.log(decoded);
+                    onSuccess={async (credentialResponse) => {
+                      var decoded = await jwt_decode(
+                        credentialResponse.credential
+                      );
+                      handleLoginWithGoogle(decoded);
                     }}
                     onError={() => {
                       console.log("Login Failed");
@@ -107,11 +118,13 @@ export default function Login() {
               </Card>
               <Input
                 value={email}
+                typ="text"
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder=" Enter Email ID"
                 className="loginInput"></Input>
               <Input
                 value={password}
+                type="password"
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder=" Enter Password"
                 className="loginInput"></Input>

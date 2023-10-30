@@ -45,6 +45,7 @@ function App() {
             path="/"
             element={<Section active={active} setActive={setActive} />}></Route>
           <Route path="login" element={<Login />}></Route>
+
           <Route path="signup" element={<SignUp />}></Route>
           <Route
             path="category"

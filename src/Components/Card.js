@@ -3,29 +3,25 @@ import { Link } from "react-router-dom";
 import INA from "../assets/INA.jpg";
 import React, { useState, useEffect } from "react";
 import { FaRupeeSign } from "react-icons/fa";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
+import bgPink from "../assets/bgPink.jpg";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
-import { ADD_TO_WISHLIST, REMOVE_FROM_WISHLIST } from "../action";
 
-export default function Card({ item, index, openPopover }) {
-  const dispatch = useDispatch();
-  const [displayImage, setDisplayImage] = useState("");
+export default function Card({ item, index, responsive }) {
+  const [displayImage, setDisplayImage] = useState(bgPink);
   const { wishlist } = useSelector((state) => state.app);
-  const { isLoggedIn } = useSelector((state) => state.user);
   const [isInWishlist, setIsInWishlist] = useState(false);
+  const { isLoggedIn } = useSelector((state) => state.user);
   const productId = item?._id;
+  let itemName = item?.name;
+  let brandName = item?.brand;
 
-  const handleToggleFavorite = (productId) => {
-    if (isLoggedIn) {
-      if (isInWishlist) {
-        dispatch(REMOVE_FROM_WISHLIST(productId));
-        setIsInWishlist(false);
-      } else {
-        dispatch(ADD_TO_WISHLIST(productId));
-        setIsInWishlist(true);
-      }
-    }
-  };
+  if (itemName.startsWith("Women's ")) {
+    itemName = itemName.replace("Women's ", "").trim();
+  }
+  if (brandName.startsWith("OFFICIAL ")) {
+    brandName = brandName.replace("OFFICIAL ", "").trim();
+  }
 
   useEffect(() => {
     if (wishlist.some((wish) => wish.products._id === productId)) {
@@ -52,173 +48,121 @@ export default function Card({ item, index, openPopover }) {
 
   return (
     <>
-      <Container key={index} className="cardContainerbox">
-        {isLoggedIn ? (
-          <>
-            {isInWishlist ? (
+      {responsive ? (
+        <>
+          <Container key={index} className="cardContainerboxRes">
+            {isLoggedIn ? (
               <>
-                <AiFillHeart
-                  className="favIconadded"
-                  onClick={() => {
-                    handleToggleFavorite(item?._id);
-                    openPopover("Product Removed from your Wishlist");
-                  }}
-                />
+                {isInWishlist ? (
+                  <>
+                    <AiFillHeart
+                      className="favIconadded"
+                      data-productid={item._id}
+                    />
+                  </>
+                ) : (
+                  <>
+                    <AiOutlineHeart
+                      className="favIcon"
+                      data-productid={item._id}
+                    />
+                  </>
+                )}
               </>
             ) : (
               <>
-                <AiOutlineHeart
-                  className="favIcon"
-                  onClick={() => {
-                    handleToggleFavorite(item?._id);
-                    openPopover("Product Added to your Wishlist");
-                  }}
-                />
+                <Link to="/login">
+                  <AiOutlineHeart className="favIcon" />
+                </Link>
               </>
             )}
-          </>
-        ) : (
-          <>
-            <Link to="/login">
-              <AiOutlineHeart className="favIcon" />
+
+            <Link to="/product" state={{ data: item }}>
+              <img
+                src={displayImage}
+                alt=""
+                height="449px"
+                width="380px"
+                cursor="pointer"
+              />
             </Link>
-          </>
-        )}
 
-        <Link to="/product" state={{ data: item }}>
-          <img
-            src={displayImage}
-            alt=""
-            width="240px"
-            height="300px"
-            cursor="pointer"
-          />
-        </Link>
-
-        <Text className="heading2" height="20px">
-          {item?.name}
-        </Text>
-        <Divider className="categoryDivider" />
-        <Text style={{ marginTop: 0, marginLeft: "10px", marginBottom: 0 }}>
-          {item?.brand}
-        </Text>
-        <Text
-          display="flex"
-          className="heading2"
-          style={{ marginTop: 0, marginLeft: "10px", marginBottom: 0 }}>
-          <FaRupeeSign fontSize="12px" />
-          {item?.price}
-          <Text marginLeft="0.5rem">ONLY</Text>
-        </Text>
-      </Container>
-    </>
-  );
-}
-
-export function Card2({ item, index, openPopover }) {
-  const dispatch = useDispatch();
-  const [displayImage, setDisplayImage] = useState("");
-  const { wishlist } = useSelector((state) => state.app);
-  const { isLoggedIn } = useSelector((state) => state.user);
-  const [isInWishlist, setIsInWishlist] = useState(false);
-  const productId = item?._id;
-
-  const handleToggleFavorite = (productId) => {
-    if (isLoggedIn) {
-      if (isInWishlist) {
-        dispatch(REMOVE_FROM_WISHLIST(productId));
-        setIsInWishlist(false);
-      } else {
-        dispatch(ADD_TO_WISHLIST(productId));
-        setIsInWishlist(true);
-      }
-    }
-  };
-
-  useEffect(() => {
-    if (wishlist.some((wish) => wish.products._id === productId)) {
-      setIsInWishlist(true);
-    }
-  }, [wishlist, productId]);
-
-  useEffect(() => {
-    async function fetchImage() {
-      try {
-        const response = await fetch(item.displayImage);
-        if (response.status === 404) {
-          setDisplayImage(INA);
-        } else {
-          setDisplayImage(item.displayImage);
-        }
-      } catch (error) {
-        setDisplayImage(INA);
-      }
-    }
-
-    fetchImage();
-  }, [item.displayImage]);
-
-  return (
-    <>
-      <Container key={index} className="cardContainerboxRes">
-        {isLoggedIn ? (
-          <>
-            {isInWishlist ? (
+            <Text className="heading2" height="20px" marginLeft="10px">
+              {item?.name}
+            </Text>
+            <Divider className="categoryDivider" />
+            <Text style={{ marginTop: 0, marginLeft: "10px", marginBottom: 0 }}>
+              {item?.brand}
+            </Text>
+            <Text
+              display="flex"
+              className="heading2"
+              style={{ marginTop: 0, marginLeft: "10px", marginBottom: 0 }}>
+              <FaRupeeSign fontSize="12px" />
+              {item?.price}
+              <Text marginLeft="0.5rem">ONLY</Text>
+            </Text>
+          </Container>
+        </>
+      ) : (
+        <>
+          <Container key={index} className="cardContainerbox">
+            {isLoggedIn ? (
               <>
-                <AiFillHeart
-                  className="favIconadded"
-                  onClick={() => {
-                    handleToggleFavorite(item?._id);
-                    openPopover("Product Removed from your Wishlist");
-                  }}
-                />
+                {isInWishlist ? (
+                  <>
+                    <AiFillHeart
+                      className="favIconadded"
+                      data-productid={item._id}
+                    />
+                  </>
+                ) : (
+                  <>
+                    <AiOutlineHeart
+                      className="favIcon"
+                      data-productid={item._id}
+                    />
+                  </>
+                )}
               </>
             ) : (
               <>
-                <AiOutlineHeart
-                  className="favIcon"
-                  onClick={() => {
-                    handleToggleFavorite(item?._id);
-                    openPopover("Product Added to your Wishlist");
-                  }}
-                />
+                <Link to="/login">
+                  <AiOutlineHeart className="favIcon" />
+                </Link>
               </>
             )}
-          </>
-        ) : (
-          <>
-            <Link to="/login">
-              <AiOutlineHeart className="favIcon" />
+
+            <Link to="/product" state={{ data: item }}>
+              <img
+                src={displayImage}
+                alt=""
+                width="240px"
+                height="300px"
+                cursor="pointer"
+              />
             </Link>
-          </>
-        )}
 
-        <Link to="/product" state={{ data: item }}>
-          <img
-            src={displayImage}
-            alt=""
-            height="449px"
-            width="380px"
-            cursor="pointer"
-          />
-        </Link>
-
-        <Text className="heading2" height="20px" marginLeft="10px">
-          {item?.name}
-        </Text>
-        <Divider className="categoryDivider" />
-        <Text style={{ marginTop: 0, marginLeft: "10px", marginBottom: 0 }}>
-          {item?.brand}
-        </Text>
-        <Text
-          display="flex"
-          className="heading2"
-          style={{ marginTop: 0, marginLeft: "10px", marginBottom: 0 }}>
-          <FaRupeeSign fontSize="12px" />
-          {item?.price}
-          <Text marginLeft="0.5rem">ONLY</Text>
-        </Text>
-      </Container>
+            <Text className="heading2 cardDetails">{itemName}</Text>
+            <Divider className="categoryDivider" />
+            <Text
+              style={{
+                fontWeight: 500,
+              }}
+              className="cardDetails">
+              {brandName}
+            </Text>
+            <Text
+              display="flex"
+              className="heading2"
+              style={{ marginTop: 0, marginLeft: "10px", marginBottom: 0 }}>
+              <FaRupeeSign fontSize="12px" />
+              {item?.price}
+              <Text marginLeft="0.5rem">ONLY</Text>
+            </Text>
+          </Container>
+        </>
+      )}
     </>
   );
 }

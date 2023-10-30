@@ -5,18 +5,24 @@ import {
   Text,
   Drawer,
   Button,
+  Accordion,
   DrawerBody,
   DrawerContent,
   DrawerOverlay,
   useDisclosure,
-  UnorderedList,
-  Accordion,
   AccordionItem,
   AccordionButton,
   AccordionIcon,
   AccordionPanel,
 } from "@chakra-ui/react";
 import eye from "../assets/eye.jpg";
+import bannerT from "../assets/bannerT.jpg";
+import bannerBS from "../assets/bannerBS.jpg";
+import blueBanner from "../assets/bluebanner.jpg";
+import bB from "../assets/bB.jpg";
+import bP from "../assets/bP.jpg";
+import wB from "../assets/wB.jpg";
+import bL from "../assets/bL.jpg";
 import { Link, useLocation } from "react-router-dom";
 import { FaBars } from "react-icons/fa";
 import { FaSearch } from "react-icons/fa";
@@ -26,17 +32,147 @@ import { BiArrowBack } from "react-icons/bi";
 import newlogo from "../assets/newlogo.png";
 import barlogo from "../assets/barlogo.jpg";
 import { AiOutlineHeart } from "react-icons/ai";
+import MBJ from "../assets/MBJ.jpg";
+import MBS from "../assets/MBS.jpg";
+import MBJS from "../assets/MBJS.jpg";
+import bannerJ from "../assets/bannerJ.jpg";
+import jog from "../assets/jog.jpg";
 import React, { useEffect, useRef, useState } from "react";
 
 export default function NavRes({ Heading, value, setBarOpen, barOpen }) {
   const [scrollY, setScrollY] = useState(0);
   const [active, setActive] = useState();
+  const [showSection, setShowSection] = useState("Men");
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { isLoggedIn } = useSelector((state) => state.user);
-  const { wishlist } = useSelector((state) => state.app);
+  const { wishlist, productsListFilter } = useSelector((state) => state.app);
   const { results } = useSelector((state) => state.app.cart);
+  const user = useSelector((state) => state.user.userData);
   const data = useLocation();
   let { pathname } = data;
+  const {
+    productMenTshirtData,
+    productMenShirtData,
+    productMenSweaterData,
+    //productBewakoofM,
+    productMenTrouserData,
+    productMenPyjamasData,
+    productMenShortsData,
+    productMenJeansData,
+    productMenKurtaData,
+    productMenTracksuitData,
+    productMenHoodieData,
+    productMenJoggersData,
+    productWomenTshirtData,
+    productWomenJoggersData,
+    productWomenshirtsData,
+    productWomenkurtiData,
+    productWomenJeansData,
+    productWomenJumpsuitData,
+    productWomenBlackData,
+    productWomenBrownData,
+    productWomenWhiteData,
+    productWomenGreyData,
+    productWomenOrangeData,
+    productWomenBlueData,
+    productWomenGreenData,
+    productWomenRedData,
+    productWomenPinkData,
+    productWomenYellowData,
+    productWomenPurpleData,
+    productWomenLavenderData,
+    productWomenKhakiData,
+    productWomenMaroonData,
+    // productBewakoof,
+    // productCHIMPAAANZEE,
+    // productCampusSutra,
+    // productLoungeDreams,
+    // productInstafabPlus,
+    // productBewakoofAir,
+    // productStyleQuotient,
+    // productRICKANDMORTY,
+    // productHARRYPOTTER,
+    // productTOMJERRY,
+    // productKotty,
+    // productMARVEL,
+    // productPEANUTS,
+    // productDRYSTATE,
+    // productCOCACOLA,
+    // productBelliskey,
+    // productLOONEYTUNES,
+    // productHubberholme,
+    // productTALESSTORIES,
+    // productDCMERCHANDISE,
+    // productCARTOONNETWORK,
+    // productDISNEYMERCHANDISE,
+    // productGARFIELDMERCHANDISE,
+    // productMINIONSMERCHANDISE,
+    // productNARUTOMERCHANDISE,
+    // productTOMJERRYM,
+    // productCARTOONNETWORKM,
+    // productDISNEYMERCHANDISEM,
+    // productBrownMochaM,
+    // productCampusSutraM,
+    // productRodamoM,
+    // productInstafabPlusM,
+    // productBewakoofAirM,
+    // productSAVVAOM,
+    // productHARRYPOTTERM,
+    // productShoresM,
+    // productMARVELMERCHANDISEM,
+    // productBelliskeyM,
+    // productTISTABENEM,
+    // productPEANUTSM,
+    // productRigoM,
+    // productGARFIELDMERCHANDISEM,
+    // productNARUTOM,
+    // productXYXXM,
+    // productDCMERCHANDISEM,
+    // productKottyM,
+    // productHubberholmeM,
+    // productChkokkoM,
+    // productMINIONSMERCHANDISEM,
+    // productBreakbounceM,
+    // productTrueBuyWorldM,
+    // productBushirtM,
+    // productINDICLUBM,
+    // productBstoriesM,
+    // productShopolicsM,
+    // productNASAM,
+    // productHOUSEDRAGONM,
+    // productBLANCKM,
+    // productThomasScottM,
+    // productDAILYOUTFITSM,
+    // productUrbanScottishM,
+    // productBlueTygaM,
+    // productBEWAKOOFXSTREETWEARM,
+    // productBewakoofAmericanPimaM,
+    // productSTARWARS,
+    // productOldGreyM,
+    // productAlstyleM,
+    // productKraniumM,
+    // productMadOverPrintM,
+    // productSmugglerzM,
+    // productFlynoffM,
+    productMenBlackData,
+    productMenBrownData,
+    productMenWhiteData,
+    productMenGreyData,
+    productMenOrangeData,
+    productMenBlueData,
+    productMenGreenData,
+    productMenPinkData,
+    productMenRedData,
+    productMenYellowData,
+    productMenCreamData,
+    productMenOliveData,
+    productMenCharcoalData,
+    productMenSilverData,
+    productMenMaroonData,
+    productMenKhakiData,
+    productMenPurpleData,
+    productMenBeigeData,
+  } = productsListFilter;
   const btnRef = useRef();
   const handleClick = (event) => {
     setActive(event.target.id);
@@ -272,96 +408,684 @@ export default function NavRes({ Heading, value, setBarOpen, barOpen }) {
                 style={{
                   padding: "10px",
                   marginLeft: "6rem",
+                  fontWeight: "600",
+                  textTransform: "capitalize",
                 }}>
-                Akshay Singh
+                {user?.name}
               </Text>
             </Flex>
-            <UnorderedList className="barboxStyle"></UnorderedList>
             <Flex className="barboxStyle1">
-              <Button className="barboxStyle1button">Men</Button>
-              <Button className="barboxStyle1button2">Women</Button>
+              <Button
+                className="barboxStyle1button"
+                onClick={() => setShowSection("Men")}>
+                Men
+              </Button>
+              <Button
+                className="barboxStyle1button2"
+                onClick={() => setShowSection("Women")}>
+                Women
+              </Button>
             </Flex>
             <Flex>
-              <Accordion
-                defaultIndex={[0]}
-                allowMultiple
-                marginTop="0.1rem"
-                width="100%">
-                <AccordionItem className="accodianItem">
-                  <h2 style={{ margin: 0 }}>
-                    <AccordionButton className="accodianbutton">
-                      <Box
-                        className="HTexth3A"
-                        as="span"
-                        flex="1"
-                        textAlign="left">
-                        Topwear
-                      </Box>
-                      <AccordionIcon />
-                    </AccordionButton>
-                  </h2>
-                  <AccordionPanel pb={4}>
-                    <Text className="bottomTexth3">Material & Care:</Text>
-                    <Text className="text" marginLeft="30px" marginTop="20px">
-                      100% Cotton
-                    </Text>
-                    <Text className="text" marginLeft="30px" marginTop="0">
-                      Machine Wash
-                    </Text>
-                    <Text className="bottomTexth3">BRAND:</Text>
+              {showSection === "Men" && (
+                <>
+                  <Accordion
+                    defaultIndex={[0]}
+                    allowMultiple
+                    marginTop="0.1rem"
+                    width="100%">
+                    <AccordionItem className="accodianItem">
+                      <h2 style={{ margin: 0 }}>
+                        <AccordionButton className="accodianbutton">
+                          <Box
+                            className="HTexth3A"
+                            as="span"
+                            flex="1"
+                            textAlign="left">
+                            Topwear
+                          </Box>
+                          <AccordionIcon />
+                        </AccordionButton>
+                      </h2>
+                      <AccordionPanel pb={4}>
+                        <Link
+                          to="/category"
+                          style={{ textDecoration: "none" }}
+                          state={{
+                            data: productMenTshirtData,
+                            Heading: "Men's T-Shirts",
+                          }}>
+                          <Text className="navdropboxh1">
+                            Oversized T-Shirts
+                          </Text>
+                        </Link>
+                        <Link
+                          to="/category"
+                          style={{ textDecoration: "none" }}
+                          state={{
+                            data: productMenShirtData,
+                            Heading: "Men's Shirt",
+                          }}>
+                          <Text className="navdropboxh1">Shirts</Text>
+                        </Link>
+                        <Link
+                          to="/category"
+                          style={{ textDecoration: "none" }}
+                          state={{
+                            data: productMenSweaterData,
 
-                    <Text className="bottomTexth3">Country of Origin:</Text>
-                    <Text className="text" marginLeft="30px" marginTop="0">
-                      India (and proud)
-                    </Text>
-                    <Text className="text" marginLeft="30px">
-                      Hey Souledsters! You must have noticed that we've said
-                      goodbye to the little Mr. Souls sleeve label that we've
-                      had through the years. But always remember, when you shop
-                      from our app, website, stores, or online marketplaces,
-                      you're always getting the genuine real deal!
-                    </Text>
-                  </AccordionPanel>
-                </AccordionItem>
+                            Heading: "Men's Sweater",
+                          }}>
+                          <Text className="navdropboxh1">Sweater</Text>
+                        </Link>
+                        <Link
+                          to="/category"
+                          style={{ textDecoration: "none" }}
+                          state={{
+                            data: productMenKurtaData,
 
-                <AccordionItem className="accodianItem">
-                  <h2 style={{ margin: 0 }}>
-                    <AccordionButton className="accodianbutton">
-                      <Box
-                        as="span"
-                        flex="1"
-                        textAlign="left"
-                        className="HTexth3A">
-                        BottomWear
-                      </Box>
-                      <AccordionIcon />
-                    </AccordionButton>
-                  </h2>
-                  <AccordionPanel pb={4}>
-                    <Text className="bottomTexth3">
-                      Official Licensed {data?.brand}
-                    </Text>
-                    <Flex>
-                      <Text className="bottomTexth3">Color:</Text>
-                      <Text className="text mL10">{data?.color}</Text>
-                    </Flex>
-                    <Flex>
-                      <Text className="bottomTexth3">Type:</Text>
-                      <Text className="text mL10">{data?.gender}</Text>
-                      <Text className="text mL10">{data?.subCategory}</Text>
-                    </Flex>
-                  </AccordionPanel>
-                </AccordionItem>
-              </Accordion>
-            </Flex>
-            <Flex
-              style={{
-                flexDirection: "column",
-                justifyContent: "flex-start",
-                margin: "2rem",
-              }}>
-              <Button className="barboxStyle1buttonSec">My Account</Button>
-              <Button className="barboxStyle1buttonSec">My Order</Button>
+                            Heading: "Men's Kurta",
+                          }}>
+                          <Text className="navdropboxh1">Kurta</Text>
+                        </Link>
+                        <Link
+                          to="/category"
+                          style={{ textDecoration: "none" }}
+                          state={{
+                            data: productMenHoodieData,
+
+                            Heading: "Men's Hoodie",
+                          }}>
+                          <Text className="navdropboxh1">Hoodie</Text>
+                        </Link>
+                        <Link
+                          to="/category"
+                          style={{ textDecoration: "none" }}
+                          state={{
+                            data: productMenTracksuitData,
+
+                            Heading: "Men's Tracksuit",
+                          }}>
+                          <Text className="navdropboxh1">Tracksuit</Text>
+                        </Link>
+                      </AccordionPanel>
+                    </AccordionItem>
+
+                    <AccordionItem className="accodianItem">
+                      <h2 style={{ margin: 0 }}>
+                        <AccordionButton className="accodianbutton">
+                          <Box
+                            as="span"
+                            flex="1"
+                            textAlign="left"
+                            className="HTexth3A">
+                            BottomWear
+                          </Box>
+                          <AccordionIcon />
+                        </AccordionButton>
+                      </h2>
+                      <AccordionPanel pb={4}>
+                        <Link
+                          to="/category"
+                          style={{ textDecoration: "none" }}
+                          state={{
+                            Banner: MBJ,
+                            data: productMenJoggersData,
+                            Heading: "Men's Joggers",
+                            gender: "Male",
+                          }}>
+                          <Text className="navdropboxh1 mT10">Joggers</Text>
+                        </Link>
+                        <Link
+                          to="/category"
+                          style={{ textDecoration: "none" }}
+                          state={{
+                            Banner: MBJS,
+                            gender: "Male",
+                            data: productMenJeansData,
+                            Heading: "Men's Jeans",
+                          }}>
+                          <Text className="navdropboxh1">Jeans</Text>
+                        </Link>
+                        <Link
+                          to="/category"
+                          style={{ textDecoration: "none" }}
+                          state={{
+                            Banner: MBS,
+                            gender: "Male",
+                            data: productMenShortsData,
+                            Heading: "Men's Shorts",
+                          }}>
+                          <Text className="navdropboxh1">Shorts</Text>
+                        </Link>
+                        <Link
+                          to="/category"
+                          style={{ textDecoration: "none" }}
+                          state={{
+                            gender: "Male",
+                            Heading: "Men's Shorts",
+                            data: productMenPyjamasData,
+                          }}>
+                          <Text className="navdropboxh1">Pyjamas</Text>
+                        </Link>
+                        <Link
+                          to="/category"
+                          style={{ textDecoration: "none" }}
+                          state={{
+                            data: productMenTrouserData,
+                            Heading: "Men's Trouser",
+                          }}>
+                          <Text className="navdropboxh1">Trouser</Text>
+                        </Link>
+                      </AccordionPanel>
+                    </AccordionItem>
+                    <AccordionItem className="accodianItem">
+                      <h2 style={{ margin: 0 }}>
+                        <AccordionButton className="accodianbutton">
+                          <Box
+                            as="span"
+                            flex="1"
+                            textAlign="left"
+                            className="HTexth3A">
+                            SHOES BY COLOR
+                          </Box>
+                          <AccordionIcon />
+                        </AccordionButton>
+                      </h2>
+                      <AccordionPanel pb={4}>
+                        <Flex style={{ justifyContent: "space-evenly" }}>
+                          <Flex
+                            style={{
+                              flexDirection: "column",
+                              minWidth: "10rem",
+                            }}>
+                            <Link
+                              to="/category"
+                              style={{ textDecoration: "none" }}
+                              state={{
+                                data: productMenBlackData,
+
+                                Heading: "Men Black Collection",
+                              }}>
+                              <Text className="navdropboxh1 mT10"> Black</Text>
+                            </Link>
+                            <Link
+                              to="/category"
+                              style={{ textDecoration: "none" }}
+                              state={{
+                                data: productMenBrownData,
+
+                                Heading: "Men Brown Collection",
+                              }}>
+                              <Text className="navdropboxh1">Brown</Text>
+                            </Link>
+                            <Link
+                              to="/category"
+                              style={{ textDecoration: "none" }}
+                              state={{
+                                data: productMenWhiteData,
+
+                                Heading: "Men White Collection",
+                              }}>
+                              <Text className="navdropboxh1">White</Text>
+                            </Link>
+                            <Link
+                              to="/category"
+                              style={{ textDecoration: "none" }}
+                              state={{
+                                data: productMenGreyData,
+
+                                Heading: "Men Grey Collection",
+                              }}>
+                              <Text className="navdropboxh1">Grey</Text>
+                            </Link>
+                            <Link
+                              to="/category"
+                              style={{ textDecoration: "none" }}
+                              state={{
+                                data: productMenOrangeData,
+
+                                Heading: "Men Orange Collection",
+                              }}>
+                              <Text className="navdropboxh1 "> Orange</Text>
+                            </Link>
+
+                            <Link
+                              to="/category"
+                              style={{ textDecoration: "none" }}
+                              state={{
+                                data: productMenKhakiData,
+
+                                Heading: "Men Khaki Collection",
+                              }}>
+                              <Text className="navdropboxh1">Khaki</Text>
+                            </Link>
+                          </Flex>
+                          <Flex
+                            style={{
+                              flexDirection: "column",
+
+                              minWidth: "10rem",
+                            }}>
+                            <Link
+                              to="/category"
+                              style={{ textDecoration: "none" }}
+                              state={{
+                                data: productMenBlueData,
+
+                                Heading: "Men Blue Collection",
+                              }}>
+                              <Text className="navdropboxh1 mT10">Blue</Text>
+                            </Link>
+                            <Link
+                              to="/category"
+                              style={{ textDecoration: "none" }}
+                              state={{
+                                data: productMenGreenData,
+
+                                Heading: "Men Green Collection",
+                              }}>
+                              <Text className="navdropboxh1">Green</Text>
+                            </Link>
+                            <Link
+                              to="/category"
+                              style={{ textDecoration: "none" }}
+                              state={{
+                                data: productMenRedData,
+
+                                Heading: "Men Red Collection",
+                              }}>
+                              <Text className="navdropboxh1">Red</Text>
+                            </Link>
+                            <Link
+                              to="/category"
+                              style={{ textDecoration: "none" }}
+                              state={{
+                                data: productMenPinkData,
+
+                                Heading: "Men Pink Collection",
+                              }}>
+                              <Text className="navdropboxh1 ">Pink</Text>
+                            </Link>
+                            <Link
+                              to="/category"
+                              style={{ textDecoration: "none" }}
+                              state={{
+                                data: productMenYellowData,
+
+                                Heading: "Men Yellow Collection",
+                              }}>
+                              <Text className="navdropboxh1 ">Yellow</Text>
+                            </Link>
+                            <Link
+                              to="/category"
+                              style={{ textDecoration: "none" }}
+                              state={{
+                                data: productMenPurpleData,
+
+                                Heading: "Men Purple Collection",
+                              }}>
+                              <Text className="navdropboxh1">Purple</Text>
+                            </Link>
+                          </Flex>
+                          <Flex
+                            style={{
+                              flexDirection: "column",
+
+                              minWidth: "10rem",
+                            }}>
+                            <Link
+                              to="/category"
+                              style={{ textDecoration: "none" }}
+                              state={{
+                                data: productMenMaroonData,
+
+                                Heading: "Men Maroon Collection",
+                              }}>
+                              <Text className="navdropboxh1 mT10">Maroon</Text>
+                            </Link>
+
+                            <Link
+                              to="/category"
+                              style={{ textDecoration: "none" }}
+                              state={{
+                                data: productMenCharcoalData,
+
+                                Heading: "Men Charcoal Collection",
+                              }}>
+                              <Text className="navdropboxh1">Charcoal</Text>
+                            </Link>
+                            <Link
+                              to="/category"
+                              style={{ textDecoration: "none" }}
+                              state={{
+                                data: productMenSilverData,
+
+                                Heading: "Men Silver Collection",
+                              }}>
+                              <Text className="navdropboxh1">Silver</Text>
+                            </Link>
+                            <Link
+                              to="/category"
+                              style={{ textDecoration: "none" }}
+                              state={{
+                                data: productMenCreamData,
+
+                                Heading: "Men Cream Collection",
+                              }}>
+                              <Text className="navdropboxh1">Cream</Text>
+                            </Link>
+                            <Link
+                              to="/category"
+                              style={{ textDecoration: "none" }}
+                              state={{
+                                data: productMenOliveData,
+
+                                Heading: "Men Olive Collection",
+                              }}>
+                              <Text className="navdropboxh1">Olive</Text>
+                            </Link>
+                            <Link
+                              to="/category"
+                              style={{ textDecoration: "none" }}
+                              state={{
+                                data: productMenBeigeData,
+
+                                Heading: "Men Beige Collection",
+                              }}>
+                              <Text className="navdropboxh1">Beige</Text>
+                            </Link>
+                          </Flex>
+                        </Flex>
+                      </AccordionPanel>
+                    </AccordionItem>
+                  </Accordion>
+                </>
+              )}
+              {showSection === "Women" && (
+                <>
+                  <Accordion
+                    defaultIndex={[0]}
+                    allowMultiple
+                    marginTop="0.1rem"
+                    width="100%">
+                    <AccordionItem className="accodianItem">
+                      <h2 style={{ margin: 0 }}>
+                        <AccordionButton className="accodianbutton">
+                          <Box
+                            className="HTexth3A"
+                            as="span"
+                            flex="1"
+                            textAlign="left">
+                            Topwear
+                          </Box>
+                          <AccordionIcon />
+                        </AccordionButton>
+                      </h2>
+                      <AccordionPanel pb={4}>
+                        <Link
+                          to="/category"
+                          style={{ textDecoration: "none" }}
+                          state={{
+                            Banner: bannerT,
+                            data: productWomenTshirtData,
+                            Heading: "Oversized Women T-Shirt",
+                          }}>
+                          <Text className="navdropboxh1 mT10">
+                            Oversized T-Shirts
+                          </Text>
+                        </Link>
+                        <Link
+                          to="/category"
+                          style={{ textDecoration: "none" }}
+                          state={{
+                            Banner: bannerBS,
+                            data: productWomenshirtsData,
+                            Heading: "Women's Shirts",
+                          }}>
+                          <Text className="navdropboxh1">Shirts</Text>
+                        </Link>
+                        <Link
+                          to="/category"
+                          style={{ textDecoration: "none" }}
+                          state={{
+                            Banner: bannerT,
+                            data: productWomenTshirtData,
+                            Heading: "Women T-Shirt",
+                          }}>
+                          <Text className="navdropboxh1">T-Shirts</Text>
+                        </Link>
+                        <Link
+                          to="/category"
+                          style={{ textDecoration: "none" }}
+                          state={{
+                            data: productWomenkurtiData,
+                            Heading: "Women Kurti",
+                          }}>
+                          <Text className="navdropboxh1">Kurti</Text>
+                        </Link>
+                      </AccordionPanel>
+                    </AccordionItem>
+
+                    <AccordionItem className="accodianItem">
+                      <h2 style={{ margin: 0 }}>
+                        <AccordionButton className="accodianbutton">
+                          <Box
+                            as="span"
+                            flex="1"
+                            textAlign="left"
+                            className="HTexth3A">
+                            BottomWear
+                          </Box>
+                          <AccordionIcon />
+                        </AccordionButton>
+                      </h2>
+                      <AccordionPanel pb={4}>
+                        <Link
+                          to="/category"
+                          style={{ textDecoration: "none" }}
+                          state={{
+                            Banner: jog,
+                            Heading: "Women Joggers",
+                            data: productWomenJoggersData,
+                          }}>
+                          <Text className="navdropboxh1 mT10">Joggers</Text>
+                        </Link>
+                        <Link
+                          to="/category"
+                          style={{ textDecoration: "none" }}
+                          state={{
+                            data: productWomenJeansData,
+                            Heading: "Women Jeans",
+                          }}>
+                          <Text className="navdropboxh1">Jeans</Text>
+                        </Link>
+                        <Link
+                          to="/category"
+                          style={{ textDecoration: "none" }}
+                          state={{
+                            Banner: bannerJ,
+                            data: productWomenJumpsuitData,
+                            Heading: "Women Jumpsuit",
+                          }}>
+                          <Text className="navdropboxh1">Jumpsuit</Text>
+                        </Link>
+                      </AccordionPanel>
+                    </AccordionItem>
+                    <AccordionItem className="accodianItem">
+                      <h2 style={{ margin: 0 }}>
+                        <AccordionButton className="accodianbutton">
+                          <Box
+                            as="span"
+                            flex="1"
+                            textAlign="left"
+                            className="HTexth3A">
+                            SHOES BY COLOR
+                          </Box>
+                          <AccordionIcon />
+                        </AccordionButton>
+                      </h2>
+                      <AccordionPanel pb={4}>
+                        <Flex style={{ justifyContent: "space-evenly" }}>
+                          <Flex
+                            style={{
+                              flexDirection: "column",
+                              minWidth: "10rem",
+                            }}>
+                            <Link
+                              to="/category"
+                              style={{ textDecoration: "none" }}
+                              state={{
+                                data: productWomenBlackData,
+                                Banner: bB,
+                                Heading: "Women Black Collection",
+                              }}>
+                              <Text className="navdropboxh1 mT10"> Black</Text>
+                            </Link>
+                            <Link
+                              to="/category"
+                              style={{ textDecoration: "none" }}
+                              state={{
+                                data: productWomenBrownData,
+                                Heading: "Women Brown Collection",
+                              }}>
+                              <Text className="navdropboxh1">Brown</Text>
+                            </Link>
+                            <Link
+                              to="/category"
+                              style={{ textDecoration: "none" }}
+                              state={{
+                                Banner: wB,
+                                data: productWomenWhiteData,
+                                Heading: "Women White Collection",
+                              }}>
+                              <Text className="navdropboxh1">White</Text>
+                            </Link>
+                            <Link
+                              to="/category"
+                              style={{ textDecoration: "none" }}
+                              state={{
+                                data: productWomenGreyData,
+                                Heading: "Women Grey Collection",
+                              }}>
+                              <Text className="navdropboxh1">Grey</Text>
+                            </Link>
+                            <Link
+                              to="/category"
+                              style={{ textDecoration: "none" }}
+                              state={{
+                                data: productWomenOrangeData,
+                                Heading: "Women Orange Collection",
+                              }}>
+                              <Text className="navdropboxh1"> Orange</Text>
+                            </Link>
+                          </Flex>
+                          <Flex
+                            style={{
+                              flexDirection: "column",
+                              minWidth: "10rem",
+                            }}>
+                            <Link
+                              to="/category"
+                              style={{ textDecoration: "none" }}
+                              state={{
+                                data: productWomenBlueData,
+                                Heading: "Women Blue Collection",
+                                Banner: blueBanner,
+                              }}>
+                              <Text className="navdropboxh1  mT10">Blue</Text>
+                            </Link>
+                            <Link
+                              to="/category"
+                              style={{ textDecoration: "none" }}
+                              state={{
+                                data: productWomenGreenData,
+                                Heading: "Women Green Collection",
+                              }}>
+                              <Text className="navdropboxh1">Green</Text>
+                            </Link>
+
+                            <Link
+                              to="/category"
+                              style={{ textDecoration: "none" }}
+                              state={{
+                                data: productWomenKhakiData,
+
+                                Heading: "Women Khaki Collection",
+                              }}>
+                              <Text className="navdropboxh1">Khaki</Text>
+                            </Link>
+                            <Link
+                              to="/category"
+                              style={{ textDecoration: "none" }}
+                              state={{
+                                data: productWomenMaroonData,
+                                Heading: "Women Maroon Collection",
+                              }}>
+                              <Text className="navdropboxh1">Maroon</Text>
+                            </Link>
+                            <Link
+                              to="/category"
+                              style={{ textDecoration: "none" }}
+                              state={{
+                                data: productWomenLavenderData,
+                                Banner: bL,
+                                Heading: "Women Lavender Collection",
+                              }}>
+                              <Text className="navdropboxh1">Lavender</Text>
+                            </Link>
+                          </Flex>
+                          <Flex
+                            style={{
+                              flexDirection: "column",
+                              minWidth: "10rem",
+                            }}>
+                            <Link
+                              to="/category"
+                              style={{ textDecoration: "none" }}
+                              state={{
+                                data: productWomenRedData,
+                                Heading: "Women Red Collection",
+                              }}>
+                              <Text className="navdropboxh1">Red</Text>
+                            </Link>
+                            <Link
+                              to="/category"
+                              style={{ textDecoration: "none" }}
+                              state={{
+                                data: productWomenPinkData,
+                                Banner: bP,
+                                Heading: "Women Pink Collection",
+                              }}>
+                              <Text className="navdropboxh1">Pink</Text>
+                            </Link>
+                            <Link
+                              to="/category"
+                              style={{ textDecoration: "none" }}
+                              state={{
+                                data: productWomenYellowData,
+
+                                Heading: "Women Yellow Collection",
+                              }}>
+                              <Text className="navdropboxh1">Yellow</Text>
+                            </Link>
+                            <Link
+                              to="/category"
+                              style={{ textDecoration: "none" }}
+                              state={{
+                                data: productWomenPurpleData,
+
+                                Heading: "Women Purple Collection",
+                              }}>
+                              <Text className="navdropboxh1">Purple</Text>
+                            </Link>
+                          </Flex>
+                        </Flex>
+                      </AccordionPanel>
+                    </AccordionItem>
+                  </Accordion>
+                </>
+              )}
             </Flex>
           </DrawerBody>
         </DrawerContent>

@@ -4,20 +4,27 @@ import { useDispatch, useSelector } from "react-redux";
 import { LOGOUT_USER } from "../action";
 import { GoDotFill } from "react-icons/go";
 import { getOrderList } from "../fetch";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Order({ openPopover }) {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [orderList, setOrderList] = useState(null);
   const [orderData, setOrderData] = useState("");
-  const { user } = useSelector((state) => state.user.userData.data);
+  const user = useSelector((state) => {
+    return state?.user?.userData?.data;
+  });
+  const { isLoggedIn } = useSelector((state) => state.user);
+  if (!isLoggedIn) {
+    navigate("/");
+  }
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const data = await getOrderList();
         const { results } = data;
-        setOrderData(data.data);
+        setOrderData(data?.data);
         setOrderList(results);
       } catch (error) {
         console.error(error);
@@ -39,7 +46,7 @@ export default function Order({ openPopover }) {
             <Text className="bottomTexth3 mT10p ">
               {user?.name?.toUpperCase()}
             </Text>
-            <Text className="text3 mL10p mT10p">{user.email}</Text>
+            <Text className="text3 mL10p mT10p">{user?.email}</Text>
           </Box>
           <Box className="orderContainerb2"></Box>
           <Link to="/login" style={{ textDecoration: "none" }}>
@@ -62,7 +69,7 @@ export default function Order({ openPopover }) {
             <>
               <Flex className="cartItem">
                 <Text className="text3 ">My Order</Text>
-                {orderData.map((item) => (
+                {orderData?.map((item) => (
                   <>
                     <Flex className="orderbox">
                       <Flex className="orderbox1">
