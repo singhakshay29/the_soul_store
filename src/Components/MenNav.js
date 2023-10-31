@@ -1039,9 +1039,17 @@ export default function MenNav() {
                     </Box>
                   )}
                 </ListItem>
-
                 <ListItem className={scrollY > 43 ? "navlist2" : "navList"}>
-                  MEMBERSHIP
+                  <Link
+                    to="/member"
+                    style={{
+                      textDecoration: "none",
+                      margin: 0,
+                      padding: 0,
+                      color: "#58595b",
+                    }}>
+                    MEMBERSHIP
+                  </Link>
                 </ListItem>
               </List>
             </Box>

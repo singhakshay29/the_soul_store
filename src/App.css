@@ -1766,3 +1766,201 @@ iframe#webpack-dev-server-client-overlay {
   border: none;
   cursor: pointer;
 }
+.memberText {
+  color: #161b24 !important;
+  font-size: 1.8rem;
+  font-weight: 800;
+  margin: 0;
+}
+.memberbox {
+  flex-direction: column;
+  flex-wrap: wrap;
+  min-width: 14rem;
+  max-width: 18rem;
+  overflow: hidden;
+  margin-left: 20px;
+}
+.memberText2 {
+  font-size: 25px;
+  color: #122643;
+  font-weight: 700;
+  padding: 10px;
+  border-bottom: 2px solid #122643;
+  margin: 0;
+  padding-left: 0;
+  flex-wrap: nowrap;
+}
+.memberText3 {
+  color: #292b2c;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: 1pxw;
+}
+.cls-2 {
+  fill: #fff;
+  color: #fff;
+}
+.cls-1[data-v-185b4889] {
+  fill: none;
+}
+.bigTextMem {
+  position: absolute;
+  top: 30%; /* Center vertically */
+  left: 50%; /* Center horizontally */
+  transform: translate(-50%, -50%);
+}
+
+.bigText2Mem {
+  position: absolute;
+  top: 45%; /* Center vertically */
+  left: 50%; /* Center horizontally */
+  transform: translate(-50%, -50%);
+}
+.bigText22Mem {
+  font-weight: 700;
+  color: white;
+  font-size: 1.4rem;
+}
+.mem2container {
+  padding: 20px 0;
+  background-color: #f2f2f2;
+  width: 100%;
+  flex-direction: column;
+}
+.memCardbox {
+  flex-direction: column;
+  margin: 0px 5px;
+  height: 250px;
+  border-radius: 10px;
+  margin: 0px 5px;
+  align-items: center;
+  background-color: #fff;
+  border: 2px solid #707070;
+  height: 256px;
+  width: 300px;
+  box-shadow: 0 4px 2.2px rgba(0, 0, 0, 0.034), 0 4px 10px rgba(0, 0, 0, 0.086),
+    0 4px 20px rgba(0, 0, 0, 0.12);
+  transition: 0.1s;
+  overflow: hidden;
+}
+.cardTextHeading {
+  color: #fff;
+  font-weight: 700;
+  font-size: 15px;
+  padding: 8px;
+  margin-top: -1px;
+  background-color: #e76a52;
+  letter-spacing: normal;
+  width: 100%;
+  margin: 0;
+}
+.cardTextCon {
+  margin-bottom: 5px;
+  font-size: 25px;
+  color: #161b24;
+  letter-spacing: normal;
+  font-weight: 700;
+}
+.aboutus1 {
+  margin: 0;
+  padding: 60px 0 40px;
+  background: #117a7a;
+  color: #fff;
+  line-height: 25px;
+  width: 100%;
+  text-align: center;
+}
+.aboutt1 {
+  padding: 20px 50px;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 25px;
+}
+.about2h {
+  font-weight: 700;
+  font-size: 1.5rem;
+  margin-bottom: 25px;
+  color: #58595b;
+}
+.about2p {
+  font-weight: 500;
+  font-size: 0.95rem;
+  margin-bottom: 25px;
+  color: #58595b;
+  text-align: justify !important;
+  font-family: "Source Sans Pro", sans-serif;
+}
+.about3h {
+  font-weight: 700;
+  font-size: 1.5rem;
+  margin-bottom: 25px;
+  color: #fff;
+}
+.contact1 {
+  background-color: #ededed;
+  padding: 40px 0px 5px;
+  flex-direction: column;
+  overflow: hidden;
+}
+.contactflex2 {
+  background-color: #e11b23;
+  padding-top: 20px;
+  padding-bottom: 50px;
+  font-weight: 600;
+  font-size: 30px;
+}
+.contactflex3 {
+  margin-top: -40px;
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 20px !important;
+  width: 20%;
+  flex-direction: column;
+  text-align: center;
+}
+.contactquery {
+  color: #35495e;
+}
+.term {
+  padding-bottom: 15px;
+  text-transform: uppercase;
+  font-size: 15px;
+  color: #ed2d2f;
+  line-height: 1.5;
+  background: none repeat scroll 0 0 #ffffff;
+}
+.termtext {
+  font-size: 15px;
+  margin-bottom: 25px;
+  line-height: 25px;
+  text-align: justify;
+  color: #5a5e68;
+  font-weight: 400;
+}
+.privacyflexbox {
+  width: 100%;
+}
+.privacyflex1 {
+  background: #e6e7e8;
+  width: 100%;
+  padding: 20px 80px;
+  margin-bottom: 30px;
+}
+.privacyh1 {
+  font-family: Source Sans Pro, sans-serif;
+  font-weight: 700;
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  color: #58595b;
+}
+.termtextprivacy {
+  padding: 0px 80px;
+  font-size: 15px;
+  margin-bottom: 25px;
+  /* line-height: 25px; */
+  text-align: justify;
+  color: #5a5e68;
+  font-weight: 400;
+  line-height: 1.5;
+}

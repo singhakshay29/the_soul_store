@@ -11,9 +11,7 @@ export default function Order({ openPopover }) {
   const navigate = useNavigate();
   const [orderList, setOrderList] = useState(null);
   const [orderData, setOrderData] = useState("");
-  const user = useSelector((state) => {
-    return state?.user?.userData?.data;
-  });
+  const userdata = useSelector((state) => state.user.userData);
   const { isLoggedIn } = useSelector((state) => state.user);
   if (!isLoggedIn) {
     navigate("/");
@@ -44,9 +42,9 @@ export default function Order({ openPopover }) {
         <Container className="orderContainer">
           <Box className="orderContainerb1">
             <Text className="bottomTexth3 mT10p ">
-              {user?.name?.toUpperCase()}
+              {userdata?.name?.toUpperCase()}
             </Text>
-            <Text className="text3 mL10p mT10p">{user?.email}</Text>
+            <Text className="text3 mL10p mT10p">{userdata?.email}</Text>
           </Box>
           <Box className="orderContainerb2"></Box>
           <Link to="/login" style={{ textDecoration: "none" }}>

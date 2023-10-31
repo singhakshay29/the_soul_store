@@ -78,17 +78,18 @@ export default function Topbar({ active, setActive }) {
               <>
                 <NavLink to="/order">
                   <Button className="topbarbutton2">Track Order</Button>
-                  <Button className="topbarbutton2">Contact US</Button>
                 </NavLink>
               </>
             ) : (
               <>
                 <NavLink to="/login">
                   <Button className="topbarbutton2">Track Order</Button>
-                  <Button className="topbarbutton2">Contact US</Button>
                 </NavLink>
               </>
             )}
+            <Link to="/contact" style={{ textDecoration: "none" }}>
+              <Button className="topbarbutton2">Contact US</Button>
+            </Link>
             <Link to="https://play.google.com/store/apps/details?id=com.thesouledstore">
               <Button className="topbarbutton2">
                 <CiMobile3 style={{ margin: "5px" }} />

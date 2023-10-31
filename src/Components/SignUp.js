@@ -22,9 +22,7 @@ export default function SignUp() {
   const [password, setPassword] = useState("");
   const [errorColor, setErrorColor] = useState("");
   const [finalpassword, setfinalPassword] = useState("");
-
   const { errorMessage } = useSelector((state) => state.user);
-
   const { isLoggedIn } = useSelector((state) => state.user);
   async function handleLoginWithGoogle(decode) {
     const { given_name, family_name, email } = await decode;

@@ -21,6 +21,7 @@ import bannerBS from "../assets/bannerBS.jpg";
 import { AiOutlineCopyrightCircle } from "react-icons/ai";
 
 export default function Footer({ active }) {
+  const { isLoggedIn } = useSelector((state) => state.user);
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 800);
   const { productsListFilter } = useSelector((state) => state.app);
 
@@ -119,22 +120,63 @@ export default function Footer({ active }) {
       <Flex className="bottom">
         <Flex className="bottomText">
           <Text className="bottomTexth1">NEED HELP</Text>
-          <Text className="bottomTexth2">CONTACT US</Text>
-          <Text className="bottomTexth2">TRACK ORDER</Text>
-          <Text className="bottomTexth2">My ACCOUNT</Text>
+          {isLoggedIn ? (
+            <>
+              <Link to="/contact" style={{ textDecoration: "none" }}>
+                <Text className="bottomTexth2">CONTACT US</Text>
+              </Link>
+            </>
+          ) : (
+            <>
+              <Link to="/login">
+                <Text className="bottomTexth2">CONTACT US</Text>
+              </Link>
+            </>
+          )}
+          {isLoggedIn ? (
+            <>
+              <Link style={{ textDecoration: "none" }} to="/order">
+                <Text className="bottomTexth2">TRACK ORDER</Text>
+              </Link>
+            </>
+          ) : (
+            <>
+              <Link style={{ textDecoration: "none" }} to="/login">
+                <Text className="bottomTexth2">TRACK ORDER</Text>
+              </Link>
+            </>
+          )}
+
+          {isLoggedIn ? (
+            <>
+              <Link style={{ textDecoration: "none" }} to="/profile">
+                <Text className="bottomTexth2">My ACCOUNT</Text>
+              </Link>
+            </>
+          ) : (
+            <>
+              <Link to="/login">
+                <Text className="bottomTexth2">My ACCOUNT</Text>
+              </Link>
+            </>
+          )}
         </Flex>
         <Container className="bottomText">
           <Text className="bottomTexth1">COMPANY</Text>
-          <Text className="bottomTexth2">About Us</Text>
-          <Text className="bottomTexth2">Careers</Text>
+          <Link to="/about" style={{ textDecoration: "none" }}>
+            <Text className="bottomTexth2">About Us</Text>
+          </Link>
           <Text className="bottomTexth2">Community Initiatives</Text>
           <Text className="bottomTexth2">Souled Army</Text>
         </Container>
         <Container className="bottomText">
           <Text className="bottomTexth1">MORE INFO</Text>
-          <Text className="bottomTexth2">T&C</Text>
-          <Text className="bottomTexth2">Privacy Policy</Text>
-          <Text className="bottomTexth2">Sitemap</Text>
+          <Link to="/term" style={{ textDecoration: "none" }}>
+            <Text className="bottomTexth2">T&C</Text>
+          </Link>
+          <Link to="/privacy" style={{ textDecoration: "none" }}>
+            <Text className="bottomTexth2">Privacy Policy</Text>
+          </Link>
         </Container>
         <Container className="bottomText">
           <Text className="bottomTexth1">STORE NEAR ME</Text>
@@ -195,7 +237,9 @@ export default function Footer({ active }) {
               width: "10rem",
               overflow: "hidden",
             }}>
-            <img src={appstore} width="150px" alt="" />
+            <Link to="https://apps.apple.com/us/app/thesouledstore/id1493897434?ls=1">
+              <img src={appstore} width="150px" alt="" />
+            </Link>
           </Box>
         </Flex>
         <Flex
