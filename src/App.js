@@ -63,7 +63,7 @@ function App() {
             path="shoppingcart"
             element={<ShoppingCart openPopover={openPopover} />}></Route>
         </Routes>
-        <Footer />
+        <Footer active={active} />
       </Router>
     </>
   );
