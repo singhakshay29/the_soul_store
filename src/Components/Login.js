@@ -1,9 +1,7 @@
-import jwt_decode from "jwt-decode";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { LOGIN_FAILURE, LOGIN_USER } from "../action";
 import { useDispatch, useSelector } from "react-redux";
-import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
 
 import {
   Box,
@@ -24,12 +22,6 @@ export default function Login() {
   const { errorMessage } = useSelector((state) => state.user);
   const { isLoggedIn } = useSelector((state) => state.user);
 
-  async function handleLoginWithGoogle(decode) {
-    const { given_name, family_name, email } = await decode;
-    setEmail(email);
-    setPassword(given_name + " " + family_name);
-    handleLogin();
-  }
   const handleLogin = (e) => {
     if (e) {
       e.preventDefault();
@@ -91,31 +83,7 @@ export default function Login() {
               width="80%"
               height="61%"
               border="1px solid grey"
-              margin="5% 10%">
-              <Container
-                className=" mT10"
-                style={{
-                  justifyContent: "center",
-                  display: "flex",
-                }}>
-                <GoogleOAuthProvider clientId="558764896658-onefrip4mvmp2o8e3eh5psn0vi9ln5ck.apps.googleusercontent.com">
-                  <GoogleLogin
-                    onSuccess={async (credentialResponse) => {
-                      var decoded = await jwt_decode(
-                        credentialResponse.credential
-                      );
-                      handleLoginWithGoogle(decoded);
-                    }}
-                    onError={() => {
-                      console.log("Login Failed");
-                    }}
-                  />
-                </GoogleOAuthProvider>
-              </Container>
-
-              <Card className="heading2" marginTop="15px">
-                -OR-
-              </Card>
+              margin="10% 10%">
               <Input
                 value={email}
                 typ="text"

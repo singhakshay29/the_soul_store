@@ -63,7 +63,6 @@ export default function Shop({ openPopover }) {
     const sortedAndFilteredItems = [...itemList];
 
     if (sortingCriteria === "A to Z") {
-      console.log("A");
       sortedAndFilteredItems.sort((a, b) => a.name.localeCompare(b.name));
     } else if (sortingCriteria === "Price-Low to High") {
       sortedAndFilteredItems.sort((a, b) => a.price - b.price);

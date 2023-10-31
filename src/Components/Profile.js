@@ -1,14 +1,24 @@
 import { Box, Button, Container, Divider, Flex, Text } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { LOGOUT_USER } from "../action";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import NavRes from "./NavRes";
 
 export default function Profile() {
   const dispatch = useDispatch();
   const data = useSelector((state) => state.user.userData);
+  const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 1100);
+  useEffect(() => {
+    const handleResize = () => {
+      setIsSmallScreen(window.innerWidth < 1100);
+    };
+    window.addEventListener("resize", handleResize);
+    // eslint-disable-next-line
+  }, []);
   return (
     <>
+      {isSmallScreen && <NavRes />}
       <Flex
         style={{
           justifyContent: "center",
@@ -16,9 +26,9 @@ export default function Profile() {
         <Container className="orderContainer">
           <Box className="orderContainerb1">
             <Text className="bottomTexth3 mT10p ">
-              {data?.name?.toUpperCase()}
+              {data?.data?.name?.toUpperCase()}
             </Text>
-            <Text className="text44 mL10p mT10p">{data?.email}</Text>
+            <Text className="text44 mL10p mT10p">{data?.data?.email}</Text>
           </Box>
           <Box className="orderContainerb2"></Box>
           <Link to="/login" style={{ textDecoration: "none" }}>
@@ -52,7 +62,7 @@ export default function Profile() {
               </label>
               <input
                 className="profile1input"
-                defaultValue={data?.email}
+                defaultValue={data?.data?.email}
                 type="text"
                 style={{ cursor: "not-allowed" }}></input>
             </Flex>
@@ -76,7 +86,7 @@ export default function Profile() {
                 className="profile1input"
                 style={{ width: "10rem" }}
                 type="text"
-                defaultValue={data?.name}></input>
+                defaultValue={data?.data?.name}></input>
             </Flex>
           </Flex>
         </Flex>

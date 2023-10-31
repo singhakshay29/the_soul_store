@@ -16,15 +16,18 @@ export default function Card({ item, index, responsive }) {
   let itemName = item?.name;
   let brandName = item?.brand;
 
-  if (itemName.startsWith("Women's ")) {
+  if (itemName?.startsWith("Women's ")) {
     itemName = itemName.replace("Women's ", "").trim();
   }
-  if (brandName.startsWith("OFFICIAL ")) {
+  if (itemName?.startsWith("Men's ")) {
+    itemName = itemName.replace("Men's ", "").trim();
+  }
+  if (brandName?.startsWith("OFFICIAL ")) {
     brandName = brandName.replace("OFFICIAL ", "").trim();
   }
 
   useEffect(() => {
-    if (wishlist.some((wish) => wish.products._id === productId)) {
+    if (wishlist?.some((wish) => wish.products._id === productId)) {
       setIsInWishlist(true);
     }
   }, [wishlist, productId]);

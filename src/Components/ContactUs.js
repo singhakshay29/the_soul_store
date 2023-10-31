@@ -1,14 +1,26 @@
 import { Box, Flex } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { BiLogoFacebook } from "react-icons/bi";
 import { AiOutlineInstagram } from "react-icons/ai";
 import { BsTwitter } from "react-icons/bs";
 import { FaSnapchat } from "react-icons/fa";
+import NavRes from "./NavRes";
+import { useSelector } from "react-redux";
 
 export default function ContactUs() {
+  const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 1100);
+  const { isLoggedIn } = useSelector((state) => state.user);
+  useEffect(() => {
+    const handleResize = () => {
+      setIsSmallScreen(window.innerWidth < 1100);
+    };
+    window.addEventListener("resize", handleResize);
+    // eslint-disable-next-line
+  }, []);
   return (
     <>
+      {isSmallScreen && <NavRes />}
       <Flex className="contact1">
         <Flex
           className="heading1"
@@ -19,9 +31,19 @@ export default function ContactUs() {
           Track, Return/ Exchange or Cancel your orders hassle-free.
         </Flex>
         <Flex style={{ justifyContent: "center" }}>
-          <Link to="/order" style={{ textDecoration: "none" }}>
-            <Box className="shopbox2">MY ORDER</Box>
-          </Link>
+          {isLoggedIn ? (
+            <>
+              <Link to="/order" style={{ textDecoration: "none" }}>
+                <Box className="shopbox2">MY ORDER</Box>
+              </Link>
+            </>
+          ) : (
+            <>
+              <Link to="/login" style={{ textDecoration: "none" }}>
+                <Box className="shopbox2">MY ORDER</Box>
+              </Link>
+            </>
+          )}
         </Flex>
         <Flex className="contactflex2">
           <Flex

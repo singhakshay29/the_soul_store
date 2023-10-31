@@ -1,9 +1,19 @@
 import { Flex } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import NavRes from "./NavRes";
 
 export default function Term() {
+  const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 1100);
+  useEffect(() => {
+    const handleResize = () => {
+      setIsSmallScreen(window.innerWidth < 1100);
+    };
+    window.addEventListener("resize", handleResize);
+    // eslint-disable-next-line
+  }, []);
   return (
     <>
+      {isSmallScreen && <NavRes />}
       <Flex style={{ padding: "40px 80px", flexDirection: "column" }}>
         <Flex className="term">TERMS & CONDITIONS</Flex>
         <Flex className="termtext">

@@ -35,7 +35,6 @@ export default function ShoppingCart({ openPopover }) {
   const { cart } = useSelector((state) => state.app);
   let items, totalPrice, results;
   if (cart?.results > 0) {
-    console.log(cart);
     const { data } = cart;
     ({ results } = cart);
     ({ items, totalPrice } = data);
@@ -327,7 +326,7 @@ export default function ShoppingCart({ openPopover }) {
             </Text>
             <>
               <Box>
-                <Link to="/men">
+                <Link to="/">
                   <Button className="wishlist">CONTINUE SHOPPING</Button>
                 </Link>
 

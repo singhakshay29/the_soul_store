@@ -99,7 +99,6 @@ export default function SignUp() {
                 <GoogleOAuthProvider clientId="558764896658-onefrip4mvmp2o8e3eh5psn0vi9ln5ck.apps.googleusercontent.com">
                   <GoogleLogin
                     onSuccess={(credentialResponse) => {
-                      console.log(credentialResponse);
                       var decoded = jwt_decode(credentialResponse.credential);
                       handleLoginWithGoogle(decoded);
                     }}

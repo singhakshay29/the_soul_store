@@ -5,6 +5,7 @@ import { LOGOUT_USER } from "../action";
 import { GoDotFill } from "react-icons/go";
 import { getOrderList } from "../fetch";
 import { Link, useNavigate } from "react-router-dom";
+import NavRes from "./NavRes";
 
 export default function Order({ openPopover }) {
   const dispatch = useDispatch();
@@ -16,7 +17,6 @@ export default function Order({ openPopover }) {
   if (!isLoggedIn) {
     navigate("/");
   }
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -31,20 +31,29 @@ export default function Order({ openPopover }) {
 
     fetchData();
   }, []);
+  const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 1100);
+  useEffect(() => {
+    const handleResize = () => {
+      setIsSmallScreen(window.innerWidth < 1100);
+    };
+    window.addEventListener("resize", handleResize);
+    // eslint-disable-next-line
+  }, []);
 
   return (
     <>
+      {isSmallScreen && <NavRes />}
       <Flex
         style={{
-          justifyContent: "space-around",
-          width: "60rem",
+          justifyContent: "space-evenly",
+          overflow: "hidden",
         }}>
         <Container className="orderContainer">
           <Box className="orderContainerb1">
             <Text className="bottomTexth3 mT10p ">
-              {userdata?.name?.toUpperCase()}
+              {userdata.data?.name?.toUpperCase()}
             </Text>
-            <Text className="text3 mL10p mT10p">{userdata?.email}</Text>
+            <Text className="text3 mL10p mT10p">{userdata.data?.email}</Text>
           </Box>
           <Box className="orderContainerb2"></Box>
           <Link to="/login" style={{ textDecoration: "none" }}>

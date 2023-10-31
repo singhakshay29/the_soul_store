@@ -6,7 +6,6 @@ import Login from "./Components/Login";
 import Popup from "./Components/Popup";
 import SignUp from "./Components/SignUp";
 import Topbar from "./Components/Topbar";
-import MenNav from "./Components/MenNav";
 import Footer from "./Components/Footer";
 import Address from "./Components/Address";
 import Product from "./Components/Product";
@@ -39,11 +38,7 @@ function App() {
     <>
       <Router>
         <Topbar active={active} setActive={setActive} />
-        {active === "1" ? (
-          <WomenNav openPopover={openPopover} />
-        ) : (
-          <MenNav openPopover={openPopover} />
-        )}
+        <WomenNav active={active} openPopover={openPopover} />
         {isPopoverOpen && <Popup message={message} />}
         <Routes>
           <Route

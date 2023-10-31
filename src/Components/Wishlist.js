@@ -122,7 +122,7 @@ export default function Wishlist({ openPopover }) {
             {isLoggedIn ? (
               <>
                 <Box>
-                  <Link to="/men">
+                  <Link to="/">
                     <Button className="wishlist">CONTINUE SHOPPING</Button>
                   </Link>
                 </Box>
@@ -130,7 +130,7 @@ export default function Wishlist({ openPopover }) {
             ) : (
               <>
                 <Box>
-                  <Link to="/men">
+                  <Link to="/">
                     <Button className="wishlist">CONTINUE SHOPPING</Button>
                   </Link>
 

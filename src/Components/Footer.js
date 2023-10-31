@@ -128,7 +128,7 @@ export default function Footer({ active }) {
             </>
           ) : (
             <>
-              <Link to="/login">
+              <Link to="/login" style={{ textDecoration: "none" }}>
                 <Text className="bottomTexth2">CONTACT US</Text>
               </Link>
             </>
@@ -155,7 +155,7 @@ export default function Footer({ active }) {
             </>
           ) : (
             <>
-              <Link to="/login">
+              <Link to="/login" style={{ textDecoration: "none" }}>
                 <Text className="bottomTexth2">My ACCOUNT</Text>
               </Link>
             </>
