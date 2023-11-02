@@ -48,7 +48,7 @@ export default function Topbar({ active, setActive }) {
         </>
       ) : (
         <Flex
-          height="55px"
+          height="54px"
           bg="#e11b23"
           p="0"
           zIndex="1"

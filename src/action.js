@@ -81,9 +81,12 @@ export const GET_CART = () => {
 export const FETCH_PRODUCTS = () => {
   return async (dispatch) => {
     const parsedData = await productList();
-    const { products, productItemData } = parsedData;
-    dispatch(SET_PRODUCTS(products));
-    dispatch(SET_CART_FILTER(productItemData));
+    if (parsedData) {
+      const { products, productItemData } = parsedData;
+
+      dispatch(SET_PRODUCTS(products));
+      dispatch(SET_CART_FILTER(productItemData));
+    }
   };
 };
 

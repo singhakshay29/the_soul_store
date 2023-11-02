@@ -7,5 +7,7 @@ const Api = {
   order: "https://academics.newtonschool.co/api/v1/ecommerce/order/",
   productlistAPI:
     "https://academics.newtonschool.co/api/v1/ecommerce/clothes/products?limit=1599",
+  searchApi:
+    "https://academics.newtonschool.co/api/v1/ecommerce/clothes/products?search=",
 };
 export default Api;

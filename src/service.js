@@ -1,7 +1,67 @@
+export function service(product) {
+  function getSubCategoryData(products) {
+    const subCategoryData = products.map((item) => ({
+      brand: item.brand,
+      color: item.color,
+    }));
+
+    const uniqueBrands = [
+      ...new Set(subCategoryData.map((item) => item.brand)),
+    ];
+    const uniqueColors = [
+      ...new Set(subCategoryData.map((item) => item.color)),
+    ];
+    return {
+      brandName: uniqueBrands,
+      colorName: uniqueColors,
+      itemList: products,
+    };
+  }
+  const data = getSubCategoryData(product);
+  return data;
+}
+
+function filteredResultsbrand(givenArrayBrand, targetName) {
+  const result = givenArrayBrand.filter((item) => {
+    return item?.toLowerCase().startsWith(targetName.toLowerCase());
+  });
+  return result;
+}
+
+function filteredResultscategory(givenArrayBrand, targetName) {
+  const result = givenArrayBrand.filter((item) => {
+    return item?.toLowerCase().startsWith(targetName.toLowerCase());
+  });
+  return result;
+}
+
+export function isNamePresent(namesArray, targetName) {
+  const givenArrayBrand = namesArray?.uniqueBrands;
+  const givenArrayCategory = namesArray?.uniqueSubCategory;
+  const resultsBrand = filteredResultsbrand(givenArrayBrand, targetName);
+  const resultsCategory = filteredResultscategory(
+    givenArrayCategory,
+    targetName
+  );
+  const results = [...resultsBrand, ...resultsCategory].map((item) => {
+    return item;
+  });
+  return results;
+}
+
 export function service2(productList) {
   const productMen = productList.filter((item) => {
     return item.gender === "Men";
   });
+
+  function getAllData(product) {
+    const uniqueBrands = [...new Set(product.map((item) => item.brand))];
+    const uniqueSubCategory = [
+      ...new Set(product.map((item) => item.subCategory)),
+    ];
+    console.log(uniqueSubCategory);
+    return { uniqueBrands, uniqueSubCategory };
+  }
 
   const productWomen = productList.filter((item) => {
     return item.gender === "Women";
@@ -59,6 +119,8 @@ export function service2(productList) {
   }
 
   return {
+    productMenCollection: getAllData(productMen),
+    productWomenCollection: getAllData(productWomen),
     productMenTshirtData: getSubCategoryData(productMen, "tshirt"),
     productMenShirtData: getSubCategoryData(productMen, "shirt"),
     productMenSweaterData: getSubCategoryData(productMen, "sweater"),
@@ -91,7 +153,7 @@ export function service2(productList) {
     productWomenTshirtData: getSubCategoryData(productWomen, "tshirt"),
     productWomenJoggersData: getSubCategoryData(productWomen, "jogger"),
     productWomenJeansData: getSubCategoryData(productWomen, "jeans"),
-    productWomenshirtsData: getSubCategoryData(productWomen, "shirts"),
+    productWomenshirtsData: getSubCategoryData(productWomen, "shirt"),
     productWomenkurtiData: getSubCategoryData(productWomen, "kurti"),
     productWomenJumpsuitData: getSubCategoryData(productWomen, "jumpsuit"),
     productWomenWhiteData: getSubCategoryDataColor(productWomen, "WHITE"),

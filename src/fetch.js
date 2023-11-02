@@ -315,3 +315,42 @@ export function handleLoginGoogle(decoded) {
     jti,
   };
 }
+export async function searchList(title) {
+  try {
+    const response = await fetch(Api.searchApi + `${title}`, {
+      method: "GET",
+      headers: {
+        projectId: "dm3s7h4e43m1",
+      },
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    const data = await response.json();
+    return data?.data;
+  } catch (error) {
+    console.error("Something went wrong");
+  }
+}
+
+export const fetchDataByType = async (type) => {
+  switch (type.toLowerCase()) {
+    case "men":
+      return searchList('{"gender":"Men"}');
+    case "women":
+      return searchList('{"gender":"Women"}');
+    default:
+      throw new Error(`Invalid type: ${type}`);
+  }
+};
+
+export const searchFetchData = async (type, searchItem) => {
+  switch (type) {
+    case "brand":
+      return searchList(`{"brand":"${searchItem}"}`);
+    case "subCategory":
+      return searchList(`{"subCategory":"${searchItem}"}`);
+    default:
+      throw new Error(`Invalid type: ${type}`);
+  }
+};

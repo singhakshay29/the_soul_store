@@ -25,7 +25,7 @@ import wB from "../assets/wB.jpg";
 import bL from "../assets/bL.jpg";
 import { Link, useLocation } from "react-router-dom";
 import { FaBars } from "react-icons/fa";
-import { FaSearch } from "react-icons/fa";
+// import { FaSearch } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { BsHandbag } from "react-icons/bs";
 import { BiArrowBack } from "react-icons/bi";
@@ -37,13 +37,20 @@ import MBS from "../assets/MBS.jpg";
 import MBJS from "../assets/MBJS.jpg";
 import bannerJ from "../assets/bannerJ.jpg";
 import jog from "../assets/jog.jpg";
+// import { fetchDataByType, } from "../fetch";
+// import { service, isNamePresent } from "../service";
 import React, { useEffect, useRef, useState } from "react";
 
 export default function NavRes({ Heading, value, setBarOpen, barOpen }) {
+  // const navigation = useNavigate();
   const [scrollY, setScrollY] = useState(0);
-  const [active, setActive] = useState();
+  const [activeState, setActiveState] = useState();
   const [showSection, setShowSection] = useState("Men");
+  //const [searchItem, setSearchItem] = useState("");
+  // const [isDropdownOpen, setIsDropDownOpen] = useState(null);
+  // const [isDropdown, setIsDropDown] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
+  // const [searchResults, setSearchResults] = useState("");
   const { isLoggedIn } = useSelector((state) => state.user);
   const { wishlist, productsListFilter } = useSelector((state) => state.app);
   const { results } = useSelector((state) => state.app.cart);
@@ -51,6 +58,8 @@ export default function NavRes({ Heading, value, setBarOpen, barOpen }) {
   const data = useLocation();
   let { pathname } = data;
   const {
+    // productMenCollection,
+    // productWomenCollection,
     productMenTshirtData,
     productMenShirtData,
     productMenSweaterData,
@@ -101,9 +110,62 @@ export default function NavRes({ Heading, value, setBarOpen, barOpen }) {
     productMenPurpleData,
     productMenBeigeData,
   } = productsListFilter;
+  // const handleMouseEnter = (dropdown) => {
+  //   setIsDropDownOpen(dropdown);
+  // };
+
+  // const handleMouseLeave = () => {
+  //   setIsDropDownOpen(null);
+  // };
+
+  // const handleSearchInputChange = (event) => {
+  //   const newValue = event.target.value;
+  //   setSearchItem(newValue);
+  // };
+  // const handleSearchClick = async () => {
+  //   const searchData = await fetchDataByType(searchItem);
+  //   if (searchData.length > 0) {
+  //     const data = service(searchData);
+
+  //     navigation("/category", {
+  //       state: {
+  //         data: data,
+  //         Heading: "Search Results for",
+  //       },
+  //     });
+  //   }
+  // };
+
+  // async function handleItemClick(event) {
+  //   const clickedItem = event.target.textContent;
+  //   let storeData = [...productWomenCollection, ...productMenCollection];
+  //   const { uniqueBrands, uniqueSubCategory } = storeData;
+  //   let data = [];
+  //   if (uniqueBrands.includes(clickedItem)) {
+  //     data = await searchFetchData("brand", clickedItem);
+  //   } else if (uniqueSubCategory.includes(clickedItem)) {
+  //     data = await searchFetchData("subCategory", clickedItem);
+  //   } else {
+  //     console.log(
+  //       "User clicked on item not found in brand or category:",
+  //       clickedItem
+  //     );
+  //   }
+  //   if (data.length > 0) {
+  //     const searchdata = service(data);
+  //     console.log(searchdata);
+  //     navigation("/category", {
+  //       state: {
+  //         data: searchdata,
+  //         Heading: "Search Results for",
+  //       },
+  //     });
+  //   }
+  // }
+
   const btnRef = useRef();
   const handleClick = (event) => {
-    setActive(event.target.id);
+    setActiveState(event.target.id);
   };
   const onOpenHandle = () => {
     onOpen();
@@ -116,6 +178,20 @@ export default function NavRes({ Heading, value, setBarOpen, barOpen }) {
       setBarOpen(false);
     }, 100);
   };
+
+  // useEffect(() => {
+  //   const delay = 500;
+
+  //   const timer = setTimeout(() => {
+  //     if (searchItem !== "") {
+  //       let storeData = [...productMenCollection, ...productWomenCollection];
+  //       const value = isNamePresent(storeData, searchItem);
+  //       setSearchResults(value);
+  //     }
+  //   }, delay);
+
+  //   return () => clearTimeout(timer);
+  // }, [searchItem]);
   useEffect(() => {
     const handleScroll = () => {
       setScrollY(window.scrollY);
@@ -165,18 +241,21 @@ export default function NavRes({ Heading, value, setBarOpen, barOpen }) {
               style={{
                 display: "flex",
               }}>
-              <Box
+              {/* <Box
                 style={{
                   marginLeft: "20px",
                   marginTop: "17px",
                 }}>
                 <FaSearch
+                  onMouseEnter={() => handleMouseEnter("Search")}
+                  onMouseLeave={() => handleMouseLeave()}
+                  onClick={() => handleSearchClick()}
                   style={{
                     fontSize: "22px",
                     color: "grey",
                   }}
                 />
-              </Box>
+              </Box> */}
               {pathname === "/category" && (
                 <>
                   <Link to="/wishlist">
@@ -189,7 +268,7 @@ export default function NavRes({ Heading, value, setBarOpen, barOpen }) {
                     )}
                     <AiOutlineHeart
                       className={
-                        active === "2"
+                        activeState === "2"
                           ? "activeIcon navbuttonicon"
                           : "navbuttonicon"
                       }
@@ -209,7 +288,7 @@ export default function NavRes({ Heading, value, setBarOpen, barOpen }) {
                 )}
                 <BsHandbag
                   className={
-                    active === "3"
+                    activeState === "3"
                       ? "activeIcon navbuttonicon"
                       : "navbuttonicon"
                   }
@@ -259,18 +338,73 @@ export default function NavRes({ Heading, value, setBarOpen, barOpen }) {
               style={{
                 display: "flex",
               }}>
-              <Box
+              {/* <Box
                 style={{
                   marginLeft: "20px",
                   marginTop: "17px",
                 }}>
                 <FaSearch
+                  onMouseEnter={() => handleMouseEnter("Search")}
+                  onMouseLeave={() => handleMouseLeave()}
+                  onClick={() => handleSearchClick()}
                   style={{
                     fontSize: "22px",
                     color: "grey",
                   }}
                 />
               </Box>
+              {isDropdownOpen === "Search" && (
+                <Box
+                  onMouseEnter={() => handleMouseEnter("Search")}
+                  onMouseLeave={() => {
+                    handleMouseLeave();
+                    setIsDropDown(false);
+                  }}
+                  className="navSearchboxRes">
+                  <Flex className="searchNavInput">
+                    <input
+                      placeholder="Search"
+                      value={searchItem}
+                      onChange={handleSearchInputChange}
+                      onClick={() => setIsDropDown(true)}
+                      style={{
+                        width: "9.8rem",
+                        border: "none",
+                        outline: "none",
+                      }}></input>
+                    <FaSearch
+                      onClick={() => handleSearchClick()}
+                      style={{
+                        fontSize: "22px",
+                        color: "grey",
+                        cursor: "pointer",
+                      }}
+                    />
+                  </Flex>
+                </Box>
+              )}
+              {isDropdown && (
+                <Box
+                  onMouseEnter={() => {
+                    handleMouseEnter("Search");
+                    setIsDropDown(true);
+                  }}
+                  onMouseLeave={() => {
+                    handleMouseLeave();
+                    setIsDropDown(false);
+                  }}>
+                  {searchResults.length > 0 && (
+                    <Flex className="showSuggestion" onClick={handleItemClick}>
+                      {searchResults.map((item, index) => (
+                        <Flex className="showSuggestionText" key={index}>
+                          {item}
+                        </Flex>
+                      ))}
+                    </Flex>
+                  )}
+                </Box>
+              )} */}
+
               <Link to="/wishlist">
                 {isLoggedIn && (
                   <>
@@ -281,7 +415,7 @@ export default function NavRes({ Heading, value, setBarOpen, barOpen }) {
                 )}
                 <AiOutlineHeart
                   className={
-                    active === "2"
+                    activeState === "2"
                       ? "activeIcon navbuttonicon"
                       : "navbuttonicon"
                   }
@@ -299,7 +433,7 @@ export default function NavRes({ Heading, value, setBarOpen, barOpen }) {
                 )}
                 <BsHandbag
                   className={
-                    active === "3"
+                    activeState === "3"
                       ? "activeIcon navbuttonicon"
                       : "navbuttonicon"
                   }

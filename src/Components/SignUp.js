@@ -1,5 +1,5 @@
 import jwt_decode from "jwt-decode";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
 import {
@@ -13,6 +13,7 @@ import {
 } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
 import { LOGIN_FAILURE, SIGNUP_USER } from "../action";
+import NavRes from "./NavRes";
 
 export default function SignUp() {
   const navigator = useNavigate();
@@ -24,6 +25,7 @@ export default function SignUp() {
   const [finalpassword, setfinalPassword] = useState("");
   const { errorMessage } = useSelector((state) => state.user);
   const { isLoggedIn } = useSelector((state) => state.user);
+  const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 1000);
   async function handleLoginWithGoogle(decode) {
     const { given_name, family_name, email } = await decode;
     setEmail(email);
@@ -53,9 +55,17 @@ export default function SignUp() {
   if (isLoggedIn) {
     navigator("/");
   }
+  useEffect(() => {
+    const handleResize = () => {
+      setIsSmallScreen(window.innerWidth < 1000);
+    };
+    window.addEventListener("resize", handleResize);
+    // eslint-disable-next-line
+  }, []);
 
   return (
     <>
+      {isSmallScreen && <NavRes />}
       <Flex className="loginBox">
         <Flex className="lB1">
           <Container className="lC1">

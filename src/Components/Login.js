@@ -12,6 +12,7 @@ import {
   Text,
   Flex,
 } from "@chakra-ui/react";
+import NavRes from "./NavRes";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -21,6 +22,7 @@ export default function Login() {
   const [errorColor, setErrorColor] = useState("");
   const { errorMessage } = useSelector((state) => state.user);
   const { isLoggedIn } = useSelector((state) => state.user);
+  const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 1000);
 
   const handleLogin = (e) => {
     if (e) {
@@ -41,10 +43,15 @@ export default function Login() {
   }
   useEffect(() => {
     dispatch(LOGIN_FAILURE(""));
+    const handleResize = () => {
+      setIsSmallScreen(window.innerWidth < 1000);
+    };
+    window.addEventListener("resize", handleResize);
     // eslint-disable-next-line
   }, []);
   return (
     <>
+      {isSmallScreen && <NavRes />}
       <Flex className="loginBox">
         <Flex className="lB1">
           <Container className="lC1">

@@ -3,7 +3,7 @@ iframe#webpack-dev-server-client-overlay {
 }
 .topbarbutton {
   display: block;
-  padding: 18px 21px;
+  padding: 17px 21px;
   background: #ed2d2f;
   color: #fff;
   font-family: futura-pt, sans-serif;
@@ -277,6 +277,54 @@ iframe#webpack-dev-server-client-overlay {
   border-bottom: 4px #eee solid;
   box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.2);
 }
+.navSearchbox {
+  position: absolute;
+  font-size: 22px;
+  margin-top: 14.8px;
+  z-index: 1;
+  color: #4f5b66;
+  right: 9.7rem;
+  overflow: hidden;
+}
+
+.searchNavInput {
+  width: 11.5rem;
+  height: 1.5rem;
+  float: right;
+  border-radius: 5px;
+  color: #262626;
+  border: 1px solid transparent;
+  transition: width 0.55s ease;
+  border: 2px solid #707070;
+}
+.showSuggestion {
+  position: absolute;
+  background-color: #fff;
+  color: #292b2c;
+  z-index: 2;
+  border-radius: 0;
+  border-top: 3px #eee solid;
+  border-bottom: 4px #eee solid;
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.2);
+  flex-direction: column;
+  width: 180px;
+  margin-top: 2.7rem;
+  margin-left: -11.5rem;
+  overflow-y: scroll;
+  max-height: 20rem;
+}
+.showSuggestionText {
+  padding: 5px 20px;
+  font-size: 13px;
+  text-transform: capitalize;
+  font-weight: 500;
+  cursor: pointer;
+}
+.showSuggestionText:hover {
+  color: #ed2d2f;
+  background-color: #eee;
+}
+
 .uPT {
   width: 100px;
   margin-top: 3.9rem;
@@ -655,7 +703,7 @@ iframe#webpack-dev-server-client-overlay {
 }
 .cardContainerbox {
   margin: 0 0.6rem;
-  width: 15rem;
+  width: 14rem;
   height: 27rem;
   overflow: hidden;
   position: relative;
@@ -1807,15 +1855,15 @@ iframe#webpack-dev-server-client-overlay {
 }
 .bigTextMem {
   position: absolute;
-  top: 30%; /* Center vertically */
-  left: 50%; /* Center horizontally */
+  top: 30%;
+  left: 50%;
   transform: translate(-50%, -50%);
 }
 
 .bigText2Mem {
   position: absolute;
-  top: 45%; /* Center vertically */
-  left: 50%; /* Center horizontally */
+  top: 45%;
+  left: 50%;
   transform: translate(-50%, -50%);
 }
 .bigText22Mem {
@@ -1964,4 +2012,9 @@ iframe#webpack-dev-server-client-overlay {
   color: #5a5e68;
   font-weight: 400;
   line-height: 1.5;
+}
+.loderbox1 {
+  height: 70vh;
+  justify-content: center;
+  align-items: center;
 }
