@@ -207,6 +207,7 @@ export default function Section({ active, setActive }) {
                                   state={{
                                     data: productWomenTshirtData,
                                     Banner: basicB,
+                                    BannerRes: basis,
                                     Heading: "Women's Basics",
                                   }}>
                                   <img
@@ -222,6 +223,7 @@ export default function Section({ active, setActive }) {
                                   state={{
                                     data: productWomenkurtiData,
                                     Heading: "Women Dresses",
+                                    BannerRes: DW,
                                   }}>
                                   <img
                                     src={DW}
@@ -237,6 +239,7 @@ export default function Section({ active, setActive }) {
                                     data: productWomenJumpsuitData,
                                     Banner: bannerJ,
                                     Heading: "Women Jumpsuit",
+                                    BannerRes: JumpBannerSmall,
                                   }}>
                                   <img
                                     src={JumpBannerSmall}
@@ -340,6 +343,7 @@ export default function Section({ active, setActive }) {
                                   state={{
                                     data: productMenTshirtData,
                                     Heading: "Men's Oversized T-Shirts",
+                                    BannerRes: c1,
                                   }}>
                                   <img
                                     src={c1}
@@ -354,6 +358,7 @@ export default function Section({ active, setActive }) {
                                   state={{
                                     data: productMenShirtData,
                                     Heading: "Men's Shirt",
+                                    BannerRes: c2,
                                   }}>
                                   <Image
                                     src={c2}
@@ -369,6 +374,7 @@ export default function Section({ active, setActive }) {
                                   state={{
                                     data: productMenTshirtData,
                                     Heading: "Men's T-Shirts",
+                                    BannerRes: c3,
                                   }}>
                                   <img
                                     src={c3}
@@ -497,6 +503,7 @@ export default function Section({ active, setActive }) {
                                   Banner: bannerT,
                                   data: productWomenTshirtData,
                                   Heading: "Women T-Shirt",
+                                  BannerRes: btS,
                                 }}>
                                 <img
                                   src={btS}
@@ -510,7 +517,7 @@ export default function Section({ active, setActive }) {
                                 to="/category"
                                 state={{
                                   Banner: bannerBS,
-
+                                  BannerRes: shirt1,
                                   data: productWomenshirtsData,
                                   Heading: "Women's Shirts",
                                 }}>
@@ -526,7 +533,7 @@ export default function Section({ active, setActive }) {
                                 to="/category"
                                 state={{
                                   Banner: jog,
-
+                                  BannerRes: cargo,
                                   Heading: "Women Joggers",
                                   data: productWomenJoggersData,
                                 }}>
@@ -655,11 +662,12 @@ export default function Section({ active, setActive }) {
                                   Banner: MBJ,
                                   data: productMenJoggersData,
                                   Heading: "Men's Joggers",
+                                  BannerRes: menJog,
                                 }}>
                                 <img
                                   src={menJog}
                                   className="categoryImage"
-                                  alt="SHIRTS"
+                                  alt=""
                                 />
                               </Link>
                             </Container>
@@ -670,6 +678,7 @@ export default function Section({ active, setActive }) {
                                   Banner: MBS,
                                   data: productMenShortsData,
                                   Heading: "Men's Shorts",
+                                  BannerRes: menShorts,
                                 }}>
                                 <img
                                   src={menShorts}
@@ -685,6 +694,7 @@ export default function Section({ active, setActive }) {
                                   Banner: MBJS,
                                   data: productMenJeansData,
                                   Heading: "Men's Jeans",
+                                  BannerRes: menJeans,
                                 }}>
                                 <img
                                   src={menJeans}

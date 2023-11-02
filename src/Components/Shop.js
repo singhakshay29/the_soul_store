@@ -1,5 +1,4 @@
 import Card from "./Card";
-import c1 from "../assets/c1.png";
 import { RiFilter2Line } from "react-icons/ri";
 import { BsSortUp } from "react-icons/bs";
 import React, { useEffect, useRef, useState } from "react";
@@ -219,7 +218,7 @@ export default function Shop({ openPopover }) {
 
           {isSmallScreenMini ? (
             <img
-              src={BannerRes ? BannerRes : c1}
+              src={BannerRes ? BannerRes : null}
               alt=""
               style={{ width: "100%" }}
             />
