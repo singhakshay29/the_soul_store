@@ -8,13 +8,13 @@ import bgPink from "../assets/bgPink.jpg";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 
 export default function Card({ item, index, responsive }) {
-  const [displayImage, setDisplayImage] = useState(bgPink);
   const { wishlist } = useSelector((state) => state.app);
+  const [displayImage, setDisplayImage] = useState(bgPink);
   const [isInWishlist, setIsInWishlist] = useState(false);
   const { isLoggedIn } = useSelector((state) => state.user);
   const productId = item?._id;
-  let itemName = item?.name;
   let brandName = item?.brand;
+  let itemName = item?.name;
 
   if (itemName?.startsWith("Women's ")) {
     itemName = itemName.replace("Women's ", "").trim();
@@ -27,8 +27,10 @@ export default function Card({ item, index, responsive }) {
   }
 
   useEffect(() => {
-    if (wishlist?.some((wish) => wish.products._id === productId)) {
+    if (wishlist.some((wish) => wish.products._id === productId)) {
       setIsInWishlist(true);
+    } else {
+      setIsInWishlist(false);
     }
   }, [wishlist, productId]);
 
