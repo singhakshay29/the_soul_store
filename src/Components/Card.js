@@ -27,12 +27,14 @@ export default function Card({ item, index, responsive }) {
   }
 
   useEffect(() => {
-    if (wishlist.some((wish) => wish.products._id === productId)) {
-      setIsInWishlist(true);
-    } else {
-      setIsInWishlist(false);
+    if (isLoggedIn) {
+      if (wishlist.some((wish) => wish.products._id === productId)) {
+        setIsInWishlist(true);
+      } else {
+        setIsInWishlist(false);
+      }
     }
-  }, [wishlist, productId]);
+  }, [wishlist, productId, isLoggedIn]);
 
   useEffect(() => {
     async function fetchImage() {
