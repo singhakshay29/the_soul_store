@@ -129,12 +129,14 @@ export default function SignUp() {
               <Input
                 placeholder="Choose New Password*"
                 className="loginInput"
+                type="password"
                 value={finalpassword}
                 onChange={(e) => setfinalPassword(e.target.value)}></Input>
               <Input
                 placeholder="Confirm Password*"
                 className="loginInput"
                 value={password}
+                type="password"
                 onChange={(e) => setPassword(e.target.value)}></Input>
               <Input
                 placeholder="Email*"

@@ -23,7 +23,7 @@ export const LOGIN_FAILURE = (payload) => ({
 
 export const LOADING_ACTION = (payload) => {
   return {
-    type: actiontype.LOADING,
+    type: actiontype.LOADING_ACTION,
     payload: payload,
   };
 };
@@ -83,7 +83,6 @@ export const FETCH_PRODUCTS = () => {
     const parsedData = await productList();
     if (parsedData) {
       const { products, productItemData } = parsedData;
-
       dispatch(SET_PRODUCTS(products));
       dispatch(SET_CART_FILTER(productItemData));
     }

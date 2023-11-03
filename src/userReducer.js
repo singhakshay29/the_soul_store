@@ -3,7 +3,6 @@ const baseInitialState = {
   isLoggedIn: false,
   errorMessage: "",
   userData: {},
-  loading: false,
   token: "",
 };
 
@@ -22,9 +21,6 @@ const userReducer = (state = initialState, action) => {
   switch (action.type) {
     case actiontype.LOGOUT_USER:
       return { ...baseInitialState };
-
-    case actiontype.LOADING_ACTION:
-      return { ...state, loading: action.payload };
 
     case actiontype.LOGIN_FAILURE:
       return {

@@ -59,7 +59,6 @@ export function service2(productList) {
     const uniqueSubCategory = [
       ...new Set(product.map((item) => item.subCategory)),
     ];
-    console.log(uniqueSubCategory);
     return { uniqueBrands, uniqueSubCategory };
   }
 

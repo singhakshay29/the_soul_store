@@ -32,7 +32,12 @@ import menJeans from "../assets/menJeans.jpg";
 import JeansSmall from "../assets/JeansSmall.jpg";
 import tshirtsmall from "../assets/tshirtsmall.jpg";
 import sweatshirt from "../assets/sweatshirt.jpg";
-import { FETCH_PRODUCTS, GET_CART, GET_WISHLIST } from "../action";
+import {
+  FETCH_PRODUCTS,
+  GET_CART,
+  GET_WISHLIST,
+  LOADING_ACTION,
+} from "../action";
 import bannerBS from "../assets/bannerBS.jpg";
 import { Link, NavLink } from "react-router-dom";
 import Collection from "../assets/Collection.jpg";
@@ -54,13 +59,14 @@ export default function Section({ active, setActive }) {
   const [isSmallScreenMini, setIsSmallScreenMini] = useState(
     window.innerWidth < 750
   );
+  const dispatch = useDispatch();
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 1200);
-  const [loading, setLoading] = useState(true);
-  const { productsListFilter } = useSelector((state) => state.app);
+  const { productsListFilter, loading } = useSelector((state) => state.app);
   useEffect(() => {
     if (Object.keys(productsListFilter).length > 0) {
-      setLoading(false);
+      dispatch(LOADING_ACTION(false));
     }
+    // eslint-disable-next-line no-use-before-define, react-hooks/exhaustive-deps
   }, [productsListFilter]);
   const {
     productWomenkurtiData,
@@ -75,8 +81,7 @@ export default function Section({ active, setActive }) {
     productWomenJoggersData,
     productWomenJumpsuitData,
   } = productsListFilter;
-  console.log(productsListFilter);
-  const dispatch = useDispatch();
+
   const handleClick = (event) => {
     setActive(event.target.id);
   };

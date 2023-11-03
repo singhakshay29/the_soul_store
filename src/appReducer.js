@@ -3,6 +3,7 @@ import actiontype from "./actiontype";
 const baseInitialState = {
   cart: [],
   wishlist: [],
+  loading: true,
   productsList: [],
   productsListFilter: {},
 };
@@ -29,6 +30,8 @@ const appReducer = (state = initialState, action) => {
         ...state,
         productsList: action.payload,
       };
+    case actiontype.LOADING_ACTION:
+      return { ...state, loading: action.payload };
     case actiontype.SET_CART_FILTER:
       return {
         ...state,

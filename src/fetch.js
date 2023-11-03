@@ -2,29 +2,37 @@ import Api from "./Api";
 import { service2 } from "./service";
 
 export async function productList() {
-  try {
-    const response = await fetch(Api.productlistAPI, {
-      method: "GET",
-      headers: {
-        projectId: "dm3s7h4e43m1",
-      },
-    });
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
+  const data = localStorage.getItem("productsList");
+  const productsList = JSON.parse(data);
+  let productItemData = [];
+  let products = [];
+  if (productsList) {
+    productItemData = service2(productsList);
+  } else {
+    try {
+      const response = await fetch(Api.productlistAPI, {
+        method: "GET",
+        headers: {
+          projectId: "dm3s7h4e43m1",
+        },
+      });
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      const data = await response.json();
+      products = data.data;
+      if (products.length > 0) {
+        productItemData = service2(products);
+      }
+      localStorage.setItem("productsList", JSON.stringify(products));
+    } catch (error) {
+      console.error("Something went wrong");
     }
-    const data = await response.json();
-    const products = data.data;
-    let productItemData = [];
-    if (products.length > 0) {
-      productItemData = service2(products);
-    }
-    return {
-      products,
-      productItemData,
-    };
-  } catch (error) {
-    console.error("Something went wrong");
   }
+  return {
+    products,
+    productItemData,
+  };
 }
 
 export async function loginUser(email, password) {

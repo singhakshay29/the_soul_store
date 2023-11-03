@@ -28,30 +28,32 @@ import MBS from "../assets/MBS.jpg";
 import MBJS from "../assets/MBJS.jpg";
 import blueBanner from "../assets/bluebanner.jpg";
 import bL from "../assets/bL.jpg";
-import { LOGOUT_USER } from "../action";
+import { LOADING_ACTION, LOGOUT_USER } from "../action";
 import { useDispatch, useSelector } from "react-redux";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { fetchDataByType, searchFetchData } from "../fetch";
 import { service, isNamePresent } from "../service";
 
 export default function WomenNav({ openPopover, active }) {
-  const [activeState, setActive] = useState();
-  const [scrollY, setScrollY] = useState(0);
   const dispatch = useDispatch();
   const navigation = useNavigate();
+  const [activeState, setActive] = useState();
+  const [scrollY, setScrollY] = useState(0);
   const [searchItem, setSearchItem] = useState("");
   const [isDropdownOpen, setIsDropDownOpen] = useState(null);
   const [isDropdown, setIsDropDown] = useState(false);
   const { isLoggedIn } = useSelector((state) => state.user);
   const { results } = useSelector((state) => state.app.cart);
   const [searchResults, setSearchResults] = useState("");
-  const [loading, setLoading] = useState(true);
-  const { wishlist, productsListFilter } = useSelector((state) => state.app);
+  const { wishlist, productsListFilter, loading } = useSelector(
+    (state) => state.app
+  );
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 1200);
   useEffect(() => {
     if (Object.keys(productsListFilter).length > 0) {
-      setLoading(false);
+      dispatch(LOADING_ACTION(false));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [productsListFilter]);
   const {
     productMenCollection,
