@@ -1802,16 +1802,21 @@ export default function WomenNav({ openPopover, active }) {
                 style={{
                   marginLeft: "20px",
                   marginTop: "17px",
+                  width: "22px",
                 }}>
-                <FaSearch
-                  onMouseEnter={() => handleMouseEnter("Search")}
-                  onMouseLeave={() => handleMouseLeave()}
-                  onClick={() => handleSearchClick()}
-                  style={{
-                    fontSize: "22px",
-                    color: "grey",
-                  }}
-                />
+                {isDropdownOpen !== "Search" && (
+                  <>
+                    <FaSearch
+                      onMouseEnter={() => handleMouseEnter("Search")}
+                      onMouseLeave={() => handleMouseLeave()}
+                      onClick={() => handleSearchClick()}
+                      style={{
+                        fontSize: "22px",
+                        color: "grey",
+                      }}
+                    />
+                  </>
+                )}
               </Box>
               {isDropdownOpen === "Search" && (
                 <Box
@@ -1823,7 +1828,7 @@ export default function WomenNav({ openPopover, active }) {
                   className="navSearchbox">
                   <Flex className="searchNavInput">
                     <input
-                      placeholder="Search"
+                      placeholder="What are you looking for ?"
                       value={searchItem}
                       onChange={handleSearchInputChange}
                       onClick={() => setIsDropDown(true)}
@@ -1831,6 +1836,7 @@ export default function WomenNav({ openPopover, active }) {
                         width: "9.8rem",
                         border: "none",
                         outline: "none",
+                        backgroundColor: "#efeff1",
                       }}></input>
                     <FaSearch
                       onClick={() => handleSearchClick()}

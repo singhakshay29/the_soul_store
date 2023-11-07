@@ -285,17 +285,20 @@ iframe#webpack-dev-server-client-overlay {
   color: #4f5b66;
   right: 9.7rem;
   overflow: hidden;
+  background-color: #efeff1;
 }
 
 .searchNavInput {
-  width: 11.5rem;
+  width: 2.5rem;
   height: 1.5rem;
   float: right;
   border-radius: 5px;
   color: #262626;
   border: 1px solid transparent;
   transition: width 0.55s ease;
-  border: 2px solid #707070;
+}
+.searchNavInput:hover {
+  width: 11.5rem;
 }
 .showSuggestion {
   position: absolute;
@@ -1168,7 +1171,7 @@ iframe#webpack-dev-server-client-overlay {
   border: 1px solid#eee;
   flex-direction: column;
   margin-top: 2rem;
-  /* min-width: 40rem; */
+  min-width: 40rem;
 }
 
 .shopbox {
