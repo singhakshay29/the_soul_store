@@ -60,6 +60,9 @@ export default function SignUp() {
       setIsSmallScreen(window.innerWidth < 1000);
     };
     window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
     // eslint-disable-next-line
   }, []);
 

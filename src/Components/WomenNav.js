@@ -251,6 +251,7 @@ export default function WomenNav({ openPopover, active }) {
     window.addEventListener("scroll", handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);
+      window.addEventListener("resize", handleResize);
     };
   }, []);
   return (
@@ -1896,15 +1897,16 @@ export default function WomenNav({ openPopover, active }) {
                       <Link to="/profile" style={{ textDecoration: "none" }}>
                         <Text className="navdropboxh1"> Profile</Text>
                       </Link>
-
-                      <Text
-                        onClick={() => {
-                          dispatch(LOGOUT_USER());
-                          openPopover("Succesfully Logout");
-                        }}
-                        className="navdropboxh1">
-                        Log Out
-                      </Text>
+                      <Link to="/login" style={{ textDecoration: "none" }}>
+                        <Text
+                          onClick={() => {
+                            dispatch(LOGOUT_USER());
+                            openPopover("Succesfully Logout");
+                          }}
+                          className="navdropboxh1">
+                          Log Out
+                        </Text>
+                      </Link>
                     </Box>
                   )}
                 </>

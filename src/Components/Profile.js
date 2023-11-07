@@ -8,6 +8,7 @@ import NavRes from "./NavRes";
 export default function Profile() {
   const dispatch = useDispatch();
   const data = useSelector((state) => state.user.userData);
+  console.log(data);
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 1100);
   useEffect(() => {
     const handleResize = () => {
@@ -26,9 +27,9 @@ export default function Profile() {
         <Container className="orderContainer">
           <Box className="orderContainerb1">
             <Text className="bottomTexth3 mT10p ">
-              {data?.data?.name?.toUpperCase()}
+              {data?.name?.toUpperCase()}
             </Text>
-            <Text className="text44 mL10p mT10p">{data?.data?.email}</Text>
+            <Text className="text44 mL10p mT10p">{data?.email}</Text>
           </Box>
           <Box className="orderContainerb2"></Box>
           <Link to="/login" style={{ textDecoration: "none" }}>
@@ -62,7 +63,7 @@ export default function Profile() {
               </label>
               <input
                 className="profile1input"
-                defaultValue={data?.data?.email}
+                defaultValue={data?.email}
                 type="text"
                 style={{ cursor: "not-allowed" }}></input>
             </Flex>
@@ -86,7 +87,7 @@ export default function Profile() {
                 className="profile1input"
                 style={{ width: "10rem" }}
                 type="text"
-                defaultValue={data?.data?.name}></input>
+                defaultValue={data?.name}></input>
             </Flex>
           </Flex>
         </Flex>

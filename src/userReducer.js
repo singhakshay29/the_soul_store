@@ -7,12 +7,16 @@ const baseInitialState = {
 };
 
 const initialUserDetails = localStorage.getItem("authorization");
+const parsedData = initialUserDetails ? JSON.parse(initialUserDetails) : null;
 
 const initialState = initialUserDetails
   ? {
       ...baseInitialState,
       isLoggedIn: true,
-      userData: JSON.parse(initialUserDetails).signup.data,
+      userData:
+        parsedData.signup.data.user === undefined
+          ? parsedData.signup.data
+          : parsedData.signup.data.user,
       token: JSON.parse(initialUserDetails).signup.token,
     }
   : baseInitialState;
@@ -31,7 +35,10 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
         isLoggedIn: true,
-        userData: action.payload,
+        userData:
+          parsedData.signup.data.user === undefined
+            ? parsedData.signup.data
+            : parsedData.signup.data.user,
       };
     default:
       return state;

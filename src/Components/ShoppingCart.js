@@ -238,6 +238,9 @@ export default function ShoppingCart({ openPopover }) {
       setIsSmallScreen(window.innerWidth < 1000);
     };
     window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
     // eslint-disable-next-line
   }, []);
   return (

@@ -47,6 +47,9 @@ export default function Login() {
       setIsSmallScreen(window.innerWidth < 1000);
     };
     window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
     // eslint-disable-next-line
   }, []);
   return (

@@ -26,6 +26,9 @@ export default function ImageSlider({ w1, w2, w3, w4 }) {
     };
 
     window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
   }, []);
 
   const slideImages = [

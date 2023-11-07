@@ -47,6 +47,9 @@ export default function Wishlist({ openPopover }) {
 
     window.addEventListener("resize", handleResize);
     dispatch(GET_WISHLIST());
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
     // eslint-disable-next-line
   }, []);
 

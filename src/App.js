@@ -50,7 +50,9 @@ function App() {
           <Route
             path="category"
             element={<Shop openPopover={openPopover} />}></Route>
-          <Route path="product" element={<Product />}></Route>
+          <Route
+            path="product"
+            element={<Product openPopover={openPopover} />}></Route>
           <Route
             path="wishlist"
             element={<Wishlist openPopover={openPopover} />}></Route>

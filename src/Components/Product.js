@@ -32,7 +32,7 @@ import { addCart } from "../fetch";
 import ImageSliderRes from "./ImageSliderRes";
 import NavRes from "./NavRes";
 
-export default function Product() {
+export default function Product({ openPopover }) {
   const dispatch = useDispatch();
   const location = useLocation();
   const { data } = location.state;
@@ -100,8 +100,6 @@ export default function Product() {
         });
         const data = await response.json();
         if (data.status === "success") {
-          console.log(data);
-          console.log(data.status);
           setproduct(data.data);
           setProductImages(data.data.images);
           setLoading(false);
@@ -115,10 +113,14 @@ export default function Product() {
   }, [id]);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     const handleResize = () => {
       setIsSmallScreen(window.innerWidth < 1100);
     };
     window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
     // eslint-disable-next-line
   }, []);
 
@@ -368,16 +370,31 @@ export default function Product() {
                         {isLoggedIn ? (
                           <>
                             <Button
-                              onClick={() => addCart(product._id, quantity)}
+                              onClick={() => {
+                                addCart(product._id, quantity);
+                                openPopover(
+                                  "Product Added to your cart successfully"
+                                );
+                              }}
                               className="buttonCartP">
-                              ADD TO CART
+                              <Link
+                                to="/shoppingcart"
+                                style={{
+                                  textDecoration: "none",
+                                  color: "white",
+                                }}>
+                                ADD TO CART
+                              </Link>
                             </Button>
                             {favId.includes(product._id) ? (
                               <>
                                 <Button
-                                  onClick={() =>
-                                    dispatch(REMOVE_FROM_WISHLIST(product._id))
-                                  }
+                                  onClick={() => {
+                                    dispatch(REMOVE_FROM_WISHLIST(product._id));
+                                    openPopover(
+                                      "Product Removed from your Wishlist"
+                                    );
+                                  }}
                                   className="wishlistbutton">
                                   <AiFillHeart style={{ fontSize: "1rem" }} />
                                   ADDED TO WISHLIST
@@ -386,9 +403,12 @@ export default function Product() {
                             ) : (
                               <>
                                 <Button
-                                  onClick={() =>
-                                    dispatch(ADD_TO_WISHLIST(product._id))
-                                  }
+                                  onClick={() => {
+                                    dispatch(ADD_TO_WISHLIST(product._id));
+                                    openPopover(
+                                      "Product Added to your Wishlist"
+                                    );
+                                  }}
                                   className="wishlistbutton ">
                                   <AiOutlineHeart
                                     style={{ fontSize: "1rem" }}

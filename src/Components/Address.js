@@ -130,6 +130,9 @@ export default function Address() {
     };
     window.addEventListener("resize", handleResize);
     localStorage.setItem("userDetailsList", JSON.stringify(userDetailsList));
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
   }, [userDetailsList]);
 
   return (

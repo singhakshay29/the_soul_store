@@ -1089,6 +1089,12 @@ iframe#webpack-dev-server-client-overlay {
   flex-direction: column;
   min-height: 25rem;
 }
+
+.orderContainerRes {
+  justify-content: center;
+  flex-direction: column;
+  min-height: 25rem;
+}
 .orderContainerb1 {
   width: 200px;
   display: flex;
@@ -1097,6 +1103,7 @@ iframe#webpack-dev-server-client-overlay {
   height: 120px;
   margin-top: 2rem;
 }
+
 .orderContainerb2 {
   width: 200px;
   display: flex;
@@ -1154,6 +1161,14 @@ iframe#webpack-dev-server-client-overlay {
   border: 1px solid#eee;
   flex-direction: column;
   margin-top: 2rem;
+  min-width: 40rem;
+}
+
+.cartItemRes {
+  border: 1px solid#eee;
+  flex-direction: column;
+  margin-top: 2rem;
+  /* min-width: 40rem; */
 }
 
 .shopbox {

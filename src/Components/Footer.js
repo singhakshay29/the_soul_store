@@ -47,6 +47,9 @@ export default function Footer({ active }) {
       setIsSmallScreen(window.innerWidth < 1100);
     };
     window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
     // eslint-disable-next-line
   }, []);
   return (

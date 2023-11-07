@@ -199,6 +199,7 @@ export default function Shop({ openPopover }) {
   };
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     const handleResizeMini = () => {
       setIsSmallScreenMini(window.innerWidth < 750);
     };
