@@ -1,4 +1,5 @@
 import Api from "./Api";
+import axios from "axios";
 import { service2 } from "./service";
 
 export async function productList() {
@@ -10,17 +11,15 @@ export async function productList() {
     productItemData = service2(productsList);
   } else {
     try {
-      const response = await fetch(Api.productlistAPI, {
-        method: "GET",
+      const response = await axios.get(Api.productlistAPI, {
         headers: {
           projectId: "dm3s7h4e43m1",
         },
       });
-      if (!response.ok) {
+      if (response.status !== 200) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
-      const data = await response.json();
-      products = data.data;
+      products = response.data.data;
       if (products.length > 0) {
         productItemData = service2(products);
       }
@@ -38,21 +37,22 @@ export async function productList() {
 export async function loginUser(email, password) {
   try {
     const url = Api.login;
-    const response = await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        projectId: "dm3s7h4e43m1",
-      },
-      body: JSON.stringify({
+    const response = await axios.post(
+      url,
+      {
         email: `${email}`,
         password: `${password}`,
         appType: "ecommerce",
-      }),
-    });
-    console.log(response);
-    if (response.ok) {
-      const data = await response.json();
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          projectId: "dm3s7h4e43m1",
+        },
+      }
+    );
+    if (response.status === 200) {
+      const data = response.data;
       localStorage.setItem(
         "authorization",
         JSON.stringify({
@@ -61,7 +61,7 @@ export async function loginUser(email, password) {
       );
       return data;
     } else {
-      console.log("Something went Wrong");
+      console.log("Something went wrong");
     }
   } catch (error) {
     console.log("Something went Wrong");
@@ -71,21 +71,23 @@ export async function loginUser(email, password) {
 export async function signup(username, email, password) {
   try {
     const url = Api.signup;
-    const response = await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        projectId: "dm3s7h4e43m1",
-      },
-      body: JSON.stringify({
+    const response = await axios.post(
+      url,
+      {
         name: `${username}`,
         email: `${email}`,
         password: `${password}`,
         appType: "ecommerce",
-      }),
-    });
-    if (response.ok) {
-      const responseData = await response.json();
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          projectId: "dm3s7h4e43m1",
+        },
+      }
+    );
+    if (response.status === 200) {
+      const responseData = response.data;
       localStorage.setItem(
         "authorization",
         JSON.stringify({
@@ -105,17 +107,19 @@ export async function addWishlist(productId) {
     const parsedData = JSON.parse(user);
     try {
       const baseUrl = Api.wishlist;
-      const response = await fetch(baseUrl, {
-        method: "PATCH",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${parsedData.signup.token}`,
-          projectId: "dm3s7h4e43m1",
-        },
-        body: JSON.stringify({ productId: productId }),
-      });
-      const data = await response.json();
+      const response = await axios.patch(
+        baseUrl,
+        { productId: productId },
+        {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${parsedData.signup.token}`,
+            projectId: "dm3s7h4e43m1",
+          },
+        }
+      );
+      const data = response.data;
       return data.status;
     } catch (error) {
       console.error("Somethings went wrong");
@@ -129,8 +133,7 @@ export async function removeWishlist(productId) {
     const parsedData = JSON.parse(user);
     try {
       const baseApi = Api.wishlist + productId;
-      const response = await fetch(baseApi, {
-        method: "DELETE",
+      const response = await axios.delete(baseApi, {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
@@ -138,7 +141,7 @@ export async function removeWishlist(productId) {
           projectId: "dm3s7h4e43m1",
         },
       });
-      const data = await response.json();
+      const data = response.data;
       return data.status;
     } catch (error) {
       console.error("Something went wrong");
@@ -152,8 +155,7 @@ export async function getWishlist() {
     const parsedData = JSON.parse(user);
     try {
       const baseUrl = Api.wishlist;
-      const response = await fetch(baseUrl, {
-        method: "GET",
+      const response = await axios.get(baseUrl, {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
@@ -161,9 +163,10 @@ export async function getWishlist() {
           projectid: "dm3s7h4e43m1",
         },
       });
-      const data = await response.json();
-      const databox = data.data;
+
+      const databox = response.data.data;
       const wishlist = databox.items;
+
       localStorage.setItem(
         "wishlist",
         JSON.stringify({
@@ -183,8 +186,7 @@ export async function getCart() {
   if (user) {
     const parsedData = JSON.parse(user);
     try {
-      const response = await fetch(Api.cart, {
-        method: "GET",
+      const response = await axios.get(Api.cart, {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
@@ -192,13 +194,15 @@ export async function getCart() {
           projectid: "dm3s7h4e43m1",
         },
       });
-      const data = await response.json();
+
+      const data = response.data;
       localStorage.setItem(
         "cartItem",
         JSON.stringify({
           cartItem: data,
         })
       );
+
       return data;
     } catch (error) {
       console.log("Somethings went wrong");
@@ -212,17 +216,20 @@ export async function addCart(productId, qty) {
     const parsedData = JSON.parse(user);
     try {
       const baseUrl = Api.cart + productId;
-      const response = await fetch(baseUrl, {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${parsedData.signup.token}`,
-          projectid: "dm3s7h4e43m1",
-        },
-        body: JSON.stringify({ quantity: qty }),
-      });
-      const data = await response.json();
+      const response = await axios.post(
+        baseUrl,
+        { quantity: qty },
+        {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${parsedData.signup.token}`,
+            projectid: "dm3s7h4e43m1",
+          },
+        }
+      );
+
+      const data = response.data;
       return data.status;
     } catch (error) {
       console.log("Somethings went wrong");
@@ -236,17 +243,17 @@ export async function removeCart(productId, qty) {
     const parsedData = JSON.parse(user);
     try {
       const baseUrl = Api.cart + productId;
-      const response = await fetch(baseUrl, {
-        method: "DELETE",
+      const response = await axios.delete(baseUrl, {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
           Authorization: `Bearer ${parsedData.signup.token}`,
           projectid: "dm3s7h4e43m1",
         },
-        body: JSON.stringify({ quantity: qty }),
+        data: { quantity: qty },
       });
-      const data = await response.json();
+
+      const data = response.data;
       return data.status;
     } catch (error) {
       console.log("Somethings went wrong");
@@ -260,15 +267,9 @@ export async function placeOrder(productId, address, quantity) {
     const parsedData = JSON.parse(user);
     try {
       const baseUrl = Api.order;
-      const response = await fetch(baseUrl, {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${parsedData.signup.token}`,
-          projectid: "dm3s7h4e43m1",
-        },
-        body: JSON.stringify({
+      const response = await axios.post(
+        baseUrl,
+        {
           productId: productId,
           quantity: quantity,
           addressType: addressType,
@@ -279,9 +280,18 @@ export async function placeOrder(productId, address, quantity) {
             country: country,
             zipCode: pinNo,
           },
-        }),
-      });
-      const data = await response.json();
+        },
+        {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${parsedData.signup.token}`,
+            projectid: "dm3s7h4e43m1",
+          },
+        }
+      );
+
+      const data = response.data;
       return data.status;
     } catch (error) {
       console.log("Somethings went wrong");
@@ -294,8 +304,7 @@ export async function getOrderList() {
   if (user) {
     const parsedData = JSON.parse(user);
     try {
-      const response = await fetch(Api.order, {
-        method: "GET",
+      const response = await axios.get(Api.order, {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
@@ -303,10 +312,12 @@ export async function getOrderList() {
           projectId: "dm3s7h4e43m1",
         },
       });
-      if (!response.ok) {
+
+      if (response.status !== 200) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
-      const data = await response.json();
+
+      const data = response.data;
       return data;
     } catch (error) {
       console.error("Something went wrong");
@@ -325,16 +336,16 @@ export function handleLoginGoogle(decoded) {
 }
 export async function searchList(title) {
   try {
-    const response = await fetch(Api.searchApi + `${title}`, {
-      method: "GET",
+    const response = await axios.get(Api.searchApi + title, {
       headers: {
         projectId: "dm3s7h4e43m1",
       },
     });
-    if (!response.ok) {
+
+    if (response.status !== 200) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
-    const data = await response.json();
+    const data = response.data;
     return data?.data;
   } catch (error) {
     console.error("Something went wrong");
@@ -347,6 +358,8 @@ export const fetchDataByType = async (type) => {
       return searchList('{"gender":"Men"}');
     case "women":
       return searchList('{"gender":"Women"}');
+    case "black" || "blue" || "green" || "brown" || "white":
+      return searchList(`{"color":${type}}`);
     default:
       throw new Error(`Invalid type: ${type}`);
   }

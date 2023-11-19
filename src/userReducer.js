@@ -35,10 +35,7 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
         isLoggedIn: true,
-        userData:
-          parsedData.signup.data.user === undefined
-            ? parsedData.signup.data
-            : parsedData.signup.data.user,
+        userData: action.payload,
       };
     default:
       return state;

@@ -93,7 +93,10 @@ export const LOGIN_USER = (email, password) => {
   return async (dispatch) => {
     const response = await loginUser(email, password);
     if (response) {
-      dispatch(LOGIN_SUCCESS(response));
+      console.log(response);
+      let data = response.data;
+      console.log(data);
+      dispatch(LOGIN_SUCCESS(data));
     } else {
       dispatch(LOGIN_FAILURE("Incorrect EmailId or Password"));
     }
@@ -103,7 +106,8 @@ export const SIGNUP_USER = (username, email, password) => {
   return async (dispatch) => {
     const response = await signup(username, email, password);
     if (response) {
-      dispatch(LOGIN_SUCCESS(response));
+      let data = response.data.user;
+      dispatch(LOGIN_SUCCESS(data));
     } else {
       dispatch(LOGIN_FAILURE("Login Failed"));
     }
