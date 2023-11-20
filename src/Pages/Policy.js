@@ -1,8 +1,8 @@
 import { Flex } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import NavRes from "./NavRes";
+import NavRes from "../Components/NavRes";
 
-export default function PrivacyPolicy() {
+export default function Policy() {
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 1100);
   useEffect(() => {
     const handleResize = () => {

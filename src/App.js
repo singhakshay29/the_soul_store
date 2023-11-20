@@ -1,24 +1,24 @@
 import "./App.css";
-import ProtectedRoute from "./protected";
-import Shop from "./Components/Shop";
-import Member from "./Components/Member";
-import Order from "./Components/Order";
-import Term from "./Components/Term";
-import Login from "./Components/Login";
+import Protected from "./protected";
 import Popup from "./Components/Popup";
-import SignUp from "./Components/SignUp";
 import Topbar from "./Components/Topbar";
 import Footer from "./Components/Footer";
-import Address from "./Components/Address";
-import Product from "./Components/Product";
-import Section from "./Components/Section";
-import Profile from "./Components/Profile";
-import WomenNav from "./Components/WomenNav";
-import Wishlist from "./Components/Wishlist";
-import AboutUs from "./Components/AboutUs";
-import ContactUs from "./Components/ContactUs";
-import ShoppingCart from "./Components/ShoppingCart";
-import PrivacyPolicy from "./Components/PrivacyPolicy";
+import Wishlist from "./Pages/Wishlist";
+import Term from "./Pages/AboutUs";
+import Nav from "./Components/Nav";
+import AboutUs from "./Pages/AboutUs";
+import Home from "./Pages/Home";
+import ContactUs from "./Pages/ContactUs";
+import Main from "./Pages/Main";
+import Policy from "./Pages/Policy";
+import Product from "./Pages/Product";
+import Cart from "./Pages/Cart";
+import Login from "./Pages/Login";
+import SignUp from "./Pages/SignUp";
+import Order from "./Pages/Order";
+import Address from "./Pages/Address";
+import Member from "./Pages/Member";
+import Profile from "./Pages/Profile";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 function App() {
@@ -27,17 +27,18 @@ function App() {
       <Router>
         <Popup />
         <Topbar />
-        <WomenNav />
+        <Nav />
         <Routes>
           <Route path="term" element={<Term />} />
           <Route path="about" element={<AboutUs />} />
-          <Route path="/" element={<Section />} />
+          <Route path="/" element={<Home />} />
           <Route path="contact" element={<ContactUs />} />
-          <Route path="category" element={<Shop />} />
-          <Route path="privacy" element={<PrivacyPolicy />} />
+          <Route path="category" element={<Main />} />
+          <Route path="privacy" element={<Policy />} />
           <Route path="product" element={<Product />} />
           <Route path="wishlist" element={<Wishlist />} />
-          <Route path="shoppingcart" element={<ShoppingCart />} />
+          <Route path="shoppingcart" element={<Cart />} />
+          <Route path="member" element={<Member />} />
           <Route
             path="login"
             element={<ProtectedRoute element={<Login />} />}
@@ -67,6 +68,10 @@ function App() {
       </Router>
     </>
   );
+}
+
+function ProtectedRoute({ element, whenLoggedIn = false }) {
+  return <Protected whenLoggedIn={whenLoggedIn}>{element}</Protected>;
 }
 
 export default App;

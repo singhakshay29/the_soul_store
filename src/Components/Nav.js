@@ -30,7 +30,7 @@ import {
   fetchDataByType,
 } from "../service";
 
-export default function WomenNav() {
+export default function Nav() {
   const dispatch = useDispatch();
   const navigation = useNavigate();
   const [activeState, setActive] = useState();

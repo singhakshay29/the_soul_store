@@ -25,9 +25,9 @@ import {
   REMOVE_FROM_CART,
 } from "../action";
 import { useDispatch, useSelector } from "react-redux";
-import NavRes from "./NavRes";
+import NavRes from "../Components/NavRes";
 
-export default function ShoppingCart() {
+export default function Cart() {
   const dispatch = useDispatch();
   const [id, setId] = useState("");
   const [qty, setQty] = useState(1);

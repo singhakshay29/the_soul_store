@@ -5,7 +5,7 @@ import { BiLogoFacebook } from "react-icons/bi";
 import { AiOutlineInstagram } from "react-icons/ai";
 import { BsTwitter } from "react-icons/bs";
 import { FaSnapchat } from "react-icons/fa";
-import NavRes from "./NavRes";
+import NavRes from "../Components/NavRes";
 import { useSelector } from "react-redux";
 
 export default function ContactUs() {

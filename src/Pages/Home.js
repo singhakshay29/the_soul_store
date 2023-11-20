@@ -1,4 +1,4 @@
-import NavRes from "./NavRes";
+import NavRes from "../Components/NavRes";
 import m1 from "../assets/m1.png";
 import m2 from "../assets/m2.png";
 import m3 from "../assets/m3.png";
@@ -13,13 +13,13 @@ import c3 from "../assets/c3.png";
 import MBJ from "../assets/MBJ.jpg";
 import MBS from "../assets/MBS.jpg";
 import MBJS from "../assets/MBJS.jpg";
-import WGallery from "./WGallery";
+import WGallery from "../Components/WGallery";
 import DW from "../assets/DW.jpg";
 import btS from "../assets/btS.jpg";
 import jog from "../assets/jog.jpg";
 import menShorts from "../assets/menShorts.jpg";
 import menJog from "../assets/menJog.jpg";
-import ImageSlider from "./ImageSlider";
+import ImageSlider from "../Components/ImageSlider";
 import basis from "../assets/basis.jpg";
 import cargo from "../assets/cargo.jpg";
 import member from "../assets/member.png";
@@ -55,7 +55,7 @@ import {
   Spinner,
 } from "@chakra-ui/react";
 
-export default function Section() {
+export default function Home() {
   const [barOpen, setBarOpen] = useState();
   const [isSmallScreenMini, setIsSmallScreenMini] = useState(
     window.innerWidth < 750

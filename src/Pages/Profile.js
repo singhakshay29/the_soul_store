@@ -3,12 +3,11 @@ import React, { useEffect, useState } from "react";
 import { LOGOUT_USER } from "../action";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import NavRes from "./NavRes";
+import NavRes from "../Components/NavRes";
 
 export default function Profile() {
   const dispatch = useDispatch();
   const data = useSelector((state) => state.user.userData);
-  console.log(data);
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 1100);
   useEffect(() => {
     const handleResize = () => {

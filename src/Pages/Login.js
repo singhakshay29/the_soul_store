@@ -12,7 +12,7 @@ import {
   Text,
   Flex,
 } from "@chakra-ui/react";
-import NavRes from "./NavRes";
+import NavRes from "../Components/NavRes";
 
 export default function Login() {
   const dispatch = useDispatch();

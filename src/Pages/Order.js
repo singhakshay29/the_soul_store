@@ -4,19 +4,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { LOGOUT_USER, OPEN_POPOVER } from "../action";
 import { GoDotFill } from "react-icons/go";
 import { getOrderList } from "../fetch";
-import { Link, useNavigate } from "react-router-dom";
-import NavRes from "./NavRes";
+import { Link } from "react-router-dom";
+import NavRes from "../Components/NavRes";
 
 export default function Order() {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const [orderList, setOrderList] = useState(null);
   const [orderData, setOrderData] = useState("");
   const userdata = useSelector((state) => state.user.userData);
-  const { isLoggedIn } = useSelector((state) => state.user);
-  if (!isLoggedIn) {
-    navigate("/");
-  }
+
   useEffect(() => {
     const fetchData = async () => {
       try {

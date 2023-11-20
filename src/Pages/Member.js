@@ -5,7 +5,7 @@ import { FaCrown } from "react-icons/fa";
 import early from "../assets/earlyacces.jpg";
 import free from "../assets/freedelivery.webp";
 import ship from "../assets/shipping.webp";
-import NavRes from "./NavRes";
+import NavRes from "../Components/NavRes";
 import dis from "../assets/discount.webp";
 
 export default function Member() {

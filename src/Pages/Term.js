@@ -1,6 +1,6 @@
 import { Flex } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import NavRes from "./NavRes";
+import NavRes from "../Components/NavRes";
 
 export default function Term() {
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 1100);

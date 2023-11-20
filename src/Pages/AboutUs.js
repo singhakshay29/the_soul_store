@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import about from "../assets/about.avif";
 import aboutbanner from "../assets/about-doodlebanner.webp";
 import brand from "../assets/brandsbanner.png";
-import NavRes from "./NavRes";
+import NavRes from "../Components/NavRes";
 
 export default function AboutUs() {
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 1100);

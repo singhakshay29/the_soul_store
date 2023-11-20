@@ -19,7 +19,7 @@ import {
   ADD_TO_CART,
   OPEN_POPOVER,
 } from "../action";
-import NavRes from "./NavRes";
+import NavRes from "../Components/NavRes";
 
 export default function Wishlist() {
   const dispatch = useDispatch();

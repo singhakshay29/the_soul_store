@@ -1,4 +1,4 @@
-import Card from "./Card";
+import Card from "../Components/Card";
 import { RiFilter2Line } from "react-icons/ri";
 import { BsSortUp } from "react-icons/bs";
 import React, { useEffect, useRef, useState } from "react";
@@ -17,11 +17,11 @@ import {
   useDisclosure,
   UnorderedList,
 } from "@chakra-ui/react";
-import NavRes from "./NavRes";
+import NavRes from "../Components/NavRes";
 import { useDispatch, useSelector } from "react-redux";
 import { ADD_TO_WISHLIST, OPEN_POPOVER, REMOVE_FROM_WISHLIST } from "../action";
 
-export default function Shop() {
+export default function Main() {
   const [sortingOption, setSortingOption] = useState([]);
   const [selectedBrands, setSelectedBrands] = useState([]);
   const [selectedColors, setSelectedColors] = useState([]);

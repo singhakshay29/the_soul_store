@@ -13,7 +13,7 @@ import {
 } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
 import { LOGIN_FAILURE, SIGNUP_USER } from "../action";
-import NavRes from "./NavRes";
+import NavRes from "../Components/NavRes";
 
 export default function SignUp() {
   const dispatch = useDispatch();
