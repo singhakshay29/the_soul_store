@@ -20,13 +20,17 @@ import MBS from "../assets/MBS.jpg";
 import MBJS from "../assets/MBJS.jpg";
 import blueBanner from "../assets/bluebanner.jpg";
 import bL from "../assets/bL.jpg";
-import { LOGOUT_USER } from "../action";
+import { LOGOUT_USER, OPEN_POPOVER } from "../action";
 import { useDispatch, useSelector } from "react-redux";
 import { RiArrowDropDownLine } from "react-icons/ri";
-import { fetchDataByType, searchFetchData } from "../fetch";
-import { service, isNamePresent } from "../service";
+import {
+  service,
+  isNamePresent,
+  searchFetchData,
+  fetchDataByType,
+} from "../service";
 
-export default function WomenNav({ openPopover, active }) {
+export default function WomenNav() {
   const dispatch = useDispatch();
   const navigation = useNavigate();
   const [activeState, setActive] = useState();
@@ -37,7 +41,9 @@ export default function WomenNav({ openPopover, active }) {
   const { isLoggedIn } = useSelector((state) => state.user);
   const { results } = useSelector((state) => state.app.cart);
   const [searchResults, setSearchResults] = useState("");
-  const { wishlist, productsListFilter } = useSelector((state) => state.app);
+  const { wishlist, productsListFilter, active } = useSelector(
+    (state) => state.app
+  );
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 1200);
   const {
     productMenCollection,
@@ -181,13 +187,24 @@ export default function WomenNav({ openPopover, active }) {
   };
   const handleSearchClick = async () => {
     const searchData = await fetchDataByType(searchItem);
+    if (typeof searchData === "string") {
+      const searchData = await fetchDataByType("Women");
+      const data = service(searchData);
+      navigation("/category", {
+        state: {
+          data: data,
+          Heading: `Search Results for ${searchItem}`,
+          errorHeading: `We couldn't find any matches!`,
+        },
+      });
+    }
     if (searchData.length > 0) {
       const data = service(searchData);
 
       navigation("/category", {
         state: {
           data: data,
-          Heading: "Search Results for",
+          Heading: `Search Results for ${searchItem}`,
         },
       });
     }
@@ -1907,7 +1924,7 @@ export default function WomenNav({ openPopover, active }) {
                         <Text
                           onClick={() => {
                             dispatch(LOGOUT_USER());
-                            openPopover("Succesfully Logout");
+                            dispatch(OPEN_POPOVER("Succesfully Logout"));
                           }}
                           className="navdropboxh1">
                           Log Out

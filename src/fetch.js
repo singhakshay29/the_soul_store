@@ -351,27 +351,3 @@ export async function searchList(title) {
     console.error("Something went wrong");
   }
 }
-
-export const fetchDataByType = async (type) => {
-  switch (type.toLowerCase()) {
-    case "men":
-      return searchList('{"gender":"Men"}');
-    case "women":
-      return searchList('{"gender":"Women"}');
-    case "black" || "blue" || "green" || "brown" || "white":
-      return searchList(`{"color":${type}}`);
-    default:
-      throw new Error(`Invalid type: ${type}`);
-  }
-};
-
-export const searchFetchData = async (type, searchItem) => {
-  switch (type) {
-    case "brand":
-      return searchList(`{"brand":"${searchItem}"}`);
-    case "subCategory":
-      return searchList(`{"subCategory":"${searchItem}"}`);
-    default:
-      throw new Error(`Invalid type: ${type}`);
-  }
-};

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { LOGIN_FAILURE, LOGIN_USER } from "../action";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -15,13 +15,11 @@ import {
 import NavRes from "./NavRes";
 
 export default function Login() {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorColor, setErrorColor] = useState("");
   const { errorMessage } = useSelector((state) => state.user);
-  const { isLoggedIn } = useSelector((state) => state.user);
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 1000);
 
   const handleLogin = (e) => {
@@ -38,9 +36,7 @@ export default function Login() {
       dispatch(LOGIN_USER(email, password));
     }
   };
-  if (isLoggedIn) {
-    navigate("/");
-  }
+
   useEffect(() => {
     dispatch(LOGIN_FAILURE(""));
     const handleResize = () => {

@@ -20,10 +20,10 @@ import bannerT from "../assets/bannerT.jpg";
 import bannerBS from "../assets/bannerBS.jpg";
 import { AiOutlineCopyrightCircle } from "react-icons/ai";
 
-export default function Footer({ active }) {
+export default function Footer() {
   const { isLoggedIn } = useSelector((state) => state.user);
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 800);
-  const { productsListFilter } = useSelector((state) => state.app);
+  const { productsListFilter, active } = useSelector((state) => state.app);
 
   const {
     productMenTshirtData,

@@ -16,6 +16,22 @@ export const LOGIN_SUCCESS = (payload) => ({
   payload: payload,
 });
 
+export const SET_ACTIVE = (payload) => {
+  return {
+    type: actiontype.SET_ACTIVE,
+    payload: payload,
+  };
+};
+
+export const OPEN_POPOVER = (payload) => ({
+  type: actiontype.OPEN_POPOVER,
+  payload: payload,
+});
+
+export const CLOSE_POPOVER = () => ({
+  type: actiontype.CLOSE_POPOVER,
+});
+
 export const LOGIN_FAILURE = (payload) => ({
   type: actiontype.LOGIN_FAILURE,
   payload: payload,

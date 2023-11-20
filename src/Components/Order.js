@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Box, Container, Flex, Text, Image } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
-import { LOGOUT_USER } from "../action";
+import { LOGOUT_USER, OPEN_POPOVER } from "../action";
 import { GoDotFill } from "react-icons/go";
 import { getOrderList } from "../fetch";
 import { Link, useNavigate } from "react-router-dom";
 import NavRes from "./NavRes";
 
-export default function Order({ openPopover }) {
+export default function Order() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [orderList, setOrderList] = useState(null);
@@ -68,7 +68,7 @@ export default function Order({ openPopover }) {
                   className="logout"
                   onClick={() => {
                     dispatch(LOGOUT_USER());
-                    openPopover("Succesfully Logout");
+                    dispatch(OPEN_POPOVER("Succesfully Logout"));
                   }}>
                   LOGOUT
                 </button>
@@ -143,7 +143,7 @@ export default function Order({ openPopover }) {
                   className="logout"
                   onClick={() => {
                     dispatch(LOGOUT_USER());
-                    openPopover("Succesfully Logout");
+                    dispatch(OPEN_POPOVER("Succesfully Logout"));
                   }}>
                   LOGOUT
                 </button>

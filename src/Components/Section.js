@@ -37,6 +37,7 @@ import {
   GET_CART,
   GET_WISHLIST,
   LOADING_ACTION,
+  SET_ACTIVE,
 } from "../action";
 import bannerBS from "../assets/bannerBS.jpg";
 import { Link, NavLink } from "react-router-dom";
@@ -54,14 +55,16 @@ import {
   Spinner,
 } from "@chakra-ui/react";
 
-export default function Section({ active, setActive }) {
+export default function Section() {
   const [barOpen, setBarOpen] = useState();
   const [isSmallScreenMini, setIsSmallScreenMini] = useState(
     window.innerWidth < 750
   );
   const dispatch = useDispatch();
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 1200);
-  const { productsListFilter, loading } = useSelector((state) => state.app);
+  const { productsListFilter, loading, active } = useSelector(
+    (state) => state.app
+  );
   useEffect(() => {
     if (Object.keys(productsListFilter).length > 0) {
       dispatch(LOADING_ACTION(false));
@@ -83,7 +86,7 @@ export default function Section({ active, setActive }) {
   } = productsListFilter;
 
   const handleClick = (event) => {
-    setActive(event.target.id);
+    dispatch(SET_ACTIVE(event.target.id));
   };
 
   useEffect(() => {

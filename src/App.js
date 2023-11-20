@@ -1,7 +1,9 @@
 import "./App.css";
-import { useState } from "react";
+import ProtectedRoute from "./protected";
 import Shop from "./Components/Shop";
+import Member from "./Components/Member";
 import Order from "./Components/Order";
+import Term from "./Components/Term";
 import Login from "./Components/Login";
 import Popup from "./Components/Popup";
 import SignUp from "./Components/SignUp";
@@ -13,64 +15,55 @@ import Section from "./Components/Section";
 import Profile from "./Components/Profile";
 import WomenNav from "./Components/WomenNav";
 import Wishlist from "./Components/Wishlist";
-import ShoppingCart from "./Components/ShoppingCart";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Member from "./Components/Member";
 import AboutUs from "./Components/AboutUs";
 import ContactUs from "./Components/ContactUs";
-import Term from "./Components/Term";
+import ShoppingCart from "./Components/ShoppingCart";
 import PrivacyPolicy from "./Components/PrivacyPolicy";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 function App() {
-  const [active, setActive] = useState("1");
-  const [message, setMessage] = useState("");
-  const [isPopoverOpen, setIsPopoverOpen] = useState(false);
-
-  const openPopover = (check) => {
-    setIsPopoverOpen(true);
-    setMessage(check);
-    setTimeout(() => {
-      setIsPopoverOpen(false);
-    }, 3000);
-  };
-
   return (
     <>
       <Router>
-        <Topbar active={active} setActive={setActive} />
-        <WomenNav active={active} openPopover={openPopover} />
-        {isPopoverOpen && <Popup message={message} />}
+        <Popup />
+        <Topbar />
+        <WomenNav />
         <Routes>
+          <Route path="term" element={<Term />} />
+          <Route path="about" element={<AboutUs />} />
+          <Route path="/" element={<Section />} />
+          <Route path="contact" element={<ContactUs />} />
+          <Route path="category" element={<Shop />} />
+          <Route path="privacy" element={<PrivacyPolicy />} />
+          <Route path="product" element={<Product />} />
+          <Route path="wishlist" element={<Wishlist />} />
+          <Route path="shoppingcart" element={<ShoppingCart />} />
           <Route
-            path="/"
-            element={<Section active={active} setActive={setActive} />}></Route>
-          <Route path="login" element={<Login />}></Route>
-
-          <Route path="signup" element={<SignUp />}></Route>
+            path="login"
+            element={<ProtectedRoute element={<Login />} />}
+          />
           <Route
-            path="category"
-            element={<Shop openPopover={openPopover} />}></Route>
-          <Route
-            path="product"
-            element={<Product openPopover={openPopover} />}></Route>
-          <Route
-            path="wishlist"
-            element={<Wishlist openPopover={openPopover} />}></Route>
+            path="signup"
+            element={<ProtectedRoute element={<SignUp />} />}
+          />
           <Route
             path="order"
-            element={<Order openPopover={openPopover} />}></Route>
-          <Route path="address" element={<Address />} />
-          <Route path="member" element={<Member />} />
-          <Route path="profile" element={<Profile />} />
-          <Route path="about" element={<AboutUs />} />
-          <Route path="term" element={<Term />} />
-          <Route path="privacy" element={<PrivacyPolicy />} />
-          <Route path="contact" element={<ContactUs />} />
+            element={<ProtectedRoute whenLoggedIn element={<Order />} />}
+          />
           <Route
-            path="shoppingcart"
-            element={<ShoppingCart openPopover={openPopover} />}></Route>
+            path="address"
+            element={<ProtectedRoute whenLoggedIn element={<Address />} />}
+          />
+          <Route
+            path="member"
+            element={<ProtectedRoute whenLoggedIn element={<Member />} />}
+          />
+          <Route
+            path="profile"
+            element={<ProtectedRoute whenLoggedIn element={<Profile />} />}
+          />
         </Routes>
-        <Footer active={active} />
+        <Footer />
       </Router>
     </>
   );

@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { CiMobile3 } from "react-icons/ci";
 import { Link, NavLink } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Box, Button, Flex, Text } from "@chakra-ui/react";
+import { SET_ACTIVE } from "../action";
 
-export default function Topbar({ active, setActive }) {
+export default function Topbar() {
+  const dispatch = useDispatch();
+  const { active } = useSelector((state) => state.app);
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 1200);
   const { isLoggedIn } = useSelector((state) => state.user);
 
   const handleClick = (event) => {
-    setActive(event.target.id);
+    dispatch(SET_ACTIVE(event.target.id));
   };
   useEffect(() => {
     const handleResize = () => {

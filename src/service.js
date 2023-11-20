@@ -1,3 +1,4 @@
+import { searchList } from "./fetch";
 export function service(product) {
   function getSubCategoryData(products) {
     const subCategoryData = products.map((item) => ({
@@ -347,3 +348,75 @@ export function service2(productList) {
     ),
   };
 }
+
+export const searchFetchData = async (type, searchItem) => {
+  switch (type) {
+    case "brand":
+      return searchList(`{"brand":"${searchItem}"}`);
+    case "subCategory":
+      return searchList(`{"subCategory":"${searchItem}"}`);
+    default:
+      throw new Error(`Invalid type: ${type}`);
+  }
+};
+
+const isSubCategory = (type) => {
+  const subCategory = [
+    "Shirt",
+    "Jogger",
+    "Jeans",
+    "Pyjamas",
+    "Shorts",
+    "Trouser",
+    "Hoodie",
+    "Tracksuit",
+    "Kurta",
+    "Tshirt",
+    "Sweater",
+    "Jumpsuit",
+    "Kurti",
+  ];
+  return subCategory.includes(type);
+};
+const isColor = (type) => {
+  const colors = [
+    "Black",
+    "Blue",
+    "Green",
+    "Brown",
+    "White",
+    "Grey",
+    "Orange",
+    "Lavender",
+    "Maroon",
+    "Khaki",
+    "Purple",
+    "Yellow",
+    "Pink",
+    "Red",
+    "Beige",
+    "Khaki",
+    "Charcoal",
+    "Silver",
+    "Cream",
+    "Olive",
+  ];
+  return colors.includes(capitalizeFirstLetter(type));
+};
+const capitalizeFirstLetter = (string) => {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+};
+
+export const fetchDataByType = async (type) => {
+  const capitalizedType = capitalizeFirstLetter(type);
+
+  if (capitalizedType === "Men" || capitalizedType === "Women") {
+    return searchList(`{"gender":"${capitalizedType}"}`);
+  } else if (isColor(capitalizedType)) {
+    return searchList(`{"color":"${capitalizedType}"}`);
+  } else if (isSubCategory(capitalizedType)) {
+    return searchList(`{"subCategory":"${capitalizedType}"}`);
+  } else {
+    return `Search Results for ${type}`;
+  }
+};

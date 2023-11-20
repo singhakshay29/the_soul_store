@@ -13,16 +13,21 @@ import { FaRupeeSign } from "react-icons/fa";
 import wishlist1 from "../assets/wishlist1.png";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { GET_WISHLIST, REMOVE_FROM_WISHLIST, ADD_TO_CART } from "../action";
+import {
+  GET_WISHLIST,
+  REMOVE_FROM_WISHLIST,
+  ADD_TO_CART,
+  OPEN_POPOVER,
+} from "../action";
 import NavRes from "./NavRes";
 
-export default function Wishlist({ openPopover }) {
+export default function Wishlist() {
   const dispatch = useDispatch();
   const { wishlist } = useSelector((state) => state.app);
   const { isLoggedIn } = useSelector((state) => state.user);
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 1200);
   const handleRemoveFromWishlist = (productId) => {
-    openPopover("Product removed from your Wishlist");
+    dispatch(OPEN_POPOVER("Product removed from your Wishlist"));
     dispatch(REMOVE_FROM_WISHLIST(productId));
     setTimeout(() => {
       dispatch(GET_WISHLIST());
@@ -30,7 +35,7 @@ export default function Wishlist({ openPopover }) {
   };
 
   const handleMoveToCart = (productId) => {
-    openPopover("Product Added to your cart successfully");
+    dispatch(OPEN_POPOVER("Product Added to your cart successfully"));
     dispatch(REMOVE_FROM_WISHLIST(productId));
     setTimeout(() => {
       dispatch(GET_WISHLIST());

@@ -2,6 +2,9 @@ import actiontype from "./actiontype";
 
 const baseInitialState = {
   cart: [],
+  active: "1",
+  isOpen: false,
+  message: "",
   wishlist: [],
   loading: true,
   productsList: [],
@@ -29,6 +32,23 @@ const appReducer = (state = initialState, action) => {
       return {
         ...state,
         productsList: action.payload,
+      };
+    case actiontype.SET_ACTIVE:
+      return {
+        ...state,
+        active: action.payload,
+      };
+    case actiontype.OPEN_POPOVER:
+      return {
+        ...state,
+        isOpen: true,
+        message: action.payload,
+      };
+    case actiontype.CLOSE_POPOVER:
+      return {
+        ...state,
+        message: "",
+        isOpen: false,
       };
     case actiontype.LOADING_ACTION:
       return { ...state, loading: action.payload };

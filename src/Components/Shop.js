@@ -19,9 +19,9 @@ import {
 } from "@chakra-ui/react";
 import NavRes from "./NavRes";
 import { useDispatch, useSelector } from "react-redux";
-import { ADD_TO_WISHLIST, REMOVE_FROM_WISHLIST } from "../action";
+import { ADD_TO_WISHLIST, OPEN_POPOVER, REMOVE_FROM_WISHLIST } from "../action";
 
-export default function Shop({ openPopover }) {
+export default function Shop() {
   const [sortingOption, setSortingOption] = useState([]);
   const [selectedBrands, setSelectedBrands] = useState([]);
   const [selectedColors, setSelectedColors] = useState([]);
@@ -50,7 +50,7 @@ export default function Shop({ openPopover }) {
   const btnRef = useRef();
   const object = useLocation();
   const { data } = object?.state;
-  const { Banner, Heading, BannerRes } = object.state;
+  const { Banner, Heading, BannerRes, errorHeading } = object.state;
   const { itemList, brandName, colorName } = data || {};
   const handleSortingAndFiltering = (
     sortingCriteria,
@@ -162,10 +162,10 @@ export default function Shop({ openPopover }) {
         if (isLoggedIn) {
           if (wishlist.some((wish) => wish.products._id === clickedProductId)) {
             dispatch(REMOVE_FROM_WISHLIST(clickedProductId));
-            openPopover("Product Removed from your Wishlist");
+            dispatch(OPEN_POPOVER("Product Removed from your Wishlist"));
           } else {
             dispatch(ADD_TO_WISHLIST(clickedProductId));
-            openPopover("Product Added to your Wishlist");
+            dispatch(OPEN_POPOVER("Product Added to your Wishlist"));
           }
         }
       }
@@ -238,12 +238,7 @@ export default function Shop({ openPopover }) {
               justifyContent="center"
               onClick={handleFavoriteClick}>
               {filteredItems.map((item, index) => (
-                <Card
-                  openPopover={openPopover}
-                  item={item}
-                  index={index}
-                  responsive={true}
-                />
+                <Card item={item} index={index} responsive={true} />
               ))}
             </Flex>
             {!bottomSorting && (
@@ -569,6 +564,7 @@ export default function Shop({ openPopover }) {
             marginLeft="14.5rem"
             marginBottom="0.5rem"
           />
+
           <Flex>
             <Flex className="categorySearchBox">
               {brandName && (
@@ -697,12 +693,25 @@ export default function Shop({ openPopover }) {
               </>
               <Divider className="categoryDivider" />
             </Flex>
-            <Flex
-              style={{ flex: 1, flexWrap: "wrap" }}
-              onClick={handleFavoriteClick}>
-              {filteredItems.map((item, index) => (
-                <Card item={item} index={index} responsive={false} />
-              ))}
+            <Flex style={{ flexDirection: "column" }}>
+              {errorHeading && (
+                <>
+                  <Container className="categoryerror">
+                    {errorHeading}
+                  </Container>
+                  <Container className="categoryerror2">
+                    You may also like:-
+                  </Container>
+                </>
+              )}
+
+              <Flex
+                style={{ flex: 1, flexWrap: "wrap" }}
+                onClick={handleFavoriteClick}>
+                {filteredItems.map((item, index) => (
+                  <Card item={item} index={index} responsive={false} />
+                ))}
+              </Flex>
             </Flex>
           </Flex>
         </>

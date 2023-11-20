@@ -18,11 +18,16 @@ import { GrFormClose } from "react-icons/gr";
 import emptycart from "../assets/emptyCart.png";
 import React, { useEffect, useState } from "react";
 import { ChevronDownIcon } from "@chakra-ui/icons";
-import { ADD_TO_WISHLIST, GET_CART, REMOVE_FROM_CART } from "../action";
+import {
+  ADD_TO_WISHLIST,
+  GET_CART,
+  OPEN_POPOVER,
+  REMOVE_FROM_CART,
+} from "../action";
 import { useDispatch, useSelector } from "react-redux";
 import NavRes from "./NavRes";
 
-export default function ShoppingCart({ openPopover }) {
+export default function ShoppingCart() {
   const dispatch = useDispatch();
   const [id, setId] = useState("");
   const [qty, setQty] = useState(1);
@@ -69,7 +74,7 @@ export default function ShoppingCart({ openPopover }) {
     setIsOpen(false);
   }
   const handleRemoveAdd = (productId, qty) => {
-    openPopover("Product Added to your Wishlist");
+    dispatch(OPEN_POPOVER("Product Added to your Wishlist"));
     dispatch(REMOVE_FROM_CART(productId, qty));
     setTimeout(() => {
       dispatch(ADD_TO_WISHLIST(productId));
@@ -80,7 +85,7 @@ export default function ShoppingCart({ openPopover }) {
   };
 
   const handleRemove = (productId, qty) => {
-    openPopover("Product removed from your cart");
+    dispatch(OPEN_POPOVER("Product removed from your cart"));
     dispatch(REMOVE_FROM_CART(productId, qty));
     setTimeout(() => {
       dispatch(GET_CART());

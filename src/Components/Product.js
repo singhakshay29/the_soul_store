@@ -27,12 +27,12 @@ import { FaRupeeSign } from "react-icons/fa";
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { ADD_TO_WISHLIST, REMOVE_FROM_WISHLIST } from "../action";
+import { ADD_TO_WISHLIST, OPEN_POPOVER, REMOVE_FROM_WISHLIST } from "../action";
 import { addCart } from "../fetch";
 import ImageSliderRes from "./ImageSliderRes";
 import NavRes from "./NavRes";
 
-export default function Product({ openPopover }) {
+export default function Product() {
   const dispatch = useDispatch();
   const location = useLocation();
   const { data } = location.state;
@@ -372,8 +372,10 @@ export default function Product({ openPopover }) {
                             <Button
                               onClick={() => {
                                 addCart(product._id, quantity);
-                                openPopover(
-                                  "Product Added to your cart successfully"
+                                dispatch(
+                                  OPEN_POPOVER(
+                                    "Product Added to your cart successfully"
+                                  )
                                 );
                               }}
                               className="buttonCartP">
@@ -391,8 +393,10 @@ export default function Product({ openPopover }) {
                                 <Button
                                   onClick={() => {
                                     dispatch(REMOVE_FROM_WISHLIST(product._id));
-                                    openPopover(
-                                      "Product Removed from your Wishlist"
+                                    dispatch(
+                                      OPEN_POPOVER(
+                                        "Product Removed from your Wishlist"
+                                      )
                                     );
                                   }}
                                   className="wishlistbutton">
@@ -405,8 +409,10 @@ export default function Product({ openPopover }) {
                                 <Button
                                   onClick={() => {
                                     dispatch(ADD_TO_WISHLIST(product._id));
-                                    openPopover(
-                                      "Product Added to your Wishlist"
+                                    dispatch(
+                                      OPEN_POPOVER(
+                                        "Product Added to your Wishlist"
+                                      )
                                     );
                                   }}
                                   className="wishlistbutton ">
