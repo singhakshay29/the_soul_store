@@ -1,23 +1,13 @@
 import { Flex, Text } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import about from "../assets/about.avif";
 import aboutbanner from "../assets/about-doodlebanner.webp";
 import brand from "../assets/brandsbanner.png";
 import NavRes from "../Components/NavRes";
+import useWindowSize from "../Components/useWindowSize";
 
 export default function AboutUs() {
-  const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 1100);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsSmallScreen(window.innerWidth < 1100);
-    };
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
+  const isSmallScreen = useWindowSize();
   return (
     <>
       {isSmallScreen && <NavRes />}

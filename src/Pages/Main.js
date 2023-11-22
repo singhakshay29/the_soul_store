@@ -20,6 +20,7 @@ import {
 import NavRes from "../Components/NavRes";
 import { useDispatch, useSelector } from "react-redux";
 import { ADD_TO_WISHLIST, OPEN_POPOVER, REMOVE_FROM_WISHLIST } from "../action";
+import useWindowSize from "../Components/useWindowSize";
 
 export default function Main() {
   const [sortingOption, setSortingOption] = useState([]);
@@ -37,7 +38,7 @@ export default function Main() {
     onOpen: onSecondDrawerOpen,
     onClose: onSecondDrawerClose,
   } = useDisclosure();
-  const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 1100);
+  const isSmallScreen = useWindowSize();
   const [isSmallScreenMini, setIsSmallScreenMini] = useState(
     window.innerWidth < 750
   );
@@ -205,10 +206,6 @@ export default function Main() {
     };
 
     window.addEventListener("resize", handleResizeMini);
-    const handleResize = () => {
-      setIsSmallScreen(window.innerWidth < 1100);
-    };
-    window.addEventListener("resize", handleResize);
   }, []);
 
   return (

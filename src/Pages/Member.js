@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import bgMember from "../assets/membackground_web.jpeg";
 import { Flex, Text } from "@chakra-ui/react";
 import { FaCrown } from "react-icons/fa";
@@ -7,20 +7,10 @@ import free from "../assets/freedelivery.webp";
 import ship from "../assets/shipping.webp";
 import NavRes from "../Components/NavRes";
 import dis from "../assets/discount.webp";
+import useWindowSize from "../Components/useWindowSize";
 
 export default function Member() {
-  const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 1100);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsSmallScreen(window.innerWidth < 1100);
-    };
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
+  const isSmallScreen = useWindowSize();
   return (
     <>
       {isSmallScreen && <NavRes />}

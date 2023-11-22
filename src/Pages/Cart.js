@@ -65,11 +65,6 @@ export default function Cart() {
     setIsOpen(true);
   }
 
-  function afterOpenModal() {
-    // references are now sync'd and can be accessed.
-    // subtitle.style.color = "red";
-  }
-
   function closeModal() {
     setIsOpen(false);
   }
@@ -252,7 +247,6 @@ export default function Cart() {
     <>
       <Modal
         isOpen={modalIsOpen}
-        onAfterOpen={afterOpenModal}
         onRequestClose={closeModal}
         style={customStyles}
         ariaHideApp={false}

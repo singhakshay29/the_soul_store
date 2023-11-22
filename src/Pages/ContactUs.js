@@ -1,5 +1,5 @@
 import { Box, Flex } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { BiLogoFacebook } from "react-icons/bi";
 import { AiOutlineInstagram } from "react-icons/ai";
@@ -7,20 +7,11 @@ import { BsTwitter } from "react-icons/bs";
 import { FaSnapchat } from "react-icons/fa";
 import NavRes from "../Components/NavRes";
 import { useSelector } from "react-redux";
+import useWindowSize from "../Components/useWindowSize";
 
 export default function ContactUs() {
-  const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 1100);
+  const isSmallScreen = useWindowSize();
   const { isLoggedIn } = useSelector((state) => state.user);
-  useEffect(() => {
-    const handleResize = () => {
-      setIsSmallScreen(window.innerWidth < 1100);
-    };
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-    // eslint-disable-next-line
-  }, []);
   return (
     <>
       {isSmallScreen && <NavRes />}

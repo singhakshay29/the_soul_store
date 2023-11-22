@@ -4,6 +4,8 @@ import {
   Grid,
   Image,
   Button,
+  Flex,
+  Spinner,
   Divider,
   GridItem,
   Accordion,
@@ -11,8 +13,6 @@ import {
   AccordionButton,
   AccordionPanel,
   AccordionIcon,
-  Flex,
-  Spinner,
 } from "@chakra-ui/react";
 import {
   AiFillHeart,
@@ -21,6 +21,7 @@ import {
   AiOutlineInstagram,
 } from "react-icons/ai";
 import Api from "../Api";
+import { addCart } from "../fetch";
 import Modal from "../Components/Modal";
 import { BsWhatsapp } from "react-icons/bs";
 import { FaRupeeSign } from "react-icons/fa";
@@ -28,7 +29,6 @@ import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { ADD_TO_WISHLIST, OPEN_POPOVER, REMOVE_FROM_WISHLIST } from "../action";
-import { addCart } from "../fetch";
 import ImageSliderRes from "../Components/ImageSliderRes";
 import NavRes from "../Components/NavRes";
 

@@ -6,6 +6,7 @@ import { GoDotFill } from "react-icons/go";
 import { getOrderList } from "../fetch";
 import { Link } from "react-router-dom";
 import NavRes from "../Components/NavRes";
+import useWindowSize from "../Components/useWindowSize";
 
 export default function Order() {
   const dispatch = useDispatch();
@@ -27,18 +28,7 @@ export default function Order() {
 
     fetchData();
   }, []);
-  const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 1100);
-  useEffect(() => {
-    window.scrollTo(0, 0);
-    const handleResize = () => {
-      setIsSmallScreen(window.innerWidth < 1100);
-    };
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-    // eslint-disable-next-line
-  }, []);
+  const isSmallScreen = useWindowSize();
 
   return (
     <>

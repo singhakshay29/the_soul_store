@@ -8,6 +8,7 @@ import { AiOutlineClose } from "react-icons/ai";
 import { placeOrder } from "../fetch";
 import { REMOVE_FROM_CART } from "../action";
 import { Link } from "react-router-dom";
+import useWindowSize from "../Components/useWindowSize";
 
 export default function Address() {
   const [formData, setFormData] = useState({
@@ -22,12 +23,12 @@ export default function Address() {
     pinNo: "",
   });
   const dispatch = useDispatch();
+  const isSmallScreen = useWindowSize();
   const [selectedAddress, setSelectedAddress] = useState(0);
   const [addCount, setAddCount] = useState(() => {
     const savedData = localStorage.getItem("userDetailsList");
     return savedData ? JSON.parse(savedData).length : 0;
   });
-  const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 1000);
   const [modalIsOpen2, setIsOpen2] = useState(false);
   const [userDetailsList, setUserDetailsList] = useState(() => {
     const savedData = localStorage.getItem("userDetailsList");
@@ -114,25 +115,9 @@ export default function Address() {
       dispatch(REMOVE_FROM_CART(product.product._id, product.quantity));
     }
   };
-  // items.map(
-  //   (product) => {
-  //     dispatch(REMOVE_FROM_CART(product.product._id, product.quantity));
-  //     setTimeout(()=>{
-  //       placeOrder(product.product._id, address, product.quantity);
-  //     },200)
-  //   }
-  // );
-  //};
 
   useEffect(() => {
-    const handleResize = () => {
-      setIsSmallScreen(window.innerWidth < 1000);
-    };
-    window.addEventListener("resize", handleResize);
     localStorage.setItem("userDetailsList", JSON.stringify(userDetailsList));
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
   }, [userDetailsList]);
 
   return (

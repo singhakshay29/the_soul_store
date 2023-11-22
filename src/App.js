@@ -29,9 +29,9 @@ function App() {
         <Topbar />
         <Nav />
         <Routes>
+          <Route path="/" element={<Home />} />
           <Route path="term" element={<Term />} />
           <Route path="about" element={<AboutUs />} />
-          <Route path="/" element={<Home />} />
           <Route path="contact" element={<ContactUs />} />
           <Route path="category" element={<Main />} />
           <Route path="privacy" element={<Policy />} />
@@ -54,10 +54,6 @@ function App() {
           <Route
             path="address"
             element={<ProtectedRoute whenLoggedIn element={<Address />} />}
-          />
-          <Route
-            path="member"
-            element={<ProtectedRoute whenLoggedIn element={<Member />} />}
           />
           <Route
             path="profile"

@@ -38,6 +38,7 @@ export default function Login() {
   };
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     dispatch(LOGIN_FAILURE(""));
     const handleResize = () => {
       setIsSmallScreen(window.innerWidth < 1000);

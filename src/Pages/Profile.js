@@ -1,21 +1,16 @@
 import { Box, Button, Container, Divider, Flex, Text } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { LOGOUT_USER } from "../action";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import NavRes from "../Components/NavRes";
+import useWindowSize from "../Components/useWindowSize";
 
 export default function Profile() {
   const dispatch = useDispatch();
   const data = useSelector((state) => state.user.userData);
-  const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 1100);
-  useEffect(() => {
-    const handleResize = () => {
-      setIsSmallScreen(window.innerWidth < 1100);
-    };
-    window.addEventListener("resize", handleResize);
-    // eslint-disable-next-line
-  }, []);
+  const isSmallScreen = useWindowSize();
+
   return (
     <>
       {isSmallScreen && <NavRes />}
