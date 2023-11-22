@@ -19,6 +19,7 @@ import Order from "./Pages/Order";
 import Address from "./Pages/Address";
 import Member from "./Pages/Member";
 import Profile from "./Pages/Profile";
+import NotFoundPage from "./Pages/NotFoundPage";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 function App() {
@@ -39,29 +40,32 @@ function App() {
           <Route path="wishlist" element={<Wishlist />} />
           <Route path="shoppingcart" element={<Cart />} />
           <Route path="member" element={<Member />} />
+          <Route path="*" element={<NotFoundPage />} />
           <Route
             path="login"
-            element={<ProtectedRoute element={<Login />} />}
+            element={<ProtectedRoute whenLoggedIn element={<Login />} />}
           />
           <Route
             path="signup"
-            element={<ProtectedRoute element={<SignUp />} />}
+            element={<ProtectedRoute whenLoggedIn element={<SignUp />} />}
           />
           <Route
             path="order"
-            element={<ProtectedRoute whenLoggedIn element={<Order />} />}
+            element={
+              <ProtectedRoute whenLoggedIn={false} element={<Order />} />
+            }
           />
           <Route
             path="address"
-            element={<ProtectedRoute whenLoggedIn element={<Address />} />}
-          />
-          <Route
-            path="member"
-            element={<ProtectedRoute whenLoggedIn element={<Member />} />}
+            element={
+              <ProtectedRoute whenLoggedIn={false} element={<Address />} />
+            }
           />
           <Route
             path="profile"
-            element={<ProtectedRoute whenLoggedIn element={<Profile />} />}
+            element={
+              <ProtectedRoute whenLoggedIn={false} element={<Profile />} />
+            }
           />
         </Routes>
         <Footer />
