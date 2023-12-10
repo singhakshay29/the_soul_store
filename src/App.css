@@ -2056,3 +2056,9 @@ iframe#webpack-dev-server-client-overlay {
   justify-content: center;
   align-items: center;
 }
+.nopagebox {
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+  flex-direction: column;
+}
