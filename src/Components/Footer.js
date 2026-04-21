@@ -607,7 +607,7 @@ export default function Footer() {
               padding: 0,
             }}
             className="footerText">
-            The Souled Store 2023-24
+            The Souled Store 
           </Text>
         </Flex>
       </Flex>
